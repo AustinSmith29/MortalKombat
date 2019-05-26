@@ -1,0 +1,6 @@
+<moves>
+	<move name = "high_punch" key="X," animation="data/johnnycage/animations/cage_high_punch_right.xml" />
+	<move name = "high_kick" key="A," animation="data/johnnycage/animations/cage_high_kick.xml" />
+	<move name = "uppercut" key="D,Y," animation="data/johnnycage/animations/cage_uppercut.xml" />
+	<move name = "fireball" key="D,F," animation="data/johnnycage/animations/cage_fireball.xml" />
+</moves>
