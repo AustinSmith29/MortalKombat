@@ -12,10 +12,12 @@ public:
 	void process_move(Move& move) override;
 private:
 	int x_vel, y_vel;
+	bool airborne;
 	bones::Animation idle;
 	bones::Animation crouch;
 	bones::Animation jump;
-	bones::Animation jump_move;
+	bones::Animation jump_move_forward;
+	bones::Animation jump_move_backward;
 	bones::Animation walk_forward;
 	bones::Animation walk_backward;
 

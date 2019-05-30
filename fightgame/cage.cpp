@@ -9,7 +9,8 @@ void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
 	idle = loader.load_animation(ANIMATIONS "cage_idle.xml");
 	crouch = loader.load_animation(ANIMATIONS "cage_crouch.xml");
 	jump = loader.load_animation(ANIMATIONS "cage_jump_up.xml");
-	jump_move = loader.load_animation(ANIMATIONS "cage_jump_move.xml");
+	jump_move_forward = loader.load_animation(ANIMATIONS "cage_jump_move.xml");
+	jump_move_backward = bones::reverse_animation(jump_move_forward);
 	walk_forward = loader.load_animation(ANIMATIONS "cage_walk.xml");
 	walk_backward = bones::reverse_animation(walk_forward);
 
@@ -20,6 +21,7 @@ void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
 	state = initial;
 	x = 150;
 	y = 350;
+	airborne = false;
 	x_vel = y_vel = 0;
 }
 
@@ -28,12 +30,18 @@ void JohnnyCage::handle_input_event(SDL_Event &event)
 	move_source.process_event(event, DIRECTION_RIGHT);
 	if (event.type == SDL_CONTROLLERBUTTONDOWN)
 	{
-		if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP)
+		if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP && !airborne)
 		{
 			y_vel = -18;
+			airborne = true;
 			if (state.state == FighterState::State::JUMP && state.action == FighterState::Action::MOVERIGHT)
 			{
 				state = change_state(state, FighterState::State::JUMP, FighterState::Action::MOVERIGHT);
+				lock_state(state);
+			}
+			else if (state.state == FighterState::State::JUMP && state.action == FighterState::Action::MOVELEFT)
+			{
+				state = change_state(state, FighterState::State::JUMP, FighterState::Action::MOVELEFT);
 				lock_state(state);
 			}
 			else
@@ -47,7 +55,7 @@ void JohnnyCage::handle_input_event(SDL_Event &event)
 			state = change_state(state, FighterState::State::CROUCH, FighterState::Action::NONE);
 		}
 	}
-	if (event.type == SDL_CONTROLLERBUTTONUP)
+	if (event.type == SDL_CONTROLLERBUTTONUP && !state.locked_action)
 	{
 		if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
 		{
@@ -71,7 +79,7 @@ void JohnnyCage::handle_input_event(SDL_Event &event)
 
 void JohnnyCage::handle_input_state(SDL_GameController* controller)
 {
-	if (!state.locked)
+	if (!state.locked_state && !state.locked_action)
 	{
 		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
 		{
@@ -92,14 +100,22 @@ void JohnnyCage::handle_input_state(SDL_GameController* controller)
 void JohnnyCage::process_move(Move& move)
 {
 	current_animation = &move.animation;
-	if (move.name == "jump_move")
+	if (move.name == "jump_move_right")
 	{
 		state = change_state(state, FighterState::State::JUMP, FighterState::Action::MOVERIGHT);
 		lock_state(state);
 		return;
 	}
+	if (move.name == "jump_move_left")
+	{
+		state = change_state(state, FighterState::State::JUMP, FighterState::Action::MOVELEFT);
+		lock_state(state);
+		return;
+	}
+	std::cout << move.name << std::endl;
 	state = change_action(state, FighterState::Action::ATTACK);
 	lock_state(state);
+	lock_action(state);
 }
 
 void JohnnyCage::idle_state(FighterState::Action action)
@@ -123,6 +139,7 @@ void JohnnyCage::idle_state(FighterState::Action action)
 		if (bones::is_animation_complete(*current_animation))
 		{
 			bones::restart_animation(*current_animation);
+			unlock_action(state);
 			state = change_action(state, FighterState::Action::NONE);
 			unlock_state(state);
 		}
@@ -145,6 +162,7 @@ void JohnnyCage::crouch_state(FighterState::Action action)
 		{
 			bones::restart_animation(*current_animation);
 			state = change_action(state, FighterState::Action::NONE);
+			unlock_action(state);
 		}
 	}
 }
@@ -163,7 +181,19 @@ void JohnnyCage::jump_state(FighterState::Action action)
 	else if (action == FighterState::Action::MOVERIGHT)
 	{
 		x_vel = 4;
-		current_animation = &jump_move;
+		current_animation = &jump_move_forward;
+	}
+	else if (action == FighterState::Action::MOVELEFT)
+	{
+		x_vel = -4;
+		current_animation = &jump_move_backward;
+	}
+	else if (action == FighterState::Action::ATTACK)
+	{
+		if (bones::is_animation_complete(*current_animation))
+		{
+			bones::pause_animation(*current_animation);
+		}
 	}
 	y += y_vel;
 	x += x_vel;
@@ -173,10 +203,13 @@ void JohnnyCage::jump_state(FighterState::Action action)
 		y = 350;
 		y_vel = 0;
 		x_vel = 0;
+		airborne = false;
 		unlock_state(state);
+		unlock_action(state);
 		state = change_state(state, FighterState::State::STAND, FighterState::Action::NONE);
 		bones::restart_animation(jump);
-		bones::restart_animation(jump_move);
+		bones::restart_animation(jump_move_forward);
+		bones::restart_animation(jump_move_backward);
 	}
 }
 

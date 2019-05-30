@@ -7,7 +7,9 @@
 		<move name = "fireball" key="D,F,Y," animation="data/johnnycage/animations/cage_fireball_throw.xml" />
 		<move name = "leg_sweep" key="b,B," animation="data/johnnycage/animations/cage_leg_sweep.xml" />
 		<move name = "uppercut" key="D,Y," animation="data/johnnycage/animations/cage_uppercut.xml" />
-		<move name = "jump_move" key="F,U," animation="data/johnnycage/animations/cage_jump_move.xml" />
+		<move name = "jump_move_right" key="F,U," animation="data/johnnycage/animations/cage_jump_move.xml" />
+		<move name = "jump_move_left" key="b,U," animation="data/johnnycage/animations/cage_jump_move.xml" />
+
 	</stand>
 	<crouch>
 		<move name = "crouch_punch" key="X," animation="data/johnnycage/animations/cage_punch_crouch.xml" />
@@ -15,5 +17,6 @@
 		<move name = "crouch_kick_high" key="B," animation="data/johnnycage/animations/cage_kick_crouch_high.xml" />
 	</crouch>
 	<jump>
+		<move name = "jump_kick" key="A," animation="data/johnnycage/animations/cage_kick_jump.xml" />
 	</jump>
 </moves>

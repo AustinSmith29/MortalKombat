@@ -18,7 +18,7 @@ static bool action_transitions[5][6] = {
 
 FighterState change_state(FighterState from, FighterState::State to, FighterState::Action action)
 {
-	if (state_transitions[from.state][to] && !from.locked)
+	if (state_transitions[from.state][to] && !from.locked_state && !from.locked_action)
 	{
 		auto new_state = FighterState(to, action);
 		return new_state;
@@ -28,7 +28,7 @@ FighterState change_state(FighterState from, FighterState::State to, FighterStat
 
 FighterState change_action(FighterState state, FighterState::Action to)
 {
-	if (action_transitions[state.state][to])
+	if (action_transitions[state.state][to] && !state.locked_action)
 	{
 		auto new_state = FighterState(state.state, to);
 		return new_state;
@@ -38,10 +38,20 @@ FighterState change_action(FighterState state, FighterState::Action to)
 
 void lock_state(FighterState& state)
 {
-	state.locked = true;
+	state.locked_state = true;
 }
 
 void unlock_state(FighterState& state)
 {
-	state.locked = false;
+	state.locked_state = false;
+}
+
+void lock_action(FighterState& state)
+{
+	state.locked_action = true;
+}
+
+void unlock_action(FighterState& state)
+{
+	state.locked_action = false;
 }
