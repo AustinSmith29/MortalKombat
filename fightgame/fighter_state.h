@@ -21,9 +21,12 @@ struct FighterState
 		ATTACK
 	} action;
 	FighterState() = default;
-	FighterState(State s, Action a) { state = s; action = a; }
+	FighterState(State s, Action a) { state = s; action = a; locked = false; }
+	bool locked;
 };
 
 FighterState change_state(FighterState from, FighterState::State to, FighterState::Action action);
 FighterState change_action(FighterState state, FighterState::Action to);
+void lock_state(FighterState& state);
+void unlock_state(FighterState& state);
 #endif

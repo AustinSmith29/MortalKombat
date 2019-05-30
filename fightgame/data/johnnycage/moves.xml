@@ -1,13 +1,18 @@
 <moves>
 	<stand>
 		<move name = "high_punch" key="Y,"  animation="data/johnnycage/animations/cage_punch_high_right.xml" />
-		<move name = "high_kick" key="A,"  animation="data/johnnycage/animations/cage_kick_high.xml" />
+		<move name = "low_punch" key="X," animation="data/johnnycage/animations/cage_punch_low_right.xml" />
+		<move name = "high_kick" key="B,"  animation="data/johnnycage/animations/cage_kick_high.xml" />
+		<move name = "low_kick" key="A," animation="data/johnnycage/animations/cage_kick_low.xml" />
 		<move name = "fireball" key="D,F,Y," animation="data/johnnycage/animations/cage_fireball_throw.xml" />
 		<move name = "leg_sweep" key="b,B," animation="data/johnnycage/animations/cage_leg_sweep.xml" />
 		<move name = "uppercut" key="D,Y," animation="data/johnnycage/animations/cage_uppercut.xml" />
+		<move name = "jump_move" key="F,U," animation="data/johnnycage/animations/cage_jump_move.xml" />
 	</stand>
 	<crouch>
-		<move name = "crouch_punch" key="Y," animation="data/johnnycage/animations/cage_punch_crouch.xml" />
+		<move name = "crouch_punch" key="X," animation="data/johnnycage/animations/cage_punch_crouch.xml" />
+		<move name = "crouch_kick_low" key="A," animation="data/johnnycage/animations/cage_kick_crouch_low.xml" />
+		<move name = "crouch_kick_high" key="B," animation="data/johnnycage/animations/cage_kick_crouch_high.xml" />
 	</crouch>
 	<jump>
 	</jump>
