@@ -93,8 +93,8 @@ namespace bones
 	void pause_animation(Animation& animation);
 	void unpause_animation(Animation& animation);
 
-	bool is_animation_complete(Animation& animation);
-	void reverse_animation(Animation& animation);
+	bool is_animation_complete(const Animation& animation);
+	Animation reverse_animation(const Animation& animation);
 	void restart_animation(Animation& animation);
 }
 #endif

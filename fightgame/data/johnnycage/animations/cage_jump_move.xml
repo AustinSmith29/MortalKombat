@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<animation spritesheet="C:/Users/Austin/Documents/dev/fight/fightgame/data/johnnycage/johnnycage_spritesheet.bmp">
+    <frame duration="13" h="81" w="35" x="582" y="36">
+        <hitboxes>
+            <hitbox h="67" w="25" x="5" y="6"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="10" h="107" w="42" x="429" y="130">
+        <hitboxes>
+            <hitbox h="94" w="28" x="5" y="5"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="6" h="110" w="39" x="545" y="127">
+        <hitboxes>
+            <hitbox h="94" w="28" x="5" y="5"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="6" h="50" w="30" x="595" y="187">
+        <hitboxes>
+            <hitbox h="39" w="28" x="1" y="4"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="6" h="56" w="33" x="636" y="181">
+        <hitboxes>
+            <hitbox h="39" w="28" x="1" y="4"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="6" h="39" w="37" x="680" y="198">
+        <hitboxes>
+            <hitbox h="30" w="34" x="1" y="3"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="6" h="46" w="40" x="728" y="191">
+        <hitboxes>
+            <hitbox h="39" w="31" x="9" y="4"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="6" h="50" w="30" x="780" y="187">
+        <hitboxes>
+            <hitbox h="41" w="28" x="1" y="7"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="6" h="53" w="33" x="822" y="184">
+        <hitboxes>
+            <hitbox h="45" w="29" x="3" y="5"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="6" h="44" w="41" x="867" y="193">
+        <hitboxes>
+            <hitbox h="37" w="37" x="3" y="4"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+</animation>

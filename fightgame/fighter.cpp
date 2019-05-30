@@ -1,116 +1,52 @@
 #include "fighter.h"
-#include <iostream>
 
-Fighter::Fighter(bones::GraphicsLoader &loader) 
-	: moveSource(this)
-{
-	moveSource.load_moves_from_file("data/johnnycage/moves.xml", loader);
-	idle = loader.load_animation("data/johnnycage/animations/cage_idle.xml");
-	walk = loader.load_animation("data/johnnycage/animations/cage_walk.xml");
-	x = 100;
-	y = 300;
-	state = IDLE;
-	current_animation = &idle;
-}
 
-void Fighter::process_move(Move& move)
+FighterState Fighter::get_state()
 {
-	current_animation = &move.animation;
-	change_state(MOVE);
-	if (move.name == "fireball")
-	{
-		std::cout << "Spawning fireball" << std::endl;
-	}
-}
-
-void Fighter::read_moves(SDL_Event& event)
-{
-	moveSource.process_event(event, DIRECTION_RIGHT);
-	if (event.type == SDL_CONTROLLERBUTTONUP && event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT)
-	{
-		if (state == WALK)
-			change_state(IDLE);
-	}
-	if (event.type == SDL_CONTROLLERBUTTONUP && event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
-	{
-		if (state == WALK)
-			change_state(IDLE);
-	}
-}
-
-void Fighter::handle_input(SDL_GameController* controller)
-{
-	if (state != MOVE)
-	{
-		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
-		{
-			x += 1;
-			change_state(WALK);
-		}
-		else if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT))
-		{
-			x -= 1;
-			change_state(WALK);
-		}
-		else
-		{
-			//change_state(IDLE);
-		}
-	}
+	return state;
 }
 
 void Fighter::tick()
 {
-	switch (state)
+	switch (state.state)
 	{
-	case IDLE:
-		current_animation = &idle;
+	case FighterState::State::STAND:
+		idle_state(state.action);
 		break;
-	case WALK:
-		current_animation = &walk;
+	case FighterState::State::CROUCH:
+		crouch_state(state.action);
 		break;
-	case MOVE:
-		if (bones::is_animation_complete(*current_animation))
-		{
-			bones::restart_animation(*current_animation);
-			change_state(IDLE);
-		}
+	case FighterState::State::JUMP:
+		jump_state(state.action);
+		break;
+	case FighterState::State::THROWN:
+		thrown_state(state.action);
+		break;
+	case FighterState::State::KNOCKED:
+		knocked_state(state.action);
 		break;
 	}
 }
 
 void Fighter::draw(SDL_Renderer* renderer)
 {
-	bones::play_animation(renderer, *current_animation, x, y);
+	// "Anchor" of every frame is the bottom-middle.
+	// This fixes the animation jumping around on the screen. 
+	int w = current_animation->frames[current_animation->current_frame].w;
+	int h = current_animation->frames[current_animation->current_frame].h;
+	int draw_x = x - (w / 2);
+	int draw_y = y - h;
+	bones::play_animation(renderer, *current_animation, draw_x, draw_y);
 }
 
-void Fighter::change_state(State to)
+std::vector<SDL_Rect> Fighter::get_hitboxes()
 {
-	State from = state;
-	switch (from)
-	{
-	case IDLE:
-		// idle can go into any state
-		state = to;
-		break;
-	case BLOCK:
-		if (to != MOVE)
-			state = to;
-		break;
-	case JUMP:
-		if (to != JUMP && to != BLOCK && to != JUMP)
-			state = to;
-		break;
-	case DUCK:
-		if (to != JUMP)
-			state = to;
-		break;
-	case WALK:
-		state = to;
-		break;
-	case MOVE:
-		if (to == IDLE)
-			state = to;
-		break;
-	}
+	std::vector<SDL_Rect> hitboxes;
+	return hitboxes;
+}
+
+std::vector<SDL_Rect> Fighter::get_damageboxes()
+{
+	std::vector<SDL_Rect> damageboxes;
+	return damageboxes;
 }

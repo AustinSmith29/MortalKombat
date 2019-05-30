@@ -1,0 +1,4 @@
+<moves>
+	<move name = "crouch_punch" key="X," animation="data/johnnycage/animations/cage_punch_crouch.xml" />
+	<move name = "uppercut" key="D,Y," animation="data/johnnycage/animations/cage_uppercut.xml" />
+</moves>

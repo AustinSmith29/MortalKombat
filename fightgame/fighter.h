@@ -3,40 +3,39 @@
 
 #include "graphics.h"
 #include "movesource.h"
+#include "fighter_state.h"
 
-// For now just use an enum for states... eventually 
-// extend this behavior... this is all prototype anyway.
-enum State
-{
-	IDLE,
-	WALK,
-	JUMP,
-	DUCK,
-	BLOCK,
-	MOVE
-};
+#include <vector>
 
 class Fighter
 {
 public:
-	Fighter(bones::GraphicsLoader& loader);
 
-	void read_moves(SDL_Event& event);
-	void handle_input(SDL_GameController* controller);
+	virtual void load_resources(bones::GraphicsLoader& loader) {}
+	virtual void handle_input_event(SDL_Event& event) {}
+	virtual void handle_input_state(SDL_GameController* controller) {}
+	virtual void process_move(Move& move) {}
+
+	FighterState get_state();
+	void hit();
 	void tick();
 	void draw(SDL_Renderer* renderer);
 
-	void process_move(Move& move);
+	std::vector<SDL_Rect> get_hitboxes();
+	std::vector<SDL_Rect> get_damageboxes();
+
+protected:
+	int x, y;
+	int health;
+	FighterState state;
+	bones::Animation* current_animation;
+	MoveSource move_source;
 
 private:
-	MoveSource moveSource;
-	int x, y;
-	State state;
-	void change_state(State to);
-
-	// Animations
-	bones::Animation* current_animation;
-	bones::Animation idle;
-	bones::Animation walk;
+	virtual void idle_state(FighterState::Action action) {}
+	virtual void crouch_state(FighterState::Action action) {}
+	virtual void jump_state(FighterState::Action action) {}
+	virtual void thrown_state(FighterState::Action action) {}
+	virtual void knocked_state(FighterState::Action action) {} 
 };
 #endif

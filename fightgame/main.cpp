@@ -1,7 +1,7 @@
 #include "SDL.h"
 #include "graphics.h"
 #include "movesource.h"
-#include "fighter.h"
+#include "cage.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	SDL_Surface* screen = NULL;
 	bones::GraphicsLoader graphics;
 	SDL_Init(SDL_INIT_EVERYTHING);
-	window = SDL_CreateWindow("Hello World", SDL_WINDOWPOS_UNDEFINED,
+	window = SDL_CreateWindow("Mortal Kombat II", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		640,
 		480,
@@ -22,7 +22,10 @@ int main(int argc, char *argv[])
 	std::cout << njoysticks << " detected." << std::endl;
 	SDL_GameController* controller = SDL_GameControllerOpen(0);
 	graphics.register_service(renderer);
-	Fighter fighter(graphics);
+	Fighter *fighter;
+	JohnnyCage cage;
+	fighter = &cage;
+	fighter->load_resources(graphics);
 	SDL_Event event;
 	bool quit = false;
 	while (!quit)
@@ -33,13 +36,13 @@ int main(int argc, char *argv[])
 		{
 			if (event.type == SDL_QUIT)
 				quit = true;
-			fighter.read_moves(event);
+			fighter->handle_input_event(event);
 		}
-		fighter.handle_input(controller);
-		fighter.tick();
+		fighter->handle_input_state(controller);
+		fighter->tick();
 
 		SDL_RenderClear(renderer);
-		fighter.draw(renderer);
+		fighter->draw(renderer);
 		SDL_RenderPresent(renderer);
 
 		int time = SDL_GetTicks() - ticks;

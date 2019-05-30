@@ -119,7 +119,6 @@ namespace bones
 		doc.parse<0>(&(data[0])); // parse doesn't like const char * so give it char*
 		xml_node<>* anim = doc.first_node();
 		std::string sheetpath = anim->first_attribute("spritesheet")->value();
-		std::cout << sheetpath << std::endl;
 		std::vector<std::string> frame_attrs = { "x", "y", "w", "h" };
 		std::vector<SDL_Rect> frame_rects;
 		std::vector<SDL_Rect> hitboxes;
@@ -228,22 +227,26 @@ namespace bones
 		animation.paused = false;
 	}
 
-	bool is_animation_complete(Animation & animation)
+	bool is_animation_complete(const Animation & animation)
 	{
 		size_t frames = animation.frames.size();
-		if (animation.current_frame == frames - 1)
+		int last_duration = animation.durations.back();
+		if (animation.current_frame == frames - 1 && animation.current_tick == last_duration)
 			return true;
 		return false;
 	}
 
-	void reverse_animation(Animation& animation)
+	Animation reverse_animation(const Animation& animation)
 	{
-		std::reverse(animation.frames.begin(), animation.frames.end());
+		Animation reversed = animation;
+		std::reverse(reversed.frames.begin(), reversed.frames.end());
+		return reversed;
 	}
 
 	void restart_animation(Animation& animation)
 	{
 		animation.current_frame = 0;
 		animation.current_tick = 0;
+		animation.paused = false;
 	}
 }

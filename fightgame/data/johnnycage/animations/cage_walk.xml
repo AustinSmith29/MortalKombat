@@ -1,50 +1,50 @@
 <?xml version="1.0" ?>
-<animation spritesheet="C:/Users/Austin/Documents/dev/fight/fightgame/johnnycage.bmp">
-    <frame duration="8" h="100" w="40" x="15" y="137">
+<animation spritesheet="C:/Users/Austin/Documents/dev/fight/fightgame/data/johnnycage/johnnycage_spritesheet.bmp">
+    <frame duration="10" h="100" w="40" x="15" y="137">
         <hitboxes>
-            <hitbox h="86" w="21" x="208" y="455"/>
+            <hitbox h="86" w="21" x="8" y="4"/>
         </hitboxes>
         <damageboxes/>
     </frame>
-    <frame duration="8" h="102" w="40" x="65" y="135">
+    <frame duration="10" h="102" w="40" x="65" y="135">
         <hitboxes>
-            <hitbox h="86" w="21" x="208" y="455"/>
+            <hitbox h="86" w="21" x="8" y="4"/>
         </hitboxes>
         <damageboxes/>
     </frame>
-    <frame duration="8" h="103" w="40" x="114" y="134">
+    <frame duration="10" h="103" w="40" x="114" y="134">
         <hitboxes>
-            <hitbox h="86" w="21" x="208" y="455"/>
+            <hitbox h="86" w="21" x="8" y="4"/>
         </hitboxes>
         <damageboxes/>
     </frame>
-    <frame duration="8" h="100" w="40" x="164" y="137">
+    <frame duration="10" h="100" w="40" x="164" y="137">
         <hitboxes>
-            <hitbox h="86" w="21" x="208" y="455"/>
+            <hitbox h="86" w="21" x="8" y="4"/>
         </hitboxes>
         <damageboxes/>
     </frame>
-    <frame duration="8" h="100" w="40" x="214" y="137">
+    <frame duration="10" h="100" w="40" x="214" y="137">
         <hitboxes>
-            <hitbox h="86" w="21" x="208" y="455"/>
+            <hitbox h="86" w="21" x="8" y="4"/>
         </hitboxes>
         <damageboxes/>
     </frame>
-    <frame duration="8" h="101" w="40" x="263" y="136">
+    <frame duration="10" h="101" w="40" x="263" y="136">
         <hitboxes>
-            <hitbox h="86" w="21" x="208" y="455"/>
+            <hitbox h="86" w="21" x="8" y="4"/>
         </hitboxes>
         <damageboxes/>
     </frame>
-    <frame duration="8" h="100" w="40" x="313" y="137">
+    <frame duration="10" h="100" w="40" x="313" y="137">
         <hitboxes>
-            <hitbox h="86" w="21" x="208" y="455"/>
+            <hitbox h="86" w="21" x="8" y="4"/>
         </hitboxes>
         <damageboxes/>
     </frame>
-    <frame duration="8" h="100" w="42" x="363" y="137">
+    <frame duration="10" h="100" w="42" x="363" y="137">
         <hitboxes>
-            <hitbox h="86" w="21" x="208" y="455"/>
+            <hitbox h="86" w="21" x="8" y="4"/>
         </hitboxes>
         <damageboxes/>
     </frame>
