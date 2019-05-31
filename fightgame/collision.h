@@ -22,5 +22,4 @@ private:
 	std::vector<SDL_Rect> get_fighter_hitboxes();
 	std::vector<SDL_Rect> get_fighter_dmgboxes();
 };
-
 #endif

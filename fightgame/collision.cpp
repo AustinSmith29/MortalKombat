@@ -58,11 +58,19 @@ bool Collider::damagebox_collision(Collider& other)
 std::vector<SDL_Rect> Collider::get_fighter_hitboxes()
 {
 	std::vector<SDL_Rect> hitboxes;
+	int current_frame = fighter->current_animation->current_frame;
+	auto hitboxes_map = fighter->current_animation->hitboxes;
+	if (hitboxes_map.find(current_frame) != hitboxes_map.end())
+		hitboxes = hitboxes_map[current_frame];
 	return hitboxes;
 }
 
 std::vector<SDL_Rect> Collider::get_fighter_dmgboxes()
 {
 	std::vector<SDL_Rect> dmgboxes;
+	int current_frame = fighter->current_animation->current_frame;
+	auto dmgboxes_map = fighter->current_animation->dmgboxes;
+	if (dmgboxes_map.find(current_frame) != dmgboxes_map.end())
+		dmgboxes = dmgboxes_map[current_frame];
 	return dmgboxes;
 }
