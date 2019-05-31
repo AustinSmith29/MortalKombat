@@ -57,8 +57,12 @@ bool Collider::damagebox_collision(Collider& other)
 
 std::vector<SDL_Rect> Collider::get_fighter_hitboxes()
 {
+	std::vector<SDL_Rect> hitboxes;
+	return hitboxes;
 }
 
 std::vector<SDL_Rect> Collider::get_fighter_dmgboxes()
 {
+	std::vector<SDL_Rect> dmgboxes;
+	return dmgboxes;
 }

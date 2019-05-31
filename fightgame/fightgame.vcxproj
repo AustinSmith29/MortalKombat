@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cage.cpp" />
+    <ClCompile Include="collision.cpp" />
     <ClCompile Include="fighter.cpp" />
     <ClCompile Include="fighter_state.cpp" />
     <ClCompile Include="main.cpp" />
@@ -140,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cage.h" />
+    <ClInclude Include="collision.h" />
     <ClInclude Include="fighter.h" />
     <ClInclude Include="fighter_state.h" />
     <ClInclude Include="movesource.h" />

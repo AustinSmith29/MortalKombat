@@ -39,18 +39,6 @@ void Fighter::draw(SDL_Renderer* renderer)
 	bones::play_animation(renderer, *current_animation, draw_x, draw_y);
 }
 
-std::vector<SDL_Rect> Fighter::get_hitboxes()
-{
-	std::vector<SDL_Rect> hitboxes;
-	return hitboxes;
-}
-
-std::vector<SDL_Rect> Fighter::get_damageboxes()
-{
-	std::vector<SDL_Rect> damageboxes;
-	return damageboxes;
-}
-
 void Fighter::hit()
 {
 	if (state.action != FighterState::Action::BLOCK)

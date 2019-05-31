@@ -30,6 +30,9 @@
     <ClCompile Include="fighter_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="movesource.h">
@@ -41,8 +44,11 @@
     <ClInclude Include="cage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fighter_state.h">
+    <ClInclude Include="collision.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fighter_state.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

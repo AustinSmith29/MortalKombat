@@ -15,9 +15,9 @@ namespace bones
 	{
 		std::string sheetpath;
 		std::vector<SDL_Rect> frames;
-		std::vector<SDL_Rect> hitboxes;
-		std::vector<SDL_Rect> dmgboxes;
-		std::vector<int>      durations;
+		std::vector<int> durations;
+		std::map<int, std::vector<SDL_Rect>> hitboxes;
+		std::map<int, std::vector<SDL_Rect>> dmgboxes;
 	};
 
 	// Helper function for GraphicsLoader::load_animation
@@ -102,6 +102,31 @@ namespace bones
 		return animation;
 	}
 
+	// Dangerously gets attributes without any error checking
+	static SDL_Rect read_rect(xml_node<>* node)
+	{
+		int x = std::stoi(node->first_attribute("x")->value());
+		int y = std::stoi(node->first_attribute("y")->value());
+		int w = std::stoi(node->first_attribute("w")->value());
+		int h = std::stoi(node->first_attribute("h")->value());
+		return SDL_Rect{ x, y, w, h };
+	}
+
+	static std::vector<SDL_Rect> read_multiple_rects(xml_node<>* node)
+	{
+		std::vector<SDL_Rect> vec;
+		if (!node)
+			return vec;
+		if (!node->first_node())
+			return vec;
+		for (xml_node<>* box = node->first_node(); node; node = node->next_sibling())
+		{
+			auto rect = read_rect(box);
+			vec.push_back(rect);
+		}
+		return vec;
+	}
+
 	AnimationFileData	
 	parse_animation_file(std::string filepath)
 	{
@@ -118,34 +143,45 @@ namespace bones
 		xml_document<> doc;
 		doc.parse<0>(&(data[0])); // parse doesn't like const char * so give it char*
 		xml_node<>* anim = doc.first_node();
+
+		// Data items we need to load in
 		std::string sheetpath = anim->first_attribute("spritesheet")->value();
-		std::vector<std::string> frame_attrs = { "x", "y", "w", "h" };
 		std::vector<SDL_Rect> frame_rects;
-		std::vector<SDL_Rect> hitboxes;
-		std::vector<SDL_Rect> dmgboxes;
+		std::map<int, std::vector<SDL_Rect>> hitbox_map;
+		std::map<int, std::vector<SDL_Rect>> dmgbox_map;
 		std::vector<int> durations;
-		// Dangerously get attributes without any error checking
-		auto get_rect = [](xml_node<> * node) {
-			int x = std::stoi(node->first_attribute("x")->value());
-			int y = std::stoi(node->first_attribute("y")->value());
-			int w = std::stoi(node->first_attribute("w")->value());
-			int h = std::stoi(node->first_attribute("h")->value());
-			return SDL_Rect{ x, y, w, h };
-		};
+
+		int frame_count = 0;
 		for (xml_node<>* frame = anim->first_node(); frame; frame = frame->next_sibling())
 		{
-			// for right now, let's ignore hitboxes and dmgboxes
 			int duration = std::stoi(frame->first_attribute("duration")->value());
 			durations.push_back(duration);
-			auto rect = get_rect(frame);
+
+			auto rect = read_rect(frame);
 			frame_rects.push_back(rect);
+
+			xml_node<>* hitboxes = frame->first_node("hitboxes");
+			xml_node<>* dmgboxes = frame->first_node("damageboxes");
+			if (hitboxes)
+			{
+				std::vector<SDL_Rect> hitbox_vec = read_multiple_rects(hitboxes);
+				if (!hitbox_vec.empty())
+					hitbox_map.insert(std::make_pair(frame_count, hitbox_vec));
+			}
+			if (dmgboxes)
+			{
+				std::vector<SDL_Rect> dmgbox_vec = read_multiple_rects(dmgboxes);
+				if (!dmgbox_vec.empty())
+					dmgbox_map.insert(std::make_pair(frame_count, dmgbox_vec));
+			}
+			frame_count++;
 		}
 
 		AnimationFileData anim_data;
 		anim_data.sheetpath = sheetpath;
 		anim_data.frames = frame_rects;
-		anim_data.hitboxes = hitboxes;
-		anim_data.dmgboxes = dmgboxes;
+		anim_data.hitboxes = hitbox_map;
+		anim_data.dmgboxes = dmgbox_map;
 		anim_data.durations = durations;
 		return anim_data;
 	}
