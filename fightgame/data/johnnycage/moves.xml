@@ -9,6 +9,7 @@
 		<move name = "uppercut" key="D,Y," animation="data/johnnycage/animations/cage_uppercut.xml" />
 		<move name = "jump_move_right" key="F,U," animation="data/johnnycage/animations/cage_jump_move.xml" />
 		<move name = "jump_move_left" key="b,U," animation="data/johnnycage/animations/cage_jump_move.xml" />
+		<move name = "roundhouse" key="D,b,B," animation="data/johnnycage/animations/cage_roundhouse.xml" />
 
 	</stand>
 	<crouch>

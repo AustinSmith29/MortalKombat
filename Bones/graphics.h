@@ -42,6 +42,8 @@ namespace bones
 		std::shared_ptr<Sprite> sheet;       /// spritesheet the animation utilizes
 		std::vector<SDL_Rect> frames;        /// clippings on sprite sheet of frames
 		std::vector<int> durations;			 /// how many frames each frame should play
+		std::map<int, std::vector<SDL_Rect>> hitboxes; /// hitboxes for each frame
+		std::map<int, std::vector<SDL_Rect>> dmgboxes; /// damageboxes for each frame
 		int current_frame;					 /// current_frame of the animation
 		unsigned int current_tick;			 /// current tick of current frame
 		bool paused;                         /// determines if we play animation

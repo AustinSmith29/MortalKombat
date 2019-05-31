@@ -50,3 +50,11 @@ std::vector<SDL_Rect> Fighter::get_damageboxes()
 	std::vector<SDL_Rect> damageboxes;
 	return damageboxes;
 }
+
+void Fighter::hit()
+{
+	if (state.action != FighterState::Action::BLOCK)
+	{
+		state = change_action(state, FighterState::Action::STUN);
+	}
+}

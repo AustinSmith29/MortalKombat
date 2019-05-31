@@ -21,8 +21,7 @@ public:
 	void tick();
 	void draw(SDL_Renderer* renderer);
 
-	std::vector<SDL_Rect> get_hitboxes();
-	std::vector<SDL_Rect> get_damageboxes();
+	friend class Collider;
 
 protected:
 	int x, y;
