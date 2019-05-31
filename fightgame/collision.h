@@ -17,6 +17,8 @@ public:
 
 	bool damagebox_collision(SDL_Rect& other);
 	bool damagebox_collision(Collider& other);
+
+	void draw_boxes(SDL_Renderer* renderer);
 private:
 	Fighter* fighter;
 	std::vector<SDL_Rect> get_fighter_hitboxes();

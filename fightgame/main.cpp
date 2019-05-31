@@ -2,6 +2,7 @@
 #include "graphics.h"
 #include "movesource.h"
 #include "cage.h"
+#include "collision.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -25,9 +26,11 @@ int main(int argc, char *argv[])
 	Fighter *fighter;
 	JohnnyCage cage;
 	fighter = &cage;
+	Collider collider(fighter);
 	fighter->load_resources(graphics);
 	SDL_Event event;
 	bool quit = false;
+	SDL_Rect test = { 200, 250, 64, 100 };
 	while (!quit)
 	{
 		Uint32 ticks = SDL_GetTicks();
@@ -40,9 +43,17 @@ int main(int argc, char *argv[])
 		}
 		fighter->handle_input_state(controller);
 		fighter->tick();
+		if (collider.damagebox_collision(test))
+		{
+			std::cout << "Hit!" << std::endl;
+		}
 
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 		fighter->draw(renderer);
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+		SDL_RenderDrawRect(renderer, &test);
+		collider.draw_boxes(renderer);
 		SDL_RenderPresent(renderer);
 
 		int time = SDL_GetTicks() - ticks;

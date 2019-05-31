@@ -98,6 +98,8 @@ namespace bones
 		animation.current_tick = 0;
 		animation.paused = false;
 		animation.frames = anim_data.frames;
+		animation.hitboxes = anim_data.hitboxes;
+		animation.dmgboxes = anim_data.dmgboxes;
 
 		return animation;
 	}

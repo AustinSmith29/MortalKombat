@@ -16,6 +16,12 @@ public:
 	virtual void handle_input_state(SDL_GameController* controller) {}
 	virtual void process_move(Move& move) {}
 
+	/* Gets the top left coords of starting position of current animation frame.
+	 * Needed to adjust collision box positions and drawing positions.
+	 */
+	int topleft_x();
+	int topleft_y();
+
 	FighterState get_state();
 	void hit();
 	void tick();

@@ -1,5 +1,18 @@
 #include "fighter.h"
 
+int Fighter::topleft_x()
+{
+	int w = current_animation->frames[current_animation->current_frame].w;
+	int topleft = x - (w / 2);
+	return topleft;
+}
+
+int Fighter::topleft_y()
+{
+	int h = current_animation->frames[current_animation->current_frame].h;
+	int topleft = y - h;
+	return topleft;
+}
 
 FighterState Fighter::get_state()
 {
