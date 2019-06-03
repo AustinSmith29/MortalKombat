@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
 	int njoysticks = SDL_NumJoysticks();
 	std::cout << njoysticks << " detected." << std::endl;
 	SDL_GameController* controller = SDL_GameControllerOpen(0);
-	graphics.register_service(renderer);
 	Fighter *fighter;
 	JohnnyCage cage;
 	fighter = &cage;
