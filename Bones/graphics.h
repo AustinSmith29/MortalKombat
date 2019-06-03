@@ -47,6 +47,7 @@ namespace bones
 		int current_frame;					 /// current_frame of the animation
 		unsigned int current_tick;			 /// current tick of current frame
 		bool paused;                         /// determines if we play animation
+		SDL_RendererFlip flip{SDL_FLIP_NONE};				 /// what type of flip type
 	};
 
 	/**
@@ -98,5 +99,6 @@ namespace bones
 	bool is_animation_complete(const Animation& animation);
 	Animation reverse_animation(const Animation& animation);
 	void restart_animation(Animation& animation);
+	void flip_animation(Animation& animation);
 }
 #endif

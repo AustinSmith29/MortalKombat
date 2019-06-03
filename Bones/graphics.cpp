@@ -207,7 +207,7 @@ namespace bones
 			rect.h = 0;
 		}
 
-		SDL_RenderCopy(renderer, a.sheet->texture.get(), &(a.frames[a.current_frame]), &rect);
+		SDL_RenderCopyEx(renderer, a.sheet->texture.get(), &(a.frames[a.current_frame]), &rect, 0.0f, nullptr, a.flip);
 	}
 
 	void play_animation(SDL_Renderer * renderer, Animation & animation, int x, int y, bool reverse)
@@ -286,5 +286,15 @@ namespace bones
 		animation.current_frame = 0;
 		animation.current_tick = 0;
 		animation.paused = false;
+	}
+
+	void flip_animation(Animation& animation)
+	{
+		animation.flip = SDL_FLIP_HORIZONTAL;
+		for (auto frame : animation.frames)
+		{
+			// flip hboxes and dboxes along center
+			continue;
+		}
 	}
 }

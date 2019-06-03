@@ -20,14 +20,21 @@ struct FighterState
 		MOVERIGHT,
 		ATTACK
 	} action;
+	enum Orientation
+	{
+		RIGHT, LEFT
+	} facing;
+
 	FighterState() = default;
-	FighterState(State s, Action a) { state = s; action = a; locked_state = locked_action = false; }
+	FighterState(State s, Action a, Orientation o);
+
 	bool locked_state;
 	bool locked_action;
 };
 
 FighterState change_state(FighterState from, FighterState::State to, FighterState::Action action);
 FighterState change_action(FighterState state, FighterState::Action to);
+FighterState change_orientation(FighterState state, FighterState::Orientation orientation);
 void lock_state(FighterState& state);
 void unlock_state(FighterState& state);
 void lock_action(FighterState& state);

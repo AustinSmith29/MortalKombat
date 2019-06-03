@@ -16,7 +16,8 @@ void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
 
 	move_source.bind_owner(this);
 	move_source.load_moves_from_file("data/johnnycage/moves.xml", loader);
-	FighterState initial = FighterState(FighterState::State::STAND, FighterState::Action::NONE);
+	FighterState initial = FighterState(FighterState::State::STAND, FighterState::Action::NONE, 
+		FighterState::Orientation::RIGHT);
 	current_animation = &idle;
 	state = initial;
 	x = 150;
@@ -116,6 +117,13 @@ void JohnnyCage::process_move(Move& move)
 	state = change_action(state, FighterState::Action::ATTACK);
 	lock_state(state);
 	lock_action(state);
+}
+
+void JohnnyCage::flip_orientation()
+{
+	bones::flip_animation(idle);
+	bones::flip_animation(walk_backward);
+	bones::flip_animation(walk_forward);
 }
 
 void JohnnyCage::idle_state(FighterState::Action action)

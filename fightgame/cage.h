@@ -10,6 +10,9 @@ public:
 	void handle_input_event(SDL_Event& event) override;
 	void handle_input_state(SDL_GameController* controller) override;
 	void process_move(Move& move) override;
+
+	void flip_orientation();
+
 private:
 	int x_vel, y_vel;
 	bool airborne;
