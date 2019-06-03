@@ -40,6 +40,7 @@ namespace bones
 		else
 		{
 			texture = load_new_texture(filepath);
+			registry[filepath] = texture;
 		}
 		return Sprite(texture);
 	}
@@ -83,8 +84,7 @@ namespace bones
 		SDL_RenderCopy(renderer, sprite.texture.get(), NULL, &rect);
 	}
 
-	Animation
-	GraphicsLoader::load_animation(std::string filepath)
+	Animation GraphicsLoader::load_animation(std::string filepath)
 	{
 		if (!renderer)
 			throw std::runtime_error("GraphicsLoader has not been registered!");
