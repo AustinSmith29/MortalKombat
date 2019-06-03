@@ -10,7 +10,6 @@ int main(int argc, char *argv[])
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
 	SDL_Surface* screen = NULL;
-	bones::GraphicsLoader graphics;
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window = SDL_CreateWindow("Mortal Kombat II", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
@@ -19,6 +18,7 @@ int main(int argc, char *argv[])
 		SDL_WINDOW_SHOWN);
 	const int FPS = 60;
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	bones::GraphicsLoader graphics(renderer);
 	int njoysticks = SDL_NumJoysticks();
 	std::cout << njoysticks << " detected." << std::endl;
 	SDL_GameController* controller = SDL_GameControllerOpen(0);

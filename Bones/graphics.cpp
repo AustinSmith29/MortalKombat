@@ -23,50 +23,54 @@ namespace bones
 	// Helper function for GraphicsLoader::load_animation
 	AnimationFileData parse_animation_file(std::string filepath);
 
-	void
-	GraphicsLoader::register_service(SDL_Renderer* renderer)
+	GraphicsLoader::GraphicsLoader(SDL_Renderer* renderer)
 	{
+		if (renderer == nullptr)
+			throw std::runtime_error("SDL_Renderer is invalid.");
 		this->renderer = renderer;
 	}
 
-	std::unique_ptr<Sprite>
-	GraphicsLoader::load_sprite(std::string filepath)
+	Sprite GraphicsLoader::load_sprite(std::string filepath)
 	{
-		if (!renderer)
-			throw std::runtime_error("GraphicsLoader has not been registered!");
-
-		// Retrieve texture if it has been loaded before.
-		auto it = registry.find(filepath);
-		if (it != registry.end())
+		std::shared_ptr<SDL_Texture> texture;
+		if (is_texture_in_registry(filepath))
 		{
-			auto texture = registry[filepath];
-			auto new_sprite = std::make_unique<Sprite>(texture);
-			return new_sprite;
+			texture = get_loaded_texture(filepath);
 		}
+		else
+		{
+			texture = load_new_texture(filepath);
+		}
+		return Sprite(texture);
+	}
 
-		// Else load it for first time.
+	bool GraphicsLoader::is_texture_in_registry(std::string filepath)
+	{
+		return registry.find(filepath) != registry.end();
+	}
+
+	std::shared_ptr<SDL_Texture> GraphicsLoader::get_loaded_texture(std::string filepath)
+	{
+		return registry.at(filepath);
+	}
+
+	std::shared_ptr<SDL_Texture> GraphicsLoader::load_new_texture(std::string filepath)
+	{
 		SDL_Surface* surface = SDL_LoadBMP(filepath.c_str());
 		if (!surface)
 		{
-			std::cout << SDL_GetError() << std::endl;
 			return nullptr;
 		}
 
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		if (!texture)
 		{
-			std::cout << SDL_GetError() << std::endl;
 			return nullptr;
 		}
-
 		SDL_FreeSurface(surface);
-		registry[filepath] = std::shared_ptr<SDL_Texture>(texture,
-			[](SDL_Texture * t)
-			{
-				SDL_DestroyTexture(t);
-			});
-		auto new_sprite = std::make_unique<Sprite>(registry[filepath]);
-		return new_sprite;
+
+		auto destructor = [](SDL_Texture * tex) { SDL_DestroyTexture(tex); };
+		return std::shared_ptr<SDL_Texture>(texture, destructor);
 	}
 
 	void draw_sprite(SDL_Renderer* renderer, Sprite& sprite, int x, int y)
