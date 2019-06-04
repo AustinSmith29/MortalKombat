@@ -1,5 +1,6 @@
 #include "collision.h"
 #include "fighter.h"
+#include "animation.h"
 
 /* Hitbox/dmgbox coords are relative to top left of animation frame.
  * We must shift them to the fighters coords.
@@ -69,22 +70,16 @@ bool Collider::damagebox_collision(Collider& other)
 
 std::vector<SDL_Rect> Collider::get_fighter_hitboxes()
 {
-	std::vector<SDL_Rect> hitboxes;
-	int current_frame = fighter->current_animation->current_frame;
-	auto hitboxes_map = fighter->current_animation->hitboxes;
-	if (hitboxes_map.find(current_frame) != hitboxes_map.end())
-		hitboxes = hitboxes_map[current_frame];
+	bones::Frame frame = fighter->current_animation->get_current_frame();
+	std::vector<SDL_Rect> hitboxes = frame.hitboxes;
 	convert_coords(hitboxes, fighter->topleft_x(), fighter->topleft_y());
 	return hitboxes;
 }
 
 std::vector<SDL_Rect> Collider::get_fighter_dmgboxes()
 {
-	std::vector<SDL_Rect> dmgboxes;
-	int current_frame = fighter->current_animation->current_frame;
-	auto dmgboxes_map = fighter->current_animation->dmgboxes;
-	if (dmgboxes_map.find(current_frame) != dmgboxes_map.end())
-		dmgboxes = dmgboxes_map[current_frame];
+	bones::Frame frame = fighter->current_animation->get_current_frame();
+	std::vector<SDL_Rect> dmgboxes = frame.damageboxes;
 	convert_coords(dmgboxes, fighter->topleft_x(), fighter->topleft_y());
 	return dmgboxes;
 }

@@ -11,6 +11,14 @@ using namespace rapidxml;
 
 namespace bones
 {
+	static std::string get_spritesheet_path(std::string file_contents);
+	static std::string open_file_as_string(std::string filepath);
+	static std::vector<Frame> load_frames_from_xml(std::string file_contents);
+	static Frame create_frame_from_xml_node(xml_node<>* frame_node);
+	static SDL_Rect read_rect(xml_node<>* node);
+	static std::vector<SDL_Rect> read_multiple_rects(xml_node<>* node);
+	static std::string get_attribute_from_node(std::string name, xml_node<>* node);
+
 	GraphicsLoader::GraphicsLoader(SDL_Renderer* renderer)
 	{
 		if (renderer == nullptr)

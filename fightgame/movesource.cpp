@@ -17,24 +17,17 @@ static Uint32 timer_callback(Uint32 interval, void* param)
 	movesource->flush();
 	return 0;
 }
-
+/*
 MoveSource::MoveSource()
 {
 	owner = nullptr;
 	first_press = false;
 }
-
+*/
 MoveSource::MoveSource(Fighter *fighter)
 {
 	owner = fighter;
 	first_press = false;
-}
-
-MoveSource::~MoveSource()
-{
-	input_buffer.clear();
-	move_map.clear();
-	owner = nullptr;
 }
 
 void MoveSource::bind_owner(Fighter* fighter)

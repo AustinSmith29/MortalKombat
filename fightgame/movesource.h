@@ -23,9 +23,8 @@ class Fighter;
 class MoveSource
 {
 public:
-	MoveSource();
+	MoveSource() = delete;
 	MoveSource(Fighter *owner);
-	~MoveSource();
 
 	void bind_owner(Fighter* owner);
 	void bind_move(FighterState::State state, std::string input_seq, Move move);

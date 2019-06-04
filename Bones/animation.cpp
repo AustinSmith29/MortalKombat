@@ -69,6 +69,7 @@ namespace bones
 			// flip hboxes and dboxes along center
 			continue;
 		}
+		return *this; // TODO: change this obviously
 	}
 
 	void Animation::play_animation(SDL_Renderer * renderer, int x, int y)

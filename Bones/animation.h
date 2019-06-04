@@ -46,7 +46,5 @@ namespace bones
 
 		void draw_single_frame(SDL_Renderer* renderer, int x, int y);
 	};
-
-	void play_animation(SDL_Renderer* renderer, Animation& animation, int x, int y);
 }
 #endif
