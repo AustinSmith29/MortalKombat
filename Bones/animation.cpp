@@ -21,17 +21,17 @@ namespace bones
 
 	void Animation::step()
 	{
-
-		if (animation.current_tick >= animation.durations[animation.current_frame])
+		Frame frame = get_current_frame();
+		if (current_tick >= frame.duration)
 		{
-			animation.current_frame++;
-			animation.current_tick = 0;
+			current_frame++;
+			current_tick = 0;
 		}
-		animation.current_tick++;
-		// Restart animation on completion.
-		if (animation.current_frame >= animation.frames.size())
+		current_tick++;
+
+		if (current_frame >= frames.size())
 		{
-			animation.current_frame = 0;
+			restart();
 		}
 	}
 
