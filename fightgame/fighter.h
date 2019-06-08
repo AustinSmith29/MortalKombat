@@ -5,6 +5,20 @@
 #include "movesource.h"
 #include "fighter_state.h"
 
+enum class FighterGraphics
+{
+	IDLE,
+	CROUCH,
+	JUMP,
+	JUMP_FORWARD,
+	JUMP_BACKWARD,
+	WALK_FORWARD,
+	WALK_BACKWARD,
+	BLOCK_STAND,
+	BLOCK_CROUCH,
+	FIGHT_MOVE
+};
+
 class Fighter
 {
 public:
@@ -25,7 +39,7 @@ public:
 	int topleft_x();
 	int topleft_y();
 
-	FighterState get_state();
+	void set_graphics(FighterGraphics graphics);
 	void flip_orientation();
 	void tick();
 	void draw(SDL_Renderer* renderer);
@@ -36,24 +50,10 @@ protected:
 	int x, y;
 	int x_vel, y_vel;
 	int health;
-	bool airborne;
-	FighterState state;
 	MoveSource move_source;
-
 	bones::Animation* current_animation;
-	bones::Animation idle;
-	bones::Animation crouch;
-	bones::Animation jump;
-	bones::Animation jump_move_forward;
-	bones::Animation jump_move_backward;
-	bones::Animation walk_forward;
-	bones::Animation walk_backward;
 
 private:
-	void idle_state(FighterState::Action action);
-	void crouch_state(FighterState::Action action);
-	void jump_state(FighterState::Action action);
-	void thrown_state(FighterState::Action action);
-	void knocked_state(FighterState::Action action);
+	void handle_button_press(Uint8 button);
 };
 #endif

@@ -1,42 +1,16 @@
 #ifndef _FIGHTER_STATE
 #define _FIGHTER_STATE
 
-struct FighterState
+#include <SDL.h>
+
+class Fighter;
+class FighterState
 {
-	enum State
-	{
-		STAND = 0,
-		CROUCH,
-		JUMP,
-		THROWN,
-		KNOCKED
-	} state;
-	enum Action
-	{
-		NONE = 0,
-		BLOCK,
-		STUN,
-		MOVELEFT,
-		MOVERIGHT,
-		ATTACK
-	} action;
-	enum Orientation
-	{
-		RIGHT, LEFT
-	} facing;
-
-	FighterState() = default;
-	FighterState(State s, Action a, Orientation o);
-
-	bool locked_state;
-	bool locked_action;
+public:
+	virtual void enter(Fighter &fighter) = 0;
+	virtual void handle_input_event(Fighter &fighter, SDL_Event& event) = 0;
+	virtual void handle_input_state(Fighter &fighter, SDL_GameController* controller) = 0;
+	virtual void tick(Fighter &fighter) = 0;
+	virtual void exit(Fighter &fighter) = 0;
 };
-
-FighterState change_state(FighterState from, FighterState::State to, FighterState::Action action);
-FighterState change_action(FighterState state, FighterState::Action to);
-FighterState change_orientation(FighterState state, FighterState::Orientation orientation);
-void lock_state(FighterState& state);
-void unlock_state(FighterState& state);
-void lock_action(FighterState& state);
-void unlock_action(FighterState& state);
 #endif
