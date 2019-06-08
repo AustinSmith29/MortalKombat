@@ -1,8 +1,6 @@
 #ifndef _FIGHTER_STATE
 #define _FIGHTER_STATE
 
-#include <SDL.h>
-
 class Fighter;
 class FighterState
 {
