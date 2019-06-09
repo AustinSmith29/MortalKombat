@@ -5,6 +5,11 @@ Fighter::Fighter() : move_source(this)
 	x = y = 0;
 	x_vel = y_vel = 0;
 	health = 100;
+	current_state = &idle_state;
+}
+
+void Fighter::process_move(Move& move)
+{
 }
 
 int Fighter::topleft_x()
@@ -21,6 +26,31 @@ int Fighter::topleft_y()
 	return topleft;
 }
 
+Orientation Fighter::get_orientation()
+{
+	return orientation;
+}
+
+FighterState::FightMoveHook Fighter::get_fight_move_hook()
+{
+	return current_state->get_move_hook();
+}
+
+void Fighter::move_left()
+{
+	x -= 1;
+}
+
+void Fighter::move_right()
+{
+	x += 1;
+}
+
+void Fighter::set_graphics(FighterGraphics graphics)
+{
+
+}
+
 void Fighter::flip_orientation()
 {
 
@@ -28,6 +58,7 @@ void Fighter::flip_orientation()
 
 void Fighter::tick()
 {
+	current_state->tick(*this);
 }
 
 void Fighter::draw(SDL_Renderer* renderer)
@@ -41,16 +72,14 @@ void Fighter::draw(SDL_Renderer* renderer)
 
 void Fighter::handle_input_event(SDL_Event &event)
 {
-	move_source.process_event(event, DIRECTION_RIGHT);
+	move_source.process_event(event, orientation);
 	if (event.type == SDL_CONTROLLERBUTTONDOWN)
 	{
-		auto button = event.cbutton.button;
-		if (button == SDL_CONTROLLER_BUTTON_DPAD_UP)
-		{
-		}
-		if (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
-		{
-		}
+		handle_button_press(event.cbutton.button);
+	}
+	if (event.type == SDL_CONTROLLERBUTTONDOWN)
+	{
+		handle_button_release(event.cbutton.button);
 	}
 }
 
@@ -58,9 +87,38 @@ void Fighter::handle_button_press(Uint8 button)
 {
 	if (button == SDL_CONTROLLER_BUTTON_DPAD_UP)
 	{
+		//change_state_if_open(&jump_state);
 	}
+	else if (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
+	{
+		change_state_if_open(&move_right_state);
+	}
+	else if (button == SDL_CONTROLLER_BUTTON_DPAD_LEFT)
+	{
+		change_state_if_open(&move_left_state);
+	}
+	else if (button == SDL_CONTROLLER_BUTTON_DPAD_DOWN)
+	{
+		change_state_if_open(&crouch_state);
+	}
+}
+
+void Fighter::handle_button_release(Uint8 button)
+{
+	change_state_if_open(&idle_state);
 }
 
 void Fighter::handle_input_state(SDL_GameController* controller)
 {
+}
+
+void Fighter::change_state_if_open(FighterState* to)
+{
+}
+
+void Fighter::set_state(FighterState* to)
+{
+	current_state->exit(*this);
+	current_state = to;
+	current_state->enter(*this);
 }

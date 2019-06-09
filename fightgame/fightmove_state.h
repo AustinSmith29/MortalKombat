@@ -1,7 +1,7 @@
 #ifndef _FIGHTMOVE_STATE_H
 #define _FIGHTMOVE_STATE_H
 
-#include "fightmove_state.h"
+#include "fighter_state.h"
 
 class FightMoveState : public FighterState
 {

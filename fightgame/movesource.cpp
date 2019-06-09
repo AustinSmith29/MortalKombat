@@ -35,7 +35,7 @@ void MoveSource::bind_owner(Fighter* fighter)
 	owner = fighter;
 }
 
-void MoveSource::bind_move(FighterState::State state, std::string input_seq, Move move)
+void MoveSource::bind_move(FighterState::FightMoveHook state, std::string input_seq, Move move)
 {
 	auto key = std::make_pair(state, input_seq);
 	move_map[key] = move;
@@ -76,21 +76,21 @@ void MoveSource::load_moves_from_file(std::string filename, bones::GraphicsLoade
 	{
 		std::string input_seq;
 		Move move_obj = read_move(move, input_seq, loader);
-		bind_move(FighterState::State::STAND, input_seq, move_obj);
+		bind_move(FighterState::FightMoveHook::STAND, input_seq, move_obj);
 	}
 	std::cout << "Loaded stand moves." << std::endl;
 	for (xml_node<>* move = crouch_moves->first_node(); move; move = move->next_sibling())
 	{
 		std::string input_seq;
 		Move move_obj = read_move(move, input_seq, loader);
-		bind_move(FighterState::State::CROUCH, input_seq, move_obj);
+		bind_move(FighterState::FightMoveHook::CROUCH, input_seq, move_obj);
 	}
 	std::cout << "Loaded crouch moves." << std::endl;
 	for (xml_node<>* move = jump_moves->first_node(); move; move = move->next_sibling())
 	{
 		std::string input_seq;
 		Move move_obj = read_move(move, input_seq, loader);
-		bind_move(FighterState::State::JUMP, input_seq, move_obj);
+		bind_move(FighterState::FightMoveHook::JUMP, input_seq, move_obj);
 	}
 	std::cout << "Loaded jump moves." << std::endl;
 }
@@ -99,15 +99,15 @@ void MoveSource::load_moves_from_file(std::string filename, bones::GraphicsLoade
    Codifies button presses. Direction parameter
    simply changes if right dpad = Forward or Backward.
 */
-std::string get_input(SDL_Event &event, int direction)
+std::string get_input(SDL_Event &event, Orientation direction)
 {
 	std::vector<std::string> input_queue;
 	auto poll = [&input_queue, event, direction](SDL_GameControllerButton btn, std::string encoding) {
 		if (event.type == SDL_CONTROLLERBUTTONDOWN && event.cbutton.button == btn)
 		{
-			if (btn == SDL_CONTROLLER_BUTTON_DPAD_RIGHT && direction == DIRECTION_RIGHT)
+			if (btn == SDL_CONTROLLER_BUTTON_DPAD_RIGHT && direction == Orientation::RIGHT)
 				encoding = "F";
-			else if (btn == SDL_CONTROLLER_BUTTON_DPAD_LEFT && direction == DIRECTION_LEFT)
+			else if (btn == SDL_CONTROLLER_BUTTON_DPAD_LEFT && direction == Orientation::LEFT)
 				encoding = "F";
 			else if (btn == SDL_CONTROLLER_BUTTON_DPAD_LEFT || btn == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
 				encoding = "b";
@@ -132,7 +132,7 @@ add it to input buffer
 if input buffer contains move add it to the front of buffer
 return move at front of buffer
 */
-void MoveSource::process_event(SDL_Event &event, int direction)
+void MoveSource::process_event(SDL_Event &event, Orientation direction)
 {
 	auto input = get_input(event, direction);
 	if (input != "I")
@@ -147,8 +147,8 @@ void MoveSource::process_event(SDL_Event &event, int direction)
 
 	std::string input_seq;
 	for (const auto& piece : input_buffer) input_seq += (piece + ",");
-	FighterState::State fighter_state = owner->get_state().state;
-	auto key = std::make_pair(fighter_state, input_seq);
+	FighterState::FightMoveHook hook = owner->get_fight_move_hook();
+	auto key = std::make_pair(hook, input_seq);
 	if (move_map.find(key) != move_map.end())
 	{
 		owner->process_move(move_map[key]);

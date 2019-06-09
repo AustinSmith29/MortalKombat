@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\fighter_states">
+      <UniqueIdentifier>{e3b7e552-4870-4209-ab9b-21eed3815c9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fighter_states">
+      <UniqueIdentifier>{8179a6a4-497d-48fa-b1ec-1073e5c6d2aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,6 +39,21 @@
     <ClCompile Include="collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="idle_state.cpp">
+      <Filter>Source Files\fighter_states</Filter>
+    </ClCompile>
+    <ClCompile Include="crouch_state.cpp">
+      <Filter>Source Files\fighter_states</Filter>
+    </ClCompile>
+    <ClCompile Include="move_right_state.cpp">
+      <Filter>Source Files\fighter_states</Filter>
+    </ClCompile>
+    <ClCompile Include="move_left_state.cpp">
+      <Filter>Source Files\fighter_states</Filter>
+    </ClCompile>
+    <ClCompile Include="fightmove_state.cpp">
+      <Filter>Source Files\fighter_states</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="movesource.h">
@@ -48,6 +69,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="fighter_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="idle_state.h">
+      <Filter>Header Files\fighter_states</Filter>
+    </ClInclude>
+    <ClInclude Include="crouch_state.h">
+      <Filter>Header Files\fighter_states</Filter>
+    </ClInclude>
+    <ClInclude Include="move_right_state.h">
+      <Filter>Header Files\fighter_states</Filter>
+    </ClInclude>
+    <ClInclude Include="move_left_state.h">
+      <Filter>Header Files\fighter_states</Filter>
+    </ClInclude>
+    <ClInclude Include="fightmove_state.h">
+      <Filter>Header Files\fighter_states</Filter>
+    </ClInclude>
+    <ClInclude Include="all_fight_states.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
