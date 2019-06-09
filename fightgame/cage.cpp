@@ -6,8 +6,9 @@
 
 void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
 {
-	/*
+	
 	idle = loader.load_animation(ANIMATIONS "cage_idle.xml");
+	/*
 	crouch = loader.load_animation(ANIMATIONS "cage_crouch.xml");
 	jump = loader.load_animation(ANIMATIONS "cage_jump_up.xml");
 	jump_move_forward = loader.load_animation(ANIMATIONS "cage_jump_move.xml");
