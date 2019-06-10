@@ -1,11 +1,11 @@
 #ifndef _FIGHTER_H
 #define _FIGHTER_H
 
-#include <map>
-
 #include "graphics.h"
 #include "movesource.h"
 #include "all_fight_states.h"
+
+#include <map>
 
 enum class FighterGraphics
 {
@@ -33,7 +33,7 @@ public:
 	void handle_input_state(SDL_GameController* controller);
 
 	virtual void load_resources(bones::GraphicsLoader& loader) = 0;
-	virtual void process_move(Move& move);
+	virtual void process_move(Move& move) = 0;
 
 	/* Gets the top left coords of starting position of current animation frame.
 	 * Needed to adjust collision box positions and drawing positions.

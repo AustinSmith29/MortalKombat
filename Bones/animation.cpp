@@ -79,10 +79,12 @@ namespace bones
 			step();
 	}
 
-	void Animation::loop_animation(SDL_Renderer* renderer, int x, int y)
+	void Animation::loop()
 	{
-		draw_single_frame(renderer, x, y);
-		step();
+		if (is_complete())
+		{
+			restart();
+		}
 	}
 
 	void Animation::draw_single_frame(SDL_Renderer * renderer, int x, int y)

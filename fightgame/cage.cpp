@@ -6,7 +6,6 @@
 
 void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
 {
-	
 	idle = loader.load_animation(ANIMATIONS "cage_idle.xml");
 	crouch = loader.load_animation(ANIMATIONS "cage_crouch.xml");
 	walk_forward = loader.load_animation(ANIMATIONS "cage_walk.xml");
@@ -16,7 +15,6 @@ void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
 	jump_move_forward = loader.load_animation(ANIMATIONS "cage_jump_move.xml");
 	jump_move_backward = jump_move_forward.reverse();
 	*/
-
 	move_source.bind_owner(this);
 	move_source.load_moves_from_file("data/johnnycage/moves.xml", loader);
 	current_animation = &idle;

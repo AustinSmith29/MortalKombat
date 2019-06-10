@@ -20,11 +20,6 @@ void Fighter::set_graphics_map()
 	graphics_map[FighterGraphics::CROUCH] = &crouch;
 }
 
-void Fighter::process_move(Move& move)
-{
-	std::cout << "Here!\n";
-}
-
 int Fighter::topleft_x()
 {
 	int w = current_animation->get_current_frame().sheet_clip.w;
@@ -77,7 +72,14 @@ void Fighter::set_graphics(FighterGraphics graphics)
 
 void Fighter::flip_orientation()
 {
-
+	if (orientation == Orientation::LEFT)
+	{
+		orientation = Orientation::RIGHT;
+	}
+	else
+	{
+		orientation = Orientation::LEFT;
+	}
 }
 
 void Fighter::tick()
