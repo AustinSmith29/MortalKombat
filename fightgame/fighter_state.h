@@ -21,13 +21,14 @@ public:
 	virtual void tick(Fighter &fighter) = 0;
 	virtual void exit(Fighter &fighter) = 0;
 
-	bool is_complete();
-	void finish();
+	bool is_input_locked();
+	void lock_input();
+	void unlock_input();
 	FightMoveHook get_move_hook();
 protected:
 	void set_move_hook(FightMoveHook hook);
 private:
-	bool complete{ false };
-	FightMoveHook move_hook{ FightMoveHook::NONE };
+	bool lock{ false };
+	FightMoveHook move_hook{ FightMoveHook::STAND };
 };
 #endif

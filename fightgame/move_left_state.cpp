@@ -16,6 +16,10 @@ void MoveLeftState::enter(Fighter& fighter)
 void MoveLeftState::tick(Fighter& fighter)
 {
 	fighter.move_left();
+	if (fighter.get_animation()->is_complete())
+	{
+		fighter.get_animation()->restart();
+	}
 }
 
 void MoveLeftState::exit(Fighter& fighter)

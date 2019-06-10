@@ -35,6 +35,7 @@ namespace bones
 		Animation flip();
 
 		void play_animation(SDL_Renderer* renderer, int x, int y);
+		void loop_animation(SDL_Renderer* renderer, int x, int y);
 
 	private:
 		Sprite spritesheet;

@@ -1,6 +1,8 @@
 #ifndef _FIGHTER_H
 #define _FIGHTER_H
 
+#include <map>
+
 #include "graphics.h"
 #include "movesource.h"
 #include "all_fight_states.h"
@@ -41,8 +43,10 @@ public:
 
 	Orientation get_orientation();
 	FighterState::FightMoveHook get_fight_move_hook();
+	bones::Animation* get_animation();
 	void move_right();
 	void move_left();
+	void perform_fight_move(bones::Animation& move);
 	void set_graphics(FighterGraphics graphics);
 	void flip_orientation();
 	void tick();
@@ -56,12 +60,17 @@ protected:
 	int health;
 	MoveSource move_source;
 	bones::Animation* current_animation;
+	bones::Animation idle;
+	bones::Animation walk_forward;
+	bones::Animation walk_backward;
+	bones::Animation crouch;
 
 private:
 	void handle_button_press(Uint8 button);
 	void handle_button_release(Uint8 button);
 	void change_state_if_open(FighterState *to);
 	void set_state(FighterState* to);
+	void set_graphics_map();
 	Orientation orientation;
 	FighterState* current_state;
 	IdleState idle_state;
@@ -69,5 +78,6 @@ private:
 	MoveRightState move_right_state;
 	MoveLeftState move_left_state;
 	FightMoveState fightmove_state;
+	std::map<FighterGraphics, bones::Animation*> graphics_map;
 };
 #endif

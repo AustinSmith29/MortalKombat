@@ -8,7 +8,5 @@ class JohnnyCage : public Fighter
 public:
 	void load_resources(bones::GraphicsLoader& loader) override;
 	void process_move(Move& move) override;
-private:
-	bones::Animation idle;
 };
 #endif

@@ -40,11 +40,14 @@ int main(int argc, char *argv[])
 				quit = true;
 			fighter->handle_input_event(event);
 		}
-		fighter->handle_input_state(controller);
 		fighter->tick();
 		if (collider.damagebox_collision(test))
 		{
-			std::cout << "Hit!" << std::endl;
+			std::cout << "Damagebox Hit!" << std::endl;
+		}
+		if (collider.hitbox_collision(test))
+		{
+			std::cout << "Hitbox Hit!" << std::endl;
 		}
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);

@@ -12,4 +12,5 @@ void CrouchState::tick(Fighter& fighter)
 
 void CrouchState::exit(Fighter &fighter)
 {
+	fighter.get_animation()->restart();
 }

@@ -5,6 +5,7 @@
 void IdleState::enter(Fighter& fighter)
 {
 	fighter.set_graphics(FighterGraphics::IDLE);
+	set_move_hook(FighterState::FightMoveHook::STAND);
 }
 
 void IdleState::tick(Fighter& fighter)

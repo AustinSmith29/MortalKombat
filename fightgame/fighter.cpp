@@ -1,4 +1,5 @@
 #include "fighter.h"
+#include <iostream>
 
 Fighter::Fighter() : move_source(this)
 {
@@ -6,10 +7,22 @@ Fighter::Fighter() : move_source(this)
 	x_vel = y_vel = 0;
 	health = 100;
 	current_state = &idle_state;
+	current_animation = nullptr;
+	orientation = Orientation::RIGHT;
+	set_graphics_map();
+}
+
+void Fighter::set_graphics_map()
+{
+	graphics_map[FighterGraphics::IDLE] = &idle;
+	graphics_map[FighterGraphics::WALK_FORWARD] = &walk_forward;
+	graphics_map[FighterGraphics::WALK_BACKWARD] = &walk_backward;
+	graphics_map[FighterGraphics::CROUCH] = &crouch;
 }
 
 void Fighter::process_move(Move& move)
 {
+	std::cout << "Here!\n";
 }
 
 int Fighter::topleft_x()
@@ -36,6 +49,11 @@ FighterState::FightMoveHook Fighter::get_fight_move_hook()
 	return current_state->get_move_hook();
 }
 
+bones::Animation* Fighter::get_animation()
+{
+	return current_animation;
+}
+
 void Fighter::move_left()
 {
 	x -= 1;
@@ -46,9 +64,15 @@ void Fighter::move_right()
 	x += 1;
 }
 
+void Fighter::perform_fight_move(bones::Animation& move)
+{
+	graphics_map[FighterGraphics::FIGHT_MOVE] = &move;
+	change_state_if_open(&fightmove_state);
+}
+
 void Fighter::set_graphics(FighterGraphics graphics)
 {
-
+	current_animation = graphics_map[graphics];
 }
 
 void Fighter::flip_orientation()
@@ -72,12 +96,14 @@ void Fighter::draw(SDL_Renderer* renderer)
 
 void Fighter::handle_input_event(SDL_Event &event)
 {
+	if (current_state->is_input_locked())
+		return;
 	move_source.process_event(event, orientation);
 	if (event.type == SDL_CONTROLLERBUTTONDOWN)
 	{
 		handle_button_press(event.cbutton.button);
 	}
-	if (event.type == SDL_CONTROLLERBUTTONDOWN)
+	if (event.type == SDL_CONTROLLERBUTTONUP)
 	{
 		handle_button_release(event.cbutton.button);
 	}
@@ -114,6 +140,7 @@ void Fighter::handle_input_state(SDL_GameController* controller)
 
 void Fighter::change_state_if_open(FighterState* to)
 {
+	set_state(to);
 }
 
 void Fighter::set_state(FighterState* to)
