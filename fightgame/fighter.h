@@ -44,11 +44,19 @@ public:
 	Orientation get_orientation();
 	FighterState::FightMoveHook get_fight_move_hook();
 	bones::Animation* get_animation();
-	void move_right();
-	void move_left();
+	void move_right(); // TODO: redundant???
+	void move_left();  // TODO: redundant???
+
+	int get_velocity_y();
+	void set_velocity_y(int val);
+
+	int get_position_y();
+	void set_position_y(int val);
+
 	void perform_fight_move(bones::Animation& move);
 	void set_graphics(FighterGraphics graphics);
 	void flip_orientation();
+
 	void tick();
 	void draw(SDL_Renderer* renderer);
 
@@ -64,6 +72,7 @@ protected:
 	bones::Animation walk_forward;
 	bones::Animation walk_backward;
 	bones::Animation crouch;
+	bones::Animation jump;
 
 private:
 	void handle_button_press(Uint8 button);
@@ -78,6 +87,7 @@ private:
 	MoveRightState move_right_state;
 	MoveLeftState move_left_state;
 	FightMoveState fightmove_state;
+	JumpState jump_state;
 	std::map<FighterGraphics, bones::Animation*> graphics_map;
 };
 #endif

@@ -18,6 +18,7 @@ void Fighter::set_graphics_map()
 	graphics_map[FighterGraphics::WALK_FORWARD] = &walk_forward;
 	graphics_map[FighterGraphics::WALK_BACKWARD] = &walk_backward;
 	graphics_map[FighterGraphics::CROUCH] = &crouch;
+	graphics_map[FighterGraphics::JUMP] = &jump;
 }
 
 int Fighter::topleft_x()
@@ -59,6 +60,25 @@ void Fighter::move_right()
 	x += 1;
 }
 
+int Fighter::get_velocity_y()
+{
+	return y_vel;
+}
+
+void Fighter::set_velocity_y(int val)
+{
+	y_vel = val;
+}
+
+int Fighter::get_position_y()
+{
+	return y;
+}
+
+void Fighter::set_position_y(int val)
+{
+	y = val;
+}
 void Fighter::perform_fight_move(bones::Animation& move)
 {
 	graphics_map[FighterGraphics::FIGHT_MOVE] = &move;
@@ -115,7 +135,7 @@ void Fighter::handle_button_press(Uint8 button)
 {
 	if (button == SDL_CONTROLLER_BUTTON_DPAD_UP)
 	{
-		//change_state_if_open(&jump_state);
+		change_state_if_open(&jump_state);
 	}
 	else if (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
 	{

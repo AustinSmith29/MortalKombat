@@ -10,8 +10,8 @@ void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
 	crouch = loader.load_animation(ANIMATIONS "cage_crouch.xml");
 	walk_forward = loader.load_animation(ANIMATIONS "cage_walk.xml");
 	walk_backward = walk_forward.reverse();
-	/*
 	jump = loader.load_animation(ANIMATIONS "cage_jump_up.xml");
+	/*
 	jump_move_forward = loader.load_animation(ANIMATIONS "cage_jump_move.xml");
 	jump_move_backward = jump_move_forward.reverse();
 	*/
