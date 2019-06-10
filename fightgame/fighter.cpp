@@ -19,6 +19,8 @@ void Fighter::set_graphics_map()
 	graphics_map[FighterGraphics::WALK_BACKWARD] = &walk_backward;
 	graphics_map[FighterGraphics::CROUCH] = &crouch;
 	graphics_map[FighterGraphics::JUMP] = &jump;
+	graphics_map[FighterGraphics::JUMP_FORWARD] = &jump_forward;
+	graphics_map[FighterGraphics::JUMP_BACKWARD] = &jump_backward;
 }
 
 int Fighter::topleft_x()
@@ -102,6 +104,11 @@ void Fighter::flip_orientation()
 	}
 }
 
+void Fighter::reset_state()
+{
+	set_state(&idle_state);
+}
+
 void Fighter::tick()
 {
 	current_state->tick(*this);
@@ -116,14 +123,14 @@ void Fighter::draw(SDL_Renderer* renderer)
 	current_animation->play_animation(renderer, draw_x, draw_y);
 }
 
-void Fighter::handle_input_event(SDL_Event &event)
+void Fighter::handle_input_event(SDL_Event &event, SDL_GameController *controller)
 {
 	if (current_state->is_input_locked())
 		return;
 	move_source.process_event(event, orientation);
 	if (event.type == SDL_CONTROLLERBUTTONDOWN)
 	{
-		handle_button_press(event.cbutton.button);
+		handle_button_press(event.cbutton.button, controller);
 	}
 	if (event.type == SDL_CONTROLLERBUTTONUP)
 	{
@@ -131,11 +138,18 @@ void Fighter::handle_input_event(SDL_Event &event)
 	}
 }
 
-void Fighter::handle_button_press(Uint8 button)
+void Fighter::handle_button_press(Uint8 button, SDL_GameController *controller)
 {
 	if (button == SDL_CONTROLLER_BUTTON_DPAD_UP)
 	{
-		change_state_if_open(&jump_state);
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
+		{
+			change_state_if_open(&jump_right_state);
+		}
+		else
+		{
+			change_state_if_open(&jump_state);
+		}
 	}
 	else if (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
 	{

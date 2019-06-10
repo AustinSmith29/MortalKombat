@@ -134,6 +134,7 @@
     <ClCompile Include="fighter_state.cpp" />
     <ClCompile Include="fightmove_state.cpp" />
     <ClCompile Include="idle_state.cpp" />
+    <ClCompile Include="jump_right_state.cpp" />
     <ClCompile Include="jump_state.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="movesource.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="fighter_state.h" />
     <ClInclude Include="fightmove_state.h" />
     <ClInclude Include="idle_state.h" />
+    <ClInclude Include="jump_right_state.h" />
     <ClInclude Include="jump_state.h" />
     <ClInclude Include="movesource.h" />
     <ClInclude Include="move_left_state.h" />

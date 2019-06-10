@@ -11,10 +11,8 @@ void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
 	walk_forward = loader.load_animation(ANIMATIONS "cage_walk.xml");
 	walk_backward = walk_forward.reverse();
 	jump = loader.load_animation(ANIMATIONS "cage_jump_up.xml");
-	/*
-	jump_move_forward = loader.load_animation(ANIMATIONS "cage_jump_move.xml");
-	jump_move_backward = jump_move_forward.reverse();
-	*/
+	jump_forward = loader.load_animation(ANIMATIONS "cage_jump_move.xml");
+	jump_backward = jump_forward.reverse();
 	move_source.bind_owner(this);
 	move_source.load_moves_from_file("data/johnnycage/moves.xml", loader);
 	current_animation = &idle;

@@ -29,7 +29,7 @@ public:
 	Fighter(Fighter& rhs) = delete;
 	Fighter(Fighter&& rhs) = delete;
 
-	void handle_input_event(SDL_Event& event);
+	void handle_input_event(SDL_Event& event, SDL_GameController *controller);
 	void handle_input_state(SDL_GameController* controller);
 
 	virtual void load_resources(bones::GraphicsLoader& loader) = 0;
@@ -56,6 +56,7 @@ public:
 	void perform_fight_move(bones::Animation& move);
 	void set_graphics(FighterGraphics graphics);
 	void flip_orientation();
+	void reset_state();
 
 	void tick();
 	void draw(SDL_Renderer* renderer);
@@ -73,9 +74,11 @@ protected:
 	bones::Animation walk_backward;
 	bones::Animation crouch;
 	bones::Animation jump;
+	bones::Animation jump_forward;
+	bones::Animation jump_backward;
 
 private:
-	void handle_button_press(Uint8 button);
+	void handle_button_press(Uint8 button, SDL_GameController *controller);
 	void handle_button_release(Uint8 button);
 	void change_state_if_open(FighterState *to);
 	void set_state(FighterState* to);
@@ -88,6 +91,7 @@ private:
 	MoveLeftState move_left_state;
 	FightMoveState fightmove_state;
 	JumpState jump_state;
+	JumpRightState jump_right_state;
 	std::map<FighterGraphics, bones::Animation*> graphics_map;
 };
 #endif

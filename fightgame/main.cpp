@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		{
 			if (event.type == SDL_QUIT)
 				quit = true;
-			fighter->handle_input_event(event);
+			fighter->handle_input_event(event, controller);
 		}
 		fighter->tick();
 		if (collider.damagebox_collision(test))
