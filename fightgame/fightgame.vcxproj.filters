@@ -60,6 +60,9 @@
     <ClCompile Include="jump_right_state.cpp">
       <Filter>Source Files\fighter_states</Filter>
     </ClCompile>
+    <ClCompile Include="jump_left_state.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="movesource.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files\fighter_states</Filter>
     </ClInclude>
     <ClInclude Include="jump_right_state.h">
+      <Filter>Header Files\fighter_states</Filter>
+    </ClInclude>
+    <ClInclude Include="jump_left_state.h">
       <Filter>Header Files\fighter_states</Filter>
     </ClInclude>
   </ItemGroup>

@@ -18,7 +18,6 @@ void JumpRightState::tick(Fighter& fighter)
 
 void JumpRightState::exit(Fighter& fighter)
 {
-//	finish_jump(fighter);
 }
 
 void JumpRightState::update_position(Fighter& fighter)

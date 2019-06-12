@@ -92,6 +92,7 @@ private:
 	FightMoveState fightmove_state;
 	JumpState jump_state;
 	JumpRightState jump_right_state;
+	JumpLeftState jump_left_state;
 	std::map<FighterGraphics, bones::Animation*> graphics_map;
 };
 #endif

@@ -146,6 +146,10 @@ void Fighter::handle_button_press(Uint8 button, SDL_GameController *controller)
 		{
 			change_state_if_open(&jump_right_state);
 		}
+		else if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT))
+		{
+			change_state_if_open(&jump_left_state);
+		}
 		else
 		{
 			change_state_if_open(&jump_state);

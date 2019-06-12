@@ -9,5 +9,6 @@
 #include "move_right_state.h"
 #include "jump_state.h"
 #include "jump_right_state.h"
+#include "jump_left_state.h"
 
 #endif
