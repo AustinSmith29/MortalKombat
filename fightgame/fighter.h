@@ -76,6 +76,7 @@ protected:
 	bones::Animation jump;
 	bones::Animation jump_forward;
 	bones::Animation jump_backward;
+	bones::Animation block;
 
 private:
 	void handle_button_press(Uint8 button, SDL_GameController *controller);
@@ -93,6 +94,7 @@ private:
 	JumpState jump_state;
 	JumpRightState jump_right_state;
 	JumpLeftState jump_left_state;
+	BlockState block_state;
 	std::map<FighterGraphics, bones::Animation*> graphics_map;
 };
 #endif

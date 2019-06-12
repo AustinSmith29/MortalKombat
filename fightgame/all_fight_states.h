@@ -10,5 +10,6 @@
 #include "jump_state.h"
 #include "jump_right_state.h"
 #include "jump_left_state.h"
+#include "block_state.h"
 
 #endif

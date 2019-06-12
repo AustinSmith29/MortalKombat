@@ -21,6 +21,7 @@ void Fighter::set_graphics_map()
 	graphics_map[FighterGraphics::JUMP] = &jump;
 	graphics_map[FighterGraphics::JUMP_FORWARD] = &jump_forward;
 	graphics_map[FighterGraphics::JUMP_BACKWARD] = &jump_backward;
+	graphics_map[FighterGraphics::BLOCK_STAND] = &block;
 }
 
 int Fighter::topleft_x()
@@ -166,6 +167,10 @@ void Fighter::handle_button_press(Uint8 button, SDL_GameController *controller)
 	else if (button == SDL_CONTROLLER_BUTTON_DPAD_DOWN)
 	{
 		change_state_if_open(&crouch_state);
+	}
+	else if (button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)
+	{
+		change_state_if_open(&block_state);
 	}
 }
 
