@@ -6,6 +6,7 @@
 class CrouchState : public FighterState
 {
 public:
+	CrouchState();
 	void enter(Fighter &fighter) override;
 	void tick(Fighter &fighter) override;
 	void exit(Fighter &fighter) override;
