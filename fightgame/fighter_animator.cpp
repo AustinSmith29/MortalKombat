@@ -29,7 +29,7 @@ void FighterAnimator::play(SDL_Renderer* renderer, int x, int y)
 	current_animation->play_animation(renderer, x, y);
 }
 
-bones::Animation FighterAnimator::get_current_animation()
+bones::Animation* FighterAnimator::get_current_animation()
 {
 	return current_animation;
 }

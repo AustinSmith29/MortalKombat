@@ -50,6 +50,8 @@ public:
 	void flip_orientation();
 	void play(SDL_Renderer* renderer, int x, int y);
 
+	bones::Animation* get_current_animation();
+
 private:
 	bones::Animation* current_animation;
 	std::array<bones::Animation, FighterGraphics::TOTAL> animations;
