@@ -12,14 +12,14 @@ Fighter::Fighter() : move_source(this)
 
 int Fighter::topleft_x()
 {
-	int w = current_animation->get_current_frame().sheet_clip.w;
+	int w = animator.get_current_animation()->get_current_frame().sheet_clip.w;
 	int topleft = x - (w / 2);
 	return topleft;
 }
 
 int Fighter::topleft_y()
 {
-	int h = current_animation->get_current_frame().sheet_clip.h;
+	int h = animator.get_current_animation()->get_current_frame().sheet_clip.h;
 	int topleft = y - h;
 	return topleft;
 }
