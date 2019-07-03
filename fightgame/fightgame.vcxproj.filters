@@ -66,6 +66,9 @@
     <ClCompile Include="block_state.cpp">
       <Filter>Source Files\fighter_states</Filter>
     </ClCompile>
+    <ClCompile Include="fighter_animator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="movesource.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="block_state.h">
       <Filter>Header Files\fighter_states</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Bones\fighter_animator.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

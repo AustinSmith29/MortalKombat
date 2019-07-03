@@ -132,6 +132,7 @@
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="crouch_state.cpp" />
     <ClCompile Include="fighter.cpp" />
+    <ClCompile Include="fighter_animator.cpp" />
     <ClCompile Include="fighter_state.cpp" />
     <ClCompile Include="fightmove_state.cpp" />
     <ClCompile Include="idle_state.cpp" />
@@ -149,6 +150,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Bones\fighter_animator.h" />
     <ClInclude Include="all_fight_states.h" />
     <ClInclude Include="block_state.h" />
     <ClInclude Include="cage.h" />

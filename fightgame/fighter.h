@@ -1,25 +1,9 @@
 #ifndef _FIGHTER_H
 #define _FIGHTER_H
 
-#include "graphics.h"
+#include "fighter_animator.h"
 #include "movesource.h"
 #include "all_fight_states.h"
-
-#include <map>
-
-enum class FighterGraphics
-{
-	IDLE,
-	CROUCH,
-	JUMP,
-	JUMP_FORWARD,
-	JUMP_BACKWARD,
-	WALK_FORWARD,
-	WALK_BACKWARD,
-	BLOCK_STAND,
-	BLOCK_CROUCH,
-	FIGHT_MOVE
-};
 
 class Fighter
 {
@@ -68,22 +52,13 @@ protected:
 	int x_vel, y_vel;
 	int health;
 	MoveSource move_source;
-	bones::Animation* current_animation;
-	bones::Animation idle;
-	bones::Animation walk_forward;
-	bones::Animation walk_backward;
-	bones::Animation crouch;
-	bones::Animation jump;
-	bones::Animation jump_forward;
-	bones::Animation jump_backward;
-	bones::Animation block;
+	FighterAnimator animator;
 
 private:
 	void handle_button_press(Uint8 button, SDL_GameController *controller);
 	void handle_button_release(Uint8 button);
 	void change_state_if_open(FighterState *to);
 	void set_state(FighterState* to);
-	void set_graphics_map();
 	Orientation orientation;
 	FighterState* current_state;
 	IdleState idle_state;
@@ -95,6 +70,5 @@ private:
 	JumpRightState jump_right_state;
 	JumpLeftState jump_left_state;
 	BlockState block_state;
-	std::map<FighterGraphics, bones::Animation*> graphics_map;
 };
 #endif

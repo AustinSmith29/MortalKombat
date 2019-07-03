@@ -7,21 +7,7 @@ Fighter::Fighter() : move_source(this)
 	x_vel = y_vel = 0;
 	health = 100;
 	current_state = &idle_state;
-	current_animation = nullptr;
 	orientation = Orientation::RIGHT;
-	set_graphics_map();
-}
-
-void Fighter::set_graphics_map()
-{
-	graphics_map[FighterGraphics::IDLE] = &idle;
-	graphics_map[FighterGraphics::WALK_FORWARD] = &walk_forward;
-	graphics_map[FighterGraphics::WALK_BACKWARD] = &walk_backward;
-	graphics_map[FighterGraphics::CROUCH] = &crouch;
-	graphics_map[FighterGraphics::JUMP] = &jump;
-	graphics_map[FighterGraphics::JUMP_FORWARD] = &jump_forward;
-	graphics_map[FighterGraphics::JUMP_BACKWARD] = &jump_backward;
-	graphics_map[FighterGraphics::BLOCK_STAND] = &block;
 }
 
 int Fighter::topleft_x()
@@ -50,7 +36,7 @@ FighterState::FightMoveHook Fighter::get_fight_move_hook()
 
 bones::Animation* Fighter::get_animation()
 {
-	return current_animation;
+	return animator.get_current_animation();
 }
 
 void Fighter::move_left()
@@ -82,15 +68,16 @@ void Fighter::set_position_y(int val)
 {
 	y = val;
 }
+
 void Fighter::perform_fight_move(bones::Animation& move)
 {
-	graphics_map[FighterGraphics::FIGHT_MOVE] = &move;
-	change_state_if_open(&fightmove_state);
+	// TODO: Fighter should not handle direct fight animations.
+	throw std::runtime_error("Not implemented");
 }
 
 void Fighter::set_graphics(FighterGraphics graphics)
 {
-	current_animation = graphics_map[graphics];
+	animator.set_graphics(graphics);
 }
 
 void Fighter::flip_orientation()
@@ -103,6 +90,7 @@ void Fighter::flip_orientation()
 	{
 		orientation = Orientation::LEFT;
 	}
+	animator.flip_orientation();
 }
 
 void Fighter::reset_state()
@@ -121,7 +109,7 @@ void Fighter::draw(SDL_Renderer* renderer)
 	// This fixes the animation jumping around on the screen. 
 	int draw_x = topleft_x();
 	int draw_y = topleft_y();
-	current_animation->play_animation(renderer, draw_x, draw_y);
+	animator.play(renderer, draw_x, draw_y);
 }
 
 void Fighter::handle_input_event(SDL_Event &event, SDL_GameController *controller)
