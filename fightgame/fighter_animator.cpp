@@ -1,12 +1,11 @@
 #include "fighter_animator.h"
 
-FighterAnimator::FighterAnimator(bones::GraphicsLoader& loader, std::map<FighterGraphics, std::string> links) :
+FighterAnimator::FighterAnimator(std::map<FighterGraphics, bones::Animation> links) :
 	current_animation(nullptr)
 {
 	for (auto &graphic : links)
 	{
-		auto animation = loader.load_animation(graphic.second);
-		animations[graphic.first] = animation;
+		animations[graphic.first] = graphic.second;
 	}
 	set_graphics(FighterGraphics::IDLE);
 }

@@ -44,7 +44,7 @@ enum FighterGraphics
 class FighterAnimator
 {
 public:
-	FighterAnimator(bones::GraphicsLoader &loader, std::map<FighterGraphics, std::string>);
+	FighterAnimator(std::map<FighterGraphics, bones::Animation>);
 
 	void set_graphics(FighterGraphics graphics);
 	void flip_orientation();

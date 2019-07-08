@@ -70,7 +70,7 @@ bool Collider::damagebox_collision(Collider& other)
 
 std::vector<SDL_Rect> Collider::get_fighter_hitboxes()
 {
-	bones::Frame frame = fighter->current_animation->get_current_frame();
+	bones::Frame frame = fighter->get_animation()->get_current_frame();
 	std::vector<SDL_Rect> hitboxes = frame.hitboxes;
 	convert_coords(hitboxes, fighter->topleft_x(), fighter->topleft_y());
 	return hitboxes;
@@ -78,7 +78,7 @@ std::vector<SDL_Rect> Collider::get_fighter_hitboxes()
 
 std::vector<SDL_Rect> Collider::get_fighter_dmgboxes()
 {
-	bones::Frame frame = fighter->current_animation->get_current_frame();
+	bones::Frame frame = fighter->get_animation()->get_current_frame();
 	std::vector<SDL_Rect> dmgboxes = frame.damageboxes;
 	convert_coords(dmgboxes, fighter->topleft_x(), fighter->topleft_y());
 	return dmgboxes;
