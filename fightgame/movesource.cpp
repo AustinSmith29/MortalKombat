@@ -5,7 +5,6 @@
 #include <stdexcept>
 #include <fstream>
 #include <sstream>
-#include <iostream>
 
 #define FLUSH_TIME_MS 250
 
@@ -47,7 +46,7 @@ Move read_move(xml_node<>* node, std::string &input_seq, bones::GraphicsLoader& 
 		input_seq = node->first_attribute("key")->value();
 		std::string anim_file = node->first_attribute("animation")->value();
 		bones::Animation animation = loader.load_animation(anim_file);
-		Move move_obj;
+		FightMove move_obj;
 		move_obj.animation = animation;
 		move_obj.damage = 0;
 		move_obj.name = name;
@@ -75,24 +74,21 @@ void MoveSource::load_moves_from_file(std::string filename, bones::GraphicsLoade
 	for (xml_node<>* move = stand_moves->first_node(); move; move = move->next_sibling())
 	{
 		std::string input_seq;
-		Move move_obj = read_move(move, input_seq, loader);
+		FightMove move_obj = read_move(move, input_seq, loader);
 		bind_move(FighterState::FightMoveHook::STAND, input_seq, move_obj);
 	}
-	std::cout << "Loaded stand moves." << std::endl;
 	for (xml_node<>* move = crouch_moves->first_node(); move; move = move->next_sibling())
 	{
 		std::string input_seq;
-		Move move_obj = read_move(move, input_seq, loader);
+		FightMove move_obj = read_move(move, input_seq, loader);
 		bind_move(FighterState::FightMoveHook::CROUCH, input_seq, move_obj);
 	}
-	std::cout << "Loaded crouch moves." << std::endl;
 	for (xml_node<>* move = jump_moves->first_node(); move; move = move->next_sibling())
 	{
 		std::string input_seq;
-		Move move_obj = read_move(move, input_seq, loader);
+		FightMove move_obj = read_move(move, input_seq, loader);
 		bind_move(FighterState::FightMoveHook::JUMP, input_seq, move_obj);
 	}
-	std::cout << "Loaded jump moves." << std::endl;
 }
 
 /* 
