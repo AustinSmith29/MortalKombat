@@ -1,30 +1,31 @@
-#ifndef _MOVESOURCE_H
-#define _MOVESOURCE_H
+#ifndef _FIGHTMOVE_INPUT_HANDLER_H
+#define _FIGHTMOVE_INPUT_HANDLER_H
 
-#include "graphics.h"
 #include "fighter_state.h"
-#include "fighter_animator.h"
 #include "fightmove.h"
 
 #include <string>
 #include <vector>
 #include <map>
+#include <functional>
 
-class Fighter;
 class FightMoveInputHandler
 {
 public:
-	FightMoveInputHandler(Fighter &owner);
+	using HandlerFunc = std::function<void(FightMove)>;
+	using ActivationKey = std::pair<FighterState::FightMoveHook, std::string>;
 
-	void bind_move(FighterState::FightMoveHook state, std::string input_seq, FightMove move);
-	void load_moves_from_file(std::string filename, bones::GraphicsLoader &loader);
-	void process_event(SDL_Event &event, Orientation direction);
+	FightMoveInputHandler(HandlerFunc handler, std::map<ActivationKey, FightMove> move_map);
+	FightMoveInputHandler(const FightMoveInputHandler& handler) = delete;
+	FightMoveInputHandler& operator = (const FightMoveInputHandler& handler) = delete;
+
+	void process_event(SDL_Event &event, FighterState::FightMoveHook hook, Orientation direction);
 	void flush();
 
 private:
 	std::vector<std::string> input_buffer;
-	std::map<std::pair<FighterState::FightMoveHook, std::string>, FightMove> move_map;
+	std::map<ActivationKey, FightMove> move_map;
+	HandlerFunc handler;
 	bool first_press; /// start flush timer once this is true
-	Fighter& owner;
 };
 #endif

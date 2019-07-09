@@ -12,83 +12,13 @@ using namespace rapidxml;
 
 static Uint32 timer_callback(Uint32 interval, void* param)
 {
-	MoveSource* movesource = static_cast<MoveSource*>(param);
+	FightMoveInputHandler* movesource = static_cast<FightMoveInputHandler*>(param);
 	movesource->flush();
 	return 0;
 }
-/*
-MoveSource::MoveSource()
-{
-	owner = nullptr;
-	first_press = false;
-}
-*/
-MoveSource::MoveSource(Fighter *fighter)
-{
-	owner = fighter;
-	first_press = false;
-}
 
-void MoveSource::bind_owner(Fighter* fighter)
+FightMoveInputHandler::FightMoveInputHandler(HandlerFunc func, std::map<ActivationKey, FightMove> move_map)
 {
-	owner = fighter;
-}
-
-void MoveSource::bind_move(FighterState::FightMoveHook state, std::string input_seq, Move move)
-{
-	auto key = std::make_pair(state, input_seq);
-	move_map[key] = move;
-}
-
-Move read_move(xml_node<>* node, std::string &input_seq, bones::GraphicsLoader& loader)
-{
-		std::string name = node->first_attribute("name")->value();
-		input_seq = node->first_attribute("key")->value();
-		std::string anim_file = node->first_attribute("animation")->value();
-		bones::Animation animation = loader.load_animation(anim_file);
-		FightMove move_obj;
-		move_obj.animation = animation;
-		move_obj.damage = 0;
-		move_obj.name = name;
-		return move_obj;
-}
-void MoveSource::load_moves_from_file(std::string filename, bones::GraphicsLoader &loader)
-{
-	std::ifstream in(filename);
-	if (!in)
-	{
-		throw std::runtime_error("Could not open animation file: " + filename);
-	}
-	std::stringstream ss;
-	ss << in.rdbuf();
-	in.close();
-	std::string data(ss.str());
-
-	xml_document<> doc;
-	doc.parse<0>(&(data[0]));
-	xml_node<>* root = doc.first_node();
-	xml_node<>* stand_moves = root->first_node("stand");
-	xml_node<>* crouch_moves = root->first_node("crouch");
-	xml_node<>* jump_moves = root->first_node("jump");
-
-	for (xml_node<>* move = stand_moves->first_node(); move; move = move->next_sibling())
-	{
-		std::string input_seq;
-		FightMove move_obj = read_move(move, input_seq, loader);
-		bind_move(FighterState::FightMoveHook::STAND, input_seq, move_obj);
-	}
-	for (xml_node<>* move = crouch_moves->first_node(); move; move = move->next_sibling())
-	{
-		std::string input_seq;
-		FightMove move_obj = read_move(move, input_seq, loader);
-		bind_move(FighterState::FightMoveHook::CROUCH, input_seq, move_obj);
-	}
-	for (xml_node<>* move = jump_moves->first_node(); move; move = move->next_sibling())
-	{
-		std::string input_seq;
-		FightMove move_obj = read_move(move, input_seq, loader);
-		bind_move(FighterState::FightMoveHook::JUMP, input_seq, move_obj);
-	}
 }
 
 /* 
@@ -128,7 +58,7 @@ add it to input buffer
 if input buffer contains move add it to the front of buffer
 return move at front of buffer
 */
-void MoveSource::process_event(SDL_Event &event, Orientation direction)
+void FightMoveInputHandler::process_event(SDL_Event &event, FighterState::FightMoveHook hook, Orientation direction)
 {
 	auto input = get_input(event, direction);
 	if (input != "I")
@@ -143,15 +73,14 @@ void MoveSource::process_event(SDL_Event &event, Orientation direction)
 
 	std::string input_seq;
 	for (const auto& piece : input_buffer) input_seq += (piece + ",");
-	FighterState::FightMoveHook hook = owner->get_fight_move_hook();
 	auto key = std::make_pair(hook, input_seq);
 	if (move_map.find(key) != move_map.end())
 	{
-		owner->process_move(move_map[key]);
+		handler(move_map[key]);
 	}
 }
 
-void MoveSource::flush()
+void FightMoveInputHandler::flush()
 {
 	first_press = false;
 	input_buffer.clear();
