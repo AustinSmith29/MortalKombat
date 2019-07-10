@@ -1,6 +1,7 @@
 #include "fighter_animator.h"
 
 FighterAnimator::FighterAnimator(std::map<FighterGraphics, bones::Animation> links)
+	: current_animation(FighterGraphics::IDLE)
 {
 	for (auto &graphic : links)
 	{
