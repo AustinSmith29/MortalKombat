@@ -53,7 +53,7 @@ public:
 	bones::Animation* get_current_animation();
 
 private:
-	bones::Animation* current_animation;
+	FighterGraphics current_animation;
 	std::array<bones::Animation, FighterGraphics::TOTAL> animations;
 };
 #endif
