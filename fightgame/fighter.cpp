@@ -1,15 +1,14 @@
 #include "fighter.h"
-#include <iostream>
 
-Fighter::Fighter() : move_source(this)
+Fighter::Fighter(FighterAnimator& animator) : state_machine(*this), animator(animator)
 {
 	x = y = 0;
 	x_vel = y_vel = 0;
 	health = 100;
-	current_state = &idle_state;
 	orientation = Orientation::RIGHT;
 }
 
+//TODO: Can prob move these to FighterAnimator
 int Fighter::topleft_x()
 {
 	int w = animator.get_current_animation()->get_current_frame().sheet_clip.w;
@@ -29,24 +28,19 @@ Orientation Fighter::get_orientation()
 	return orientation;
 }
 
-FighterState::FightMoveHook Fighter::get_fight_move_hook()
-{
-	return current_state->get_move_hook();
-}
-
 bones::Animation* Fighter::get_animation()
 {
 	return animator.get_current_animation();
 }
 
-void Fighter::move_left()
+int Fighter::get_velocity_x()
 {
-	x -= 1;
+	return x_vel;
 }
 
-void Fighter::move_right()
+void Fighter::set_velocity_x(int val)
 {
-	x += 1;
+	x_vel = val;
 }
 
 int Fighter::get_velocity_y()
@@ -59,6 +53,16 @@ void Fighter::set_velocity_y(int val)
 	y_vel = val;
 }
 
+int Fighter::get_position_x()
+{
+	return x;
+}
+
+void Fighter::set_position_x(int val)
+{
+	x = val;
+}
+
 int Fighter::get_position_y()
 {
 	return y;
@@ -67,12 +71,6 @@ int Fighter::get_position_y()
 void Fighter::set_position_y(int val)
 {
 	y = val;
-}
-
-void Fighter::perform_fight_move(bones::Animation& move)
-{
-	// TODO: Fighter should not handle direct fight animations.
-	throw std::runtime_error("Not implemented");
 }
 
 void Fighter::set_graphics(FighterGraphics graphics)
@@ -93,14 +91,9 @@ void Fighter::flip_orientation()
 	animator.flip_orientation();
 }
 
-void Fighter::reset_state()
-{
-	set_state(&idle_state);
-}
-
 void Fighter::tick()
 {
-	current_state->tick(*this);
+	state_machine.tick();
 }
 
 void Fighter::draw(SDL_Renderer* renderer)
@@ -110,75 +103,4 @@ void Fighter::draw(SDL_Renderer* renderer)
 	int draw_x = topleft_x();
 	int draw_y = topleft_y();
 	animator.play(renderer, draw_x, draw_y);
-}
-
-void Fighter::handle_input_event(SDL_Event &event, SDL_GameController *controller)
-{
-	if (current_state->is_input_locked())
-		return;
-	move_source.process_event(event, orientation);
-	if (event.type == SDL_CONTROLLERBUTTONDOWN)
-	{
-		handle_button_press(event.cbutton.button, controller);
-	}
-	if (event.type == SDL_CONTROLLERBUTTONUP)
-	{
-		handle_button_release(event.cbutton.button);
-	}
-}
-
-void Fighter::handle_button_press(Uint8 button, SDL_GameController *controller)
-{
-	if (button == SDL_CONTROLLER_BUTTON_DPAD_UP)
-	{
-		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
-		{
-			change_state_if_open(&jump_right_state);
-		}
-		else if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT))
-		{
-			change_state_if_open(&jump_left_state);
-		}
-		else
-		{
-			change_state_if_open(&jump_state);
-		}
-	}
-	else if (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
-	{
-		change_state_if_open(&move_right_state);
-	}
-	else if (button == SDL_CONTROLLER_BUTTON_DPAD_LEFT)
-	{
-		change_state_if_open(&move_left_state);
-	}
-	else if (button == SDL_CONTROLLER_BUTTON_DPAD_DOWN)
-	{
-		change_state_if_open(&crouch_state);
-	}
-	else if (button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)
-	{
-		change_state_if_open(&block_state);
-	}
-}
-
-void Fighter::handle_button_release(Uint8 button)
-{
-	change_state_if_open(&idle_state);
-}
-
-void Fighter::handle_input_state(SDL_GameController* controller)
-{
-}
-
-void Fighter::change_state_if_open(FighterState* to)
-{
-	set_state(to);
-}
-
-void Fighter::set_state(FighterState* to)
-{
-	current_state->exit(*this);
-	current_state = to;
-	current_state->enter(*this);
 }
