@@ -57,9 +57,6 @@
     <ClCompile Include="jump_right_state.cpp">
       <Filter>Source Files\fighter_states</Filter>
     </ClCompile>
-    <ClCompile Include="jump_left_state.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="block_state.cpp">
       <Filter>Source Files\fighter_states</Filter>
     </ClCompile>
@@ -74,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="user_fighter.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jump_left_state.cpp">
+      <Filter>Source Files\fighter_states</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

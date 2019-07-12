@@ -27,11 +27,13 @@ public:
 	FighterStateMachine& operator = (const FighterStateMachine& machine) = delete;
 
 	void change_to(State new_state, void *data);
+	FighterState* get_previous_state();
 	void tick();
 
 private:
 	std::array<FighterState, State::TOTAL> states;
 	FighterState* current_state;
+	FighterState* prev_state;
 	Fighter& fighter;
 };
 #endif

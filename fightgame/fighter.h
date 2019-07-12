@@ -18,6 +18,9 @@ public:
 	Orientation get_orientation();
 	bones::Animation* get_animation();
 
+	void move_left();
+	void move_right();
+
 	int get_velocity_x();
 	void set_velocity_x(int val);
 	int get_velocity_y();

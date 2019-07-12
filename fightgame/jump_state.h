@@ -11,9 +11,9 @@ public:
 	void exit(Fighter& fighter, FighterStateMachine &machine) override;
 protected:
 	virtual void update_position(Fighter& fighter);
-	void apply_gravity(Fighter& fighter);
+	void apply_gravity(Fighter& fighter, FighterStateMachine &machine);
 	void start_jump(Fighter& fighter);
-	void finish_jump(Fighter& fighter);
+	void finish_jump(Fighter& fighter, FighterStateMachine &machine);
 	bool has_landed(Fighter& fighter);
 private:
 	int frame_counter{ 0 };

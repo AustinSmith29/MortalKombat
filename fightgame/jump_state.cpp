@@ -1,5 +1,6 @@
 #include "jump_state.h"
 #include "fighter.h"
+#include "fighter_state_machine.h"
 
 void JumpState::enter(Fighter& fighter, FighterStateMachine &machine, void *data)
 {
@@ -16,10 +17,10 @@ void JumpState::start_jump(Fighter& fighter)
 
 void JumpState::tick(Fighter& fighter, FighterStateMachine &machine)
 {
-	apply_gravity(fighter);
+	apply_gravity(fighter, machine);
 }
 
-void JumpState::apply_gravity(Fighter& fighter)
+void JumpState::apply_gravity(Fighter& fighter, FighterStateMachine &machine)
 {
 	decrease_y_velocity(fighter);
 	update_position(fighter);
@@ -27,7 +28,7 @@ void JumpState::apply_gravity(Fighter& fighter)
 	{
 		fighter.set_velocity_y(0);
 		fighter.set_position_y(FLOOR_Y_POSITION);
-		finish_jump(fighter);
+		finish_jump(fighter, machine);
 	}
 	frame_counter++;
 }
@@ -57,9 +58,9 @@ void JumpState::exit(Fighter& fighter, FighterStateMachine &machine)
 {
 }
 
-void JumpState::finish_jump(Fighter& fighter)
+void JumpState::finish_jump(Fighter& fighter, FighterStateMachine &machine)
 {
 	fighter.get_animation()->restart();
 	unlock_input();
-	fighter.reset_state();
+	machine.change_to(FighterStateMachine::State::IDLE, nullptr);
 }

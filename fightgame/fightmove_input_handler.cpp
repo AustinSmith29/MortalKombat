@@ -1,4 +1,4 @@
-#include "movesource.h"
+#include "fightmove_input_handler.h"
 #include "fighter.h"
 #include "rapidxml.hpp"
 

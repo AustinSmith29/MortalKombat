@@ -33,6 +33,16 @@ bones::Animation* Fighter::get_animation()
 	return animator.get_current_animation();
 }
 
+void Fighter::move_left()
+{
+	x -= 1;
+}
+
+void Fighter::move_right()
+{
+	x += 1;
+}
+
 int Fighter::get_velocity_x()
 {
 	return x_vel;

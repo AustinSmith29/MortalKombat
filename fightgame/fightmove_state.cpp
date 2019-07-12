@@ -20,8 +20,8 @@ void FightMoveState::tick(Fighter& fighter, FighterStateMachine &machine)
 void FightMoveState::exit(Fighter& fighter, FighterStateMachine &machine)
 {
 	fighter.get_animation()->restart();
-	auto hook = fighter.get_fight_move_hook();
-	if (fighter.get_fight_move_hook() == FightMoveHook::CROUCH)
+	auto hook = machine.get_previous_state()->get_move_hook();
+	if (hook == FightMoveHook::CROUCH)
 	{
 		fighter.set_graphics(FighterGraphics::CROUCH);
 	}

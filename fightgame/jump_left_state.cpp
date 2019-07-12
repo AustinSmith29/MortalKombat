@@ -9,7 +9,7 @@ void JumpLeftState::enter(Fighter& fighter, FighterStateMachine &machine, void *
 
 void JumpLeftState::tick(Fighter& fighter, FighterStateMachine &machine)
 {
-	apply_gravity(fighter);
+	apply_gravity(fighter, machine);
 	if (!has_landed(fighter))
 	{
 		fighter.move_left();
