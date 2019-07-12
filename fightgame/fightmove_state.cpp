@@ -1,22 +1,23 @@
 #include "fightmove_state.h"
 #include "fighter.h"
 
-void FightMoveState::enter(Fighter& fighter)
+void FightMoveState::enter(Fighter& fighter, FighterStateMachine &machine, void *data)
 {
 	lock_input();
-	fighter.set_graphics(FighterGraphics::FIGHT_MOVE);
+	move = *static_cast<FightMove*>(data);
+	fighter.set_graphics(move.animation);
 }
 
-void FightMoveState::tick(Fighter& fighter)
+void FightMoveState::tick(Fighter& fighter, FighterStateMachine &machine)
 {
 	if (fighter.get_animation()->is_complete())
 	{
 		unlock_input();
-		exit(fighter);
+		exit(fighter, machine);
 	}
 }
 
-void FightMoveState::exit(Fighter& fighter)
+void FightMoveState::exit(Fighter& fighter, FighterStateMachine &machine)
 {
 	fighter.get_animation()->restart();
 	auto hook = fighter.get_fight_move_hook();

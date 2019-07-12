@@ -26,7 +26,7 @@ public:
 	FighterStateMachine(const FighterStateMachine& machine) = delete;
 	FighterStateMachine& operator = (const FighterStateMachine& machine) = delete;
 
-	void change_to(State new_state);
+	void change_to(State new_state, void *data);
 	void tick();
 
 private:
@@ -34,5 +34,4 @@ private:
 	FighterState* current_state;
 	Fighter& fighter;
 };
-
 #endif

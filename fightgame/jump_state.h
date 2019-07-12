@@ -6,9 +6,9 @@
 class JumpState : public FighterState
 {
 public:
-	void enter(Fighter& fighter) override;
-	void tick(Fighter& fighter) override;
-	void exit(Fighter& fighter) override;
+	void enter(Fighter& fighter, FighterStateMachine &machine, void *data) override;
+	void tick(Fighter& fighter, FighterStateMachine &machine) override;
+	void exit(Fighter& fighter, FighterStateMachine &machine) override;
 protected:
 	virtual void update_position(Fighter& fighter);
 	void apply_gravity(Fighter& fighter);

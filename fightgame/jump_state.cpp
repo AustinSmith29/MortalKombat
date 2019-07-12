@@ -1,7 +1,7 @@
 #include "jump_state.h"
 #include "fighter.h"
 
-void JumpState::enter(Fighter& fighter)
+void JumpState::enter(Fighter& fighter, FighterStateMachine &machine, void *data)
 {
 	fighter.set_graphics(FighterGraphics::JUMP);
 	lock_input();
@@ -14,7 +14,7 @@ void JumpState::start_jump(Fighter& fighter)
 	fighter.set_velocity_y(-10);
 }
 
-void JumpState::tick(Fighter& fighter)
+void JumpState::tick(Fighter& fighter, FighterStateMachine &machine)
 {
 	apply_gravity(fighter);
 }
@@ -53,7 +53,7 @@ bool JumpState::has_landed(Fighter& fighter)
 	return fighter.get_position_y() >= FLOOR_Y_POSITION;
 }
 
-void JumpState::exit(Fighter& fighter)
+void JumpState::exit(Fighter& fighter, FighterStateMachine &machine)
 {
 }
 

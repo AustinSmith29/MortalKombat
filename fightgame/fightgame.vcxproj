@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -134,15 +134,17 @@
     <ClCompile Include="fighter.cpp" />
     <ClCompile Include="fighter_animator.cpp" />
     <ClCompile Include="fighter_state.cpp" />
+    <ClCompile Include="fighter_state_machine.cpp" />
+    <ClCompile Include="fightmove_input_handler.cpp" />
     <ClCompile Include="fightmove_state.cpp" />
     <ClCompile Include="idle_state.cpp" />
     <ClCompile Include="jump_left_state.cpp" />
     <ClCompile Include="jump_right_state.cpp" />
     <ClCompile Include="jump_state.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="movesource.cpp" />
     <ClCompile Include="move_left_state.cpp" />
     <ClCompile Include="move_right_state.cpp" />
+    <ClCompile Include="user_fighter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bones\Bones.vcxproj">
@@ -158,14 +160,17 @@
     <ClInclude Include="crouch_state.h" />
     <ClInclude Include="fighter.h" />
     <ClInclude Include="fighter_state.h" />
+    <ClInclude Include="fighter_state_machine.h" />
+    <ClInclude Include="fightmove.h" />
+    <ClInclude Include="fightmove_input_handler.h" />
     <ClInclude Include="fightmove_state.h" />
     <ClInclude Include="idle_state.h" />
     <ClInclude Include="jump_left_state.h" />
     <ClInclude Include="jump_right_state.h" />
     <ClInclude Include="jump_state.h" />
-    <ClInclude Include="movesource.h" />
     <ClInclude Include="move_left_state.h" />
     <ClInclude Include="move_right_state.h" />
+    <ClInclude Include="user_fighter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

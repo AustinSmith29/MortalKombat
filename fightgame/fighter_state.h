@@ -7,6 +7,7 @@ enum class Orientation
 	RIGHT
 };
 
+class FighterStateMachine;
 class Fighter;
 class FighterState
 {
@@ -17,9 +18,9 @@ public:
 		CROUCH,
 		JUMP
 	};
-	virtual void enter(Fighter &fighter) = 0;
-	virtual void tick(Fighter &fighter) = 0;
-	virtual void exit(Fighter &fighter) = 0;
+	virtual void enter(Fighter &fighter, FighterStateMachine &machine, void* data) = 0;
+	virtual void tick(Fighter &fighter, FighterStateMachine &machine) = 0;
+	virtual void exit(Fighter &fighter, FighterStateMachine &machine) = 0;
 
 	bool is_input_locked();
 	void lock_input();

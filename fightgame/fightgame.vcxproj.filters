@@ -24,9 +24,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="movesource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="fighter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,11 +66,17 @@
     <ClCompile Include="fighter_animator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fightmove_input_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fighter_state_machine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user_fighter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="movesource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="fighter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -117,6 +120,18 @@
       <Filter>Header Files\fighter_states</Filter>
     </ClInclude>
     <ClInclude Include="..\Bones\fighter_animator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fightmove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fightmove_input_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fighter_state_machine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="user_fighter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

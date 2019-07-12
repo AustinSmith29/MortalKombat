@@ -7,9 +7,9 @@ class CrouchState : public FighterState
 {
 public:
 	CrouchState();
-	void enter(Fighter &fighter) override;
-	void tick(Fighter &fighter) override;
-	void exit(Fighter &fighter) override;
+	void enter(Fighter &fighter, FighterStateMachine &machine, void* data) override;
+	void tick(Fighter &fighter, FighterStateMachine &machine) override;
+	void exit(Fighter &fighter, FighterStateMachine &machine) override;
 };
 
 #endif

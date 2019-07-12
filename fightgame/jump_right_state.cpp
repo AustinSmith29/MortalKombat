@@ -1,13 +1,13 @@
 #include "jump_right_state.h"
 #include "fighter.h"
 
-void JumpRightState::enter(Fighter& fighter)
+void JumpRightState::enter(Fighter& fighter, FighterStateMachine &machine, void *data)
 {
 	fighter.set_graphics(FighterGraphics::JUMP_FORWARD);
 	start_jump(fighter);
 }
 
-void JumpRightState::tick(Fighter& fighter)
+void JumpRightState::tick(Fighter& fighter, FighterStateMachine &machine)
 {
 	apply_gravity(fighter);
 	if (!has_landed(fighter))
@@ -16,7 +16,7 @@ void JumpRightState::tick(Fighter& fighter)
 	}
 }
 
-void JumpRightState::exit(Fighter& fighter)
+void JumpRightState::exit(Fighter& fighter, FighterStateMachine &machine)
 {
 }
 

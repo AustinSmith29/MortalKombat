@@ -14,14 +14,14 @@ FighterStateMachine::FighterStateMachine(Fighter& owner) : fighter(owner)
 	current_state = &states[State::IDLE];
 }
 
-void FighterStateMachine::change_to(State new_state)
+void FighterStateMachine::change_to(State new_state, void *data)
 {
 	current_state->exit(fighter);
 	current_state = &states[new_state];
-	current_state->enter(fighter);
+	current_state->enter(fighter, data);
 }
 
 void FighterStateMachine::tick()
 {
-	current_state->tick(fighter);
+	current_state->tick(fighter, *this);
 }
