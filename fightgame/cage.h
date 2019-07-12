@@ -1,12 +1,11 @@
 #ifndef _CAGE_H
 #define _CAGE_H
 
-#include "fighter.h"
+#include "fighter_animator.h"
+#include "fightmove_input_handler.h"
 
-class JohnnyCage : public Fighter
-{
-public:
-	void load_resources(bones::GraphicsLoader& loader) override;
-	void process_move(Move& move) override;
-};
+std::map <FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader& loader);
+std::map <FightMoveInputHandler::ActivationKey, FightMove> load_moves();
+void handle_fightmove(FightMove move);
+
 #endif

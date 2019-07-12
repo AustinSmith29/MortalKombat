@@ -1,10 +1,16 @@
 #include "user_fighter.h"
 
+UserFighter::UserFighter(Fighter& fighter, HandlerFunc handler, std::map<ActivationKey, FightMove> move_map)
+	: fighter(&fighter), fightmove_handler(handler, move_map)
+{
+
+}
+
 void UserFighter::handle_input_event(SDL_Event& event, SDL_GameController* controller)
 {
-	if (current_state->is_input_locked())
+	if (fighter->get_state()->is_input_locked())
 		return;
-	move_source.process_event(event, orientation);
+	fightmove_handler.process_event(event, fighter->get_state()->get_fightmove_hook(), fighter->get_orientation());
 	if (event.type == SDL_CONTROLLERBUTTONDOWN)
 	{
 		handle_button_press(event.cbutton.button, controller);
@@ -21,37 +27,46 @@ void UserFighter::handle_button_press(Uint8 button, SDL_GameController* controll
 	{
 		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
 		{
-			change_state_if_open(&jump_right_state);
+			fighter->set_state(FighterStateMachine::State::JUMP_RIGHT);
 		}
 		else if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT))
 		{
-			change_state_if_open(&jump_left_state);
+			fighter->set_state(FighterStateMachine::State::JUMP_LEFT);
 		}
 		else
 		{
-			change_state_if_open(&jump_state);
+			fighter->set_state(FighterStateMachine::State::JUMP);
 		}
 	}
 	else if (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
 	{
-		change_state_if_open(&move_right_state);
+		fighter->set_state(FighterStateMachine::State::MOVE_RIGHT);
 	}
 	else if (button == SDL_CONTROLLER_BUTTON_DPAD_LEFT)
 	{
-		change_state_if_open(&move_left_state);
+		fighter->set_state(FighterStateMachine::State::MOVE_LEFT);
 	}
 	else if (button == SDL_CONTROLLER_BUTTON_DPAD_DOWN)
 	{
-		change_state_if_open(&crouch_state);
+		fighter->set_state(FighterStateMachine::State::CROUCH);
 	}
 	else if (button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)
 	{
-		change_state_if_open(&block_state);
+		fighter->set_state(FighterStateMachine::State::BLOCK);
 	}
 }
 
 void UserFighter::handle_button_release(Uint8 button)
 {
-	change_state_if_open(&idle_state);
+	fighter->set_state(FighterStateMachine::State::IDLE);
 }
+
+void UserFighter::tick()
+{
+	fighter->tick();
+}
+
+void UserFighter::draw(SDL_Renderer* renderer)
+{
+	fighter->draw(renderer);
 }

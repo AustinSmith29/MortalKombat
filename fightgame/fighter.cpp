@@ -2,7 +2,7 @@
 
 Fighter::Fighter(FighterAnimator& animator) : state_machine(*this), animator(animator)
 {
-	x = y = 0;
+	x = y = 180;
 	x_vel = y_vel = 0;
 	health = 100;
 	orientation = Orientation::RIGHT;
@@ -31,6 +31,16 @@ Orientation Fighter::get_orientation()
 bones::Animation* Fighter::get_animation()
 {
 	return animator.get_current_animation();
+}
+
+FighterStateMachine* Fighter::get_state()
+{
+	return &state_machine;
+}
+
+void Fighter::set_state(FighterStateMachine::State state, void* data)
+{
+	state_machine.change_to(state, data);
 }
 
 void Fighter::move_left()

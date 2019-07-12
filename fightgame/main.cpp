@@ -1,8 +1,8 @@
 #include "SDL.h"
 #include "graphics.h"
-#include "movesource.h"
 #include "cage.h"
-#include "collision.h"
+#include "user_fighter.h"
+#include "fighter_animator.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -19,43 +19,34 @@ int main(int argc, char *argv[])
 	const int FPS = 60;
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	bones::GraphicsLoader graphics(renderer);
+	auto cage_graphics = load_graphics(graphics);
+	FighterAnimator cage_animator(cage_graphics);
+	Fighter cage_fighter(cage_animator);
+	auto move_map = load_moves();
+	UserFighter fighter(cage_fighter, &handle_fightmove, move_map);
 	int njoysticks = SDL_NumJoysticks();
 	std::cout << njoysticks << " detected." << std::endl;
 	SDL_GameController* controller = SDL_GameControllerOpen(0);
-	Fighter *fighter;
-	JohnnyCage cage;
-	fighter = &cage;
-	Collider collider(fighter);
-	fighter->load_resources(graphics);
 	SDL_Event event;
 	bool quit = false;
 	SDL_Rect test = { 200, 250, 64, 100 };
 	while (!quit)
 	{
 		Uint32 ticks = SDL_GetTicks();
-		Move move;
 		while (SDL_PollEvent(&event) != 0)
 		{
 			if (event.type == SDL_QUIT)
 				quit = true;
-			fighter->handle_input_event(event, controller);
+			fighter.handle_input_event(event, controller);
 		}
-		fighter->tick();
-		if (collider.damagebox_collision(test))
-		{
-			std::cout << "Damagebox Hit!" << std::endl;
-		}
-		if (collider.hitbox_collision(test))
-		{
-			std::cout << "Hitbox Hit!" << std::endl;
-		}
+
+		fighter.tick();
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
-		fighter->draw(renderer);
+		fighter.draw(renderer);
 		SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderDrawRect(renderer, &test);
-		collider.draw_boxes(renderer);
 		SDL_RenderPresent(renderer);
 
 		int time = SDL_GetTicks() - ticks;

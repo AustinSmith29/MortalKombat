@@ -26,12 +26,16 @@ public:
 	FighterStateMachine(const FighterStateMachine& machine) = delete;
 	FighterStateMachine& operator = (const FighterStateMachine& machine) = delete;
 
+	~FighterStateMachine();
+
 	void change_to(State new_state, void *data);
+	FighterState::FightMoveHook get_fightmove_hook();
+	bool is_input_locked();
 	FighterState* get_previous_state();
 	void tick();
 
 private:
-	std::array<FighterState, State::TOTAL> states;
+	std::array<FighterState*, State::TOTAL> states;
 	FighterState* current_state;
 	FighterState* prev_state;
 	Fighter& fighter;

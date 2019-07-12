@@ -17,6 +17,8 @@ public:
 
 	Orientation get_orientation();
 	bones::Animation* get_animation();
+	FighterStateMachine* get_state();
+	void set_state(FighterStateMachine::State state, void* data = nullptr);
 
 	void move_left();
 	void move_right();

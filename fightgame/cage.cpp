@@ -4,7 +4,7 @@
 
 #define ANIMATIONS "data/johnnycage/animations/"
 
-void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
+std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader& loader)
 {
 	std::map <FighterGraphics, bones::Animation> anim_sources;
 	anim_sources[FighterGraphics::IDLE] = loader.load_animation(ANIMATIONS "cage_idle.xml");
@@ -17,14 +17,16 @@ void JohnnyCage::load_resources(bones::GraphicsLoader& loader)
 	anim_sources[FighterGraphics::JUMP_FORWARD] = jump_forward;
 	anim_sources[FighterGraphics::JUMP_BACKWARD] = jump_forward.reverse();
 	anim_sources[FighterGraphics::BLOCK] = loader.load_animation(ANIMATIONS "cage_block.xml");
-	move_source.bind_owner(this);
-	move_source.load_moves_from_file("data/johnnycage/moves.xml", loader);
-	x = 150;
-	y = 350;
-	x_vel = y_vel = 0;
+	return anim_sources;
 }
 
-void JohnnyCage::process_move(Move& move)
+std::map <FightMoveInputHandler::ActivationKey, FightMove> load_moves()
 {
-	perform_fight_move(move.animation);
+	std::map <FightMoveInputHandler::ActivationKey, FightMove> moves;
+	return moves;
+}
+
+void handle_fightmove(FightMove move)
+{
+
 }
