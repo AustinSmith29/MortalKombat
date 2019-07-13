@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 	auto cage_graphics = load_graphics(graphics);
 	FighterAnimator cage_animator(cage_graphics);
 	Fighter cage_fighter(cage_animator);
+	cage_fighter.flip_orientation();
 	auto move_map = load_moves();
 	UserFighter fighter(cage_fighter, &handle_fightmove, move_map);
 	int njoysticks = SDL_NumJoysticks();

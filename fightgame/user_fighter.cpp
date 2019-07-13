@@ -10,7 +10,8 @@ void UserFighter::handle_input_event(SDL_Event& event, SDL_GameController* contr
 {
 	if (fighter->get_state()->is_input_locked())
 		return;
-	fightmove_handler.process_event(event, fighter->get_state()->get_fightmove_hook(), fighter->get_orientation());
+	fightmove_handler.process_event(event, fighter->get_state()->get_fightmove_hook(), 
+		                            fighter->get_orientation(), *fighter);
 	if (event.type == SDL_CONTROLLERBUTTONDOWN)
 	{
 		handle_button_press(event.cbutton.button, controller);

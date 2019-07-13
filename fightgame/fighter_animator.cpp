@@ -30,5 +30,6 @@ void FighterAnimator::play(SDL_Renderer* renderer, int x, int y)
 
 bones::Animation* FighterAnimator::get_current_animation()
 {
-	return &animations[current_animation];
+	bones::Animation* anim = &animations[current_animation];
+	return anim;
 }

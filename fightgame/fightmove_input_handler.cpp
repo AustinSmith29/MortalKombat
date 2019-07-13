@@ -17,7 +17,8 @@ static Uint32 timer_callback(Uint32 interval, void* param)
 	return 0;
 }
 
-FightMoveInputHandler::FightMoveInputHandler(HandlerFunc func, std::map<ActivationKey, FightMove> move_map)
+FightMoveInputHandler::FightMoveInputHandler(HandlerFunc func, std::map<ActivationKey, FightMove> move_map) :
+	handler(func), move_map(move_map), first_press(false)
 {
 }
 
@@ -58,7 +59,8 @@ add it to input buffer
 if input buffer contains move add it to the front of buffer
 return move at front of buffer
 */
-void FightMoveInputHandler::process_event(SDL_Event &event, FighterState::FightMoveHook hook, Orientation direction)
+void FightMoveInputHandler::process_event(SDL_Event &event, FighterState::FightMoveHook hook,
+										  Orientation direction, Fighter &fighter)
 {
 	auto input = get_input(event, direction);
 	if (input != "I")
@@ -76,7 +78,7 @@ void FightMoveInputHandler::process_event(SDL_Event &event, FighterState::FightM
 	auto key = std::make_pair(hook, input_seq);
 	if (move_map.find(key) != move_map.end())
 	{
-		handler(move_map[key]);
+		handler(move_map[key], fighter);
 	}
 }
 
@@ -84,4 +86,9 @@ void FightMoveInputHandler::flush()
 {
 	first_press = false;
 	input_buffer.clear();
+}
+
+FightMoveInputHandler::ActivationKey FightMoveInputHandler::make_key(FighterState::FightMoveHook hook, std::string input)
+{
+	return std::make_pair(hook, input);
 }

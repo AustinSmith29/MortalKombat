@@ -10,6 +10,7 @@ void FightMoveState::enter(Fighter& fighter, FighterStateMachine &machine, void 
 
 void FightMoveState::tick(Fighter& fighter, FighterStateMachine &machine)
 {
+	bones::Animation* animation = fighter.get_animation();
 	if (fighter.get_animation()->is_complete())
 	{
 		unlock_input();

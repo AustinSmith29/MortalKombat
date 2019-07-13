@@ -12,15 +12,17 @@
 class FightMoveInputHandler
 {
 public:
-	using HandlerFunc = std::function<void(FightMove)>;
+	using HandlerFunc = std::function<void(FightMove, Fighter&)>;
 	using ActivationKey = std::pair<FighterState::FightMoveHook, std::string>;
 
 	FightMoveInputHandler(HandlerFunc handler, std::map<ActivationKey, FightMove> move_map);
 	FightMoveInputHandler(const FightMoveInputHandler& handler) = delete;
 	FightMoveInputHandler& operator = (const FightMoveInputHandler& handler) = delete;
 
-	void process_event(SDL_Event &event, FighterState::FightMoveHook hook, Orientation direction);
+	void process_event(SDL_Event &event, FighterState::FightMoveHook hook, Orientation direction, Fighter &fighter);
 	void flush();
+
+	static ActivationKey make_key(FighterState::FightMoveHook hook, std::string input);
 
 private:
 	std::vector<std::string> input_buffer;
