@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ai_fighter.cpp" />
     <ClCompile Include="block_state.cpp" />
     <ClCompile Include="cage.cpp" />
     <ClCompile Include="collision.cpp" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Bones\fighter_animator.h" />
+    <ClInclude Include="ai_fighter.h" />
     <ClInclude Include="all_fight_states.h" />
     <ClInclude Include="block_state.h" />
     <ClInclude Include="cage.h" />

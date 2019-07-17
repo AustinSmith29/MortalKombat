@@ -75,6 +75,9 @@
     <ClCompile Include="jump_left_state.cpp">
       <Filter>Source Files\fighter_states</Filter>
     </ClCompile>
+    <ClCompile Include="ai_fighter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fighter.h">
@@ -132,6 +135,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="user_fighter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ai_fighter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

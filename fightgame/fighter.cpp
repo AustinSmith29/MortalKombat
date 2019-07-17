@@ -1,11 +1,23 @@
 #include "fighter.h"
 
-Fighter::Fighter(FighterAnimator& animator) : state_machine(*this), animator(animator)
+Fighter::Fighter(FighterAnimator& animator) 
+	: state_machine(std::make_unique<FighterStateMachine>(*this)), animator(animator)
 {
-	x = y = 180;
+	x = y = 0;
+	orientation = Orientation::RIGHT;
 	x_vel = y_vel = 0;
 	health = 100;
-	orientation = Orientation::RIGHT;
+}
+
+Fighter::Fighter(const Fighter& other)
+	: state_machine(std::make_unique<FighterStateMachine>(*this)), animator(other.animator)
+{
+	x = other.x;
+	y = other.y;
+	x_vel = other.x_vel;
+	y_vel = other.y_vel;
+	health = other.health;
+	orientation = other.orientation;
 }
 
 //TODO: Can prob move these to FighterAnimator
@@ -35,12 +47,12 @@ bones::Animation* Fighter::get_animation()
 
 FighterStateMachine* Fighter::get_state()
 {
-	return &state_machine;
+	return state_machine.get();
 }
 
 void Fighter::set_state(FighterStateMachine::State state, void* data)
 {
-	state_machine.change_to(state, data);
+	state_machine->change_to(state, data);
 }
 
 void Fighter::move_left()
@@ -113,7 +125,7 @@ void Fighter::flip_orientation()
 
 void Fighter::tick()
 {
-	state_machine.tick();
+	state_machine->tick();
 }
 
 void Fighter::draw(SDL_Renderer* renderer)

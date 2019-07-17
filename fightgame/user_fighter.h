@@ -4,22 +4,19 @@
 #include "fighter.h"
 #include "fightmove_input_handler.h"
 
-class UserFighter 
+class UserFighter : public Fighter
 {
 public:
 	using HandlerFunc = FightMoveInputHandler::HandlerFunc;
 	using ActivationKey = FightMoveInputHandler::ActivationKey;
 
-	UserFighter(Fighter& fighter, HandlerFunc handler, std::map<ActivationKey, FightMove> move_map);
+	UserFighter(FighterAnimator &animator, HandlerFunc handler, std::map<ActivationKey, FightMove> move_map);
 	UserFighter(const UserFighter& userfighter) = delete;
 	UserFighter& operator = (const UserFighter& userfighter) = delete;
 
 	void handle_input_event(SDL_Event& event, SDL_GameController* controller);
-	void tick();
-	void draw(SDL_Renderer* renderer);
 
 private:
-	Fighter *fighter;
 	FightMoveInputHandler fightmove_handler;	
 
 	void handle_button_press(Uint8 button, SDL_GameController* controller);

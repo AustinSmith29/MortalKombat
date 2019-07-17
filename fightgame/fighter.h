@@ -3,11 +3,14 @@
 
 #include "fighter_animator.h"
 #include "fighter_state_machine.h"
+#include <memory>
 
 class Fighter
 {
 public:
 	Fighter(FighterAnimator &animator);
+	Fighter(const Fighter& other);
+	Fighter& operator = (const Fighter& other) = delete;
 
 	/* Gets the top left coords of starting position of current animation frame.
 	 * Needed to adjust collision box positions and drawing positions.
@@ -46,7 +49,7 @@ protected:
 	int x_vel, y_vel;
 	int health;
 	FighterAnimator animator;
-	FighterStateMachine state_machine;
+	std::unique_ptr<FighterStateMachine> state_machine;
 	Orientation orientation;
 };
 #endif
