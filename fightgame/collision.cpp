@@ -19,9 +19,8 @@ bool intersects(SDL_Rect& a, SDL_Rect& b)
 	return SDL_HasIntersection(&a, &b);
 }
 
-Collider::Collider(Fighter* owner)
+Collider::Collider(Fighter& owner) : fighter(owner)
 {
-	fighter = owner;
 }
 
 bool collision_in(std::vector<SDL_Rect>& vec, SDL_Rect& other)
@@ -70,17 +69,17 @@ bool Collider::damagebox_collision(Collider& other)
 
 std::vector<SDL_Rect> Collider::get_fighter_hitboxes()
 {
-	bones::Frame frame = fighter->get_animation()->get_current_frame();
+	bones::Frame frame = fighter.get_animation()->get_current_frame();
 	std::vector<SDL_Rect> hitboxes = frame.hitboxes;
-	convert_coords(hitboxes, fighter->topleft_x(), fighter->topleft_y());
+	convert_coords(hitboxes, fighter.topleft_x(), fighter.topleft_y());
 	return hitboxes;
 }
 
 std::vector<SDL_Rect> Collider::get_fighter_dmgboxes()
 {
-	bones::Frame frame = fighter->get_animation()->get_current_frame();
+	bones::Frame frame = fighter.get_animation()->get_current_frame();
 	std::vector<SDL_Rect> dmgboxes = frame.damageboxes;
-	convert_coords(dmgboxes, fighter->topleft_x(), fighter->topleft_y());
+	convert_coords(dmgboxes, fighter.topleft_x(), fighter.topleft_y());
 	return dmgboxes;
 }
 

@@ -43,8 +43,6 @@ public:
 	void tick();
 	void draw(SDL_Renderer* renderer);
 
-	friend class Collider;
-
 protected:
 	int x, y;
 	int x_vel, y_vel;
