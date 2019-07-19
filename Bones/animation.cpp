@@ -61,18 +61,38 @@ namespace bones
 		return reversed;
 	}
 
+	static SDL_Rect flip_rect_on_x_axis(const SDL_Rect& rect, int axis);
 	Animation Animation::flip()
 	{
 		if (flip_status == SDL_FLIP_HORIZONTAL)
 			flip_status = SDL_FLIP_NONE;
 		else
 			flip_status = SDL_FLIP_HORIZONTAL;
-		for (auto frame : frames)
+
+		for (auto& frame : frames)
 		{
+			int center = frame.sheet_clip.w / 2;
 			// flip hboxes and dboxes along center
-			continue;
+			for (auto& dbox : frame.damageboxes)
+			{
+				dbox = flip_rect_on_x_axis(dbox, center);
+			}
+			for (auto& hbox : frame.hitboxes)
+			{
+				hbox = flip_rect_on_x_axis(hbox, center);
+			}
 		}
 		return *this; // TODO: change this obviously
+	}
+
+	static SDL_Rect flip_rect_on_x_axis(const SDL_Rect& rect, int axis)
+	{
+		return SDL_Rect{
+			(-rect.x + 2 * axis) - rect.w, // -rect.w because x is left-most point
+			rect.y,
+			rect.w,
+			rect.h
+		};
 	}
 
 	void Animation::play_animation(SDL_Renderer * renderer, int x, int y)
