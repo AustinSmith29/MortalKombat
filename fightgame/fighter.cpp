@@ -1,5 +1,7 @@
 #include "fighter.h"
 
+#include <iostream>
+
 Fighter::Fighter(FighterAnimator& animator) 
 	: state_machine(std::make_unique<FighterStateMachine>(*this)), animator(animator)
 {
@@ -116,11 +118,25 @@ void Fighter::flip_orientation()
 	{
 		orientation = Orientation::RIGHT;
 	}
-	else
+	else if (orientation == Orientation::RIGHT)
 	{
 		orientation = Orientation::LEFT;
 	}
 	animator.flip_orientation();
+}
+
+void Fighter::face(int x)
+{
+	int dx = get_position_x() - x;
+	Orientation orientation = get_orientation();
+	if (dx > 0 && orientation != Orientation::LEFT)
+	{
+		flip_orientation();
+	}
+	if (dx < 0 && orientation != Orientation::RIGHT)
+	{
+		flip_orientation();
+	}
 }
 
 void Fighter::tick()

@@ -63,7 +63,10 @@ namespace bones
 
 	Animation Animation::flip()
 	{
-		flip_status = SDL_FLIP_HORIZONTAL;
+		if (flip_status == SDL_FLIP_HORIZONTAL)
+			flip_status = SDL_FLIP_NONE;
+		else
+			flip_status = SDL_FLIP_HORIZONTAL;
 		for (auto frame : frames)
 		{
 			// flip hboxes and dboxes along center

@@ -38,6 +38,7 @@ public:
 
 	void set_graphics(FighterGraphics graphics);
 	void flip_orientation();
+	void face(int x);
 
 	void tick();
 	void draw(SDL_Renderer* renderer);
