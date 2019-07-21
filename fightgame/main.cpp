@@ -4,6 +4,8 @@
 #include "user_fighter.h"
 #include "ai_fighter.h"
 #include "fighter_animator.h"
+#include "collision.h"
+#include "easy_ai.h"
 #include <iostream>
 
 FighterAnimator create_cage(bones::GraphicsLoader &loader)
@@ -33,11 +35,13 @@ int main(int argc, char *argv[])
 	UserFighter fighter(cage_fighter, &handle_fightmove, move_map);
 	fighter.set_position_x(100);
 	fighter.set_position_y(350);
+	Collider collider(fighter);
 
-	AIFighter opponent(cage_fighter);
+	AIFighter opponent(cage_fighter, EasyAI::logic);
 	opponent.flip_orientation();
 	opponent.set_position_x(300);
 	opponent.set_position_y(350);
+	Collider collider2(opponent);
 
 	int njoysticks = SDL_NumJoysticks();
 	std::cout << njoysticks << " detected." << std::endl;
@@ -58,10 +62,20 @@ int main(int argc, char *argv[])
 		fighter.tick();
 		opponent.tick(fighter);
 
+		fighter.face(opponent.get_position_x());
+		opponent.face(fighter.get_position_x());
+
+		if (collider2.damagebox_collision(collider))
+		{
+			std::cout << "Ouch!\n";
+		}
+
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 		fighter.draw(renderer);
 		opponent.draw(renderer);
+		collider.draw_boxes(renderer);
+		collider2.draw_boxes(renderer);
 		SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderDrawRect(renderer, &test);
 		SDL_RenderPresent(renderer);

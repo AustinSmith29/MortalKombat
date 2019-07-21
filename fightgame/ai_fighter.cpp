@@ -1,20 +1,28 @@
 #include "ai_fighter.h"
-#include <cmath>
+#include "ai_util.h"
 
-AIFighter::AIFighter(FighterAnimator &animator) : Fighter(animator)
+#include <cmath>
+#include <iostream>
+
+static Uint32 timer_callback(Uint32 interval, void* param)
+{
+	bool* status = static_cast<bool*>(param);
+	*status = false;
+	return 0;
+}
+
+AIFighter::AIFighter(FighterAnimator& animator, std::function<void(AIFighter& ai, Fighter& other)> logic)
+	: Fighter(animator), logic_func(logic)
 {
 }
 
 void AIFighter::tick(Fighter &other)
 {
-	int distance = abs(other.get_position_x() - get_position_x());
-	if (distance < 50)
-	{
-		if (!state_machine->is_input_locked())
-		{
-			FightMove move = { FighterGraphics::LOW_PUNCH , 5 };
-			set_state(FighterStateMachine::FIGHT_MOVE, &move);
-		}
+	if (!state_machine->is_input_locked() && !action_chosen)
+	{ 
+		logic_func(*this, other);
+		action_chosen = true;
+		SDL_AddTimer(200, timer_callback, &action_chosen);
 	}
 	Fighter::tick();
 }
