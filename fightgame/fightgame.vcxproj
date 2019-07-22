@@ -144,6 +144,7 @@
     <ClCompile Include="jump_left_state.cpp" />
     <ClCompile Include="jump_right_state.cpp" />
     <ClCompile Include="jump_state.cpp" />
+    <ClCompile Include="keyboard_device.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="move_left_state.cpp" />
     <ClCompile Include="move_right_state.cpp" />
@@ -171,9 +172,11 @@
     <ClInclude Include="fightmove_input_handler.h" />
     <ClInclude Include="fightmove_state.h" />
     <ClInclude Include="idle_state.h" />
+    <ClInclude Include="input_device.h" />
     <ClInclude Include="jump_left_state.h" />
     <ClInclude Include="jump_right_state.h" />
     <ClInclude Include="jump_state.h" />
+    <ClInclude Include="keyboard_device.h" />
     <ClInclude Include="move_left_state.h" />
     <ClInclude Include="move_right_state.h" />
     <ClInclude Include="user_fighter.h" />

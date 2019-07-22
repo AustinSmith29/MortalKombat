@@ -6,31 +6,31 @@ UserFighter::UserFighter(FighterAnimator& animator, HandlerFunc handler, std::ma
 
 }
 
-void UserFighter::handle_input_event(SDL_Event& event, SDL_GameController* controller)
+void UserFighter::handle_input_event(InputEvent& event, InputDevice& controller)
 {
 	if (state_machine->is_input_locked())
 		return;
 	fightmove_handler.process_event(event, state_machine->get_fightmove_hook(), 
 		                            get_orientation(), *this);
-	if (event.type == SDL_CONTROLLERBUTTONDOWN)
+	if (event.type == EventType::BUTTON_DOWN)
 	{
-		handle_button_press(event.cbutton.button, controller);
+		handle_button_press(event.button, controller);
 	}
-	if (event.type == SDL_CONTROLLERBUTTONUP)
+	if (event.type == EventType::BUTTON_UP)
 	{
-		handle_button_release(event.cbutton.button);
+		handle_button_release(event.button);
 	}
 }
 
-void UserFighter::handle_button_press(Uint8 button, SDL_GameController* controller)
+void UserFighter::handle_button_press(InputButton button, InputDevice& controller)
 {
-	if (button == SDL_CONTROLLER_BUTTON_DPAD_UP)
+	if (button == InputButton::BUTTON_UP)
 	{
-		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
+		if (controller.is_button_down(InputButton::BUTTON_RIGHT))
 		{
 			set_state(FighterStateMachine::State::JUMP_RIGHT);
 		}
-		else if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT))
+		else if (controller.is_button_down(InputButton::BUTTON_LEFT))
 		{
 			set_state(FighterStateMachine::State::JUMP_LEFT);
 		}
@@ -39,25 +39,25 @@ void UserFighter::handle_button_press(Uint8 button, SDL_GameController* controll
 			set_state(FighterStateMachine::State::JUMP);
 		}
 	}
-	else if (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
+	else if (button == InputButton::BUTTON_RIGHT)
 	{
 		set_state(FighterStateMachine::State::MOVE_RIGHT);
 	}
-	else if (button == SDL_CONTROLLER_BUTTON_DPAD_LEFT)
+	else if (button == InputButton::BUTTON_LEFT)
 	{
 		set_state(FighterStateMachine::State::MOVE_LEFT);
 	}
-	else if (button == SDL_CONTROLLER_BUTTON_DPAD_DOWN)
+	else if (button == InputButton::BUTTON_DOWN)
 	{
 		set_state(FighterStateMachine::State::CROUCH);
 	}
-	else if (button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)
+	else if (button == InputButton::BUTTON_RIGHTSHOULDER)
 	{
 		set_state(FighterStateMachine::State::BLOCK);
 	}
 }
 
-void UserFighter::handle_button_release(Uint8 button)
+void UserFighter::handle_button_release(InputButton button)
 {
 	set_state(FighterStateMachine::State::IDLE);
 }

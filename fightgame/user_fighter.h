@@ -14,12 +14,12 @@ public:
 	UserFighter(const UserFighter& userfighter) = delete;
 	UserFighter& operator = (const UserFighter& userfighter) = delete;
 
-	void handle_input_event(SDL_Event& event, SDL_GameController* controller);
+	void handle_input_event(InputEvent& event, InputDevice& controller);
 
 private:
 	FightMoveInputHandler fightmove_handler;	
 
-	void handle_button_press(Uint8 button, SDL_GameController* controller);
-	void handle_button_release(Uint8 button);
+	void handle_button_press(InputButton button, InputDevice& controller);
+	void handle_button_release(InputButton button);
 };
 #endif

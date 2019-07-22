@@ -3,6 +3,7 @@
 
 #include "fighter_state.h"
 #include "fightmove.h"
+#include "input_device.h"
 
 #include <string>
 #include <vector>
@@ -19,7 +20,7 @@ public:
 	FightMoveInputHandler(const FightMoveInputHandler& handler) = delete;
 	FightMoveInputHandler& operator = (const FightMoveInputHandler& handler) = delete;
 
-	void process_event(SDL_Event &event, FighterState::FightMoveHook hook, Orientation direction, Fighter &fighter);
+	void process_event(InputEvent &event, FighterState::FightMoveHook hook, Orientation direction, Fighter &fighter);
 	void flush();
 
 	static ActivationKey make_key(FighterState::FightMoveHook hook, std::string input);

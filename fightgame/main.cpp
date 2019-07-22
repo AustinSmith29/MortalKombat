@@ -6,6 +6,7 @@
 #include "fighter_animator.h"
 #include "collision.h"
 #include "easy_ai.h"
+#include "keyboard_device.h"
 #include <iostream>
 
 FighterAnimator create_cage(bones::GraphicsLoader &loader)
@@ -45,6 +46,7 @@ int main(int argc, char *argv[])
 
 	int njoysticks = SDL_NumJoysticks();
 	std::cout << njoysticks << " detected." << std::endl;
+	InputDevice *input_device = new KeyboardDevice();
 	SDL_GameController* controller = SDL_GameControllerOpen(0);
 	SDL_Event event;
 	bool quit = false;
@@ -56,7 +58,8 @@ int main(int argc, char *argv[])
 		{
 			if (event.type == SDL_QUIT)
 				quit = true;
-			fighter.handle_input_event(event, controller);
+			auto input_event = input_device->get_input(event);
+			fighter.handle_input_event(input_event, *input_device);
 		}
 
 		fighter.tick();
@@ -86,7 +89,7 @@ int main(int argc, char *argv[])
 			SDL_Delay((1000 / FPS) - time);
 		}
 	}
-	SDL_GameControllerClose(controller);
+	delete input_device;
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
