@@ -60,11 +60,13 @@ void Fighter::set_state(FighterStateMachine::State state, void* data)
 void Fighter::move_left()
 {
 	x -= 1;
+	set_velocity_x(-1);
 }
 
 void Fighter::move_right()
 {
 	x += 1;
+	set_velocity_x(1);
 }
 
 int Fighter::get_velocity_x()
