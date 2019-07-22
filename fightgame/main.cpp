@@ -7,6 +7,7 @@
 #include "collision.h"
 #include "easy_ai.h"
 #include "keyboard_device.h"
+#include "gamepad_device.h"
 #include <iostream>
 
 FighterAnimator create_cage(bones::GraphicsLoader &loader)
@@ -47,7 +48,8 @@ int main(int argc, char *argv[])
 	int njoysticks = SDL_NumJoysticks();
 	std::cout << njoysticks << " detected." << std::endl;
 	InputDevice *input_device = new KeyboardDevice();
-	SDL_GameController* controller = SDL_GameControllerOpen(0);
+	//SDL_GameController* controller = SDL_GameControllerOpen(0);
+	//InputDevice* input_device = new GamepadDevice(controller);
 	SDL_Event event;
 	bool quit = false;
 	SDL_Rect test = { 200, 250, 64, 100 };
