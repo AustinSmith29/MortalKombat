@@ -133,6 +133,7 @@
     <ClCompile Include="cage.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="crouch_state.cpp" />
+    <ClCompile Include="dummy_ai.cpp" />
     <ClCompile Include="easy_ai.cpp" />
     <ClCompile Include="fighter.cpp" />
     <ClCompile Include="fighter_animator.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="cage.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="crouch_state.h" />
+    <ClInclude Include="dummy_ai.h" />
     <ClInclude Include="easy_ai.h" />
     <ClInclude Include="fighter.h" />
     <ClInclude Include="fighter_state.h" />
