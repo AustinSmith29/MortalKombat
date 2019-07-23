@@ -6,6 +6,7 @@
 #include "fighter_animator.h"
 #include "collision.h"
 #include "easy_ai.h"
+#include "dummy_ai.h"
 #include "keyboard_device.h"
 #include "gamepad_device.h"
 #include <iostream>
@@ -37,13 +38,11 @@ int main(int argc, char *argv[])
 	UserFighter fighter(cage_fighter, &handle_fightmove, move_map);
 	fighter.set_position_x(100);
 	fighter.set_position_y(350);
-	Collider collider(fighter);
 
 	AIFighter opponent(cage_fighter, EasyAI::logic);
 	opponent.flip_orientation();
 	opponent.set_position_x(300);
 	opponent.set_position_y(350);
-	Collider collider2(opponent);
 
 	int njoysticks = SDL_NumJoysticks();
 	std::cout << njoysticks << " detected." << std::endl;
@@ -52,7 +51,6 @@ int main(int argc, char *argv[])
 	//InputDevice* input_device = new GamepadDevice(controller);
 	SDL_Event event;
 	bool quit = false;
-	SDL_Rect test = { 200, 250, 64, 100 };
 	while (!quit)
 	{
 		Uint32 ticks = SDL_GetTicks();
@@ -70,19 +68,15 @@ int main(int argc, char *argv[])
 		fighter.face(opponent.get_position_x());
 		opponent.face(fighter.get_position_x());
 
-		if (collider2.damagebox_collision(collider))
-		{
-			std::cout << "Ouch!\n";
-		}
+		handle_fighter_on_fighter_collision(fighter, opponent);
+		handle_fighter_on_fighter_collision(opponent, fighter);
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 		fighter.draw(renderer);
 		opponent.draw(renderer);
-		collider.draw_boxes(renderer);
-		collider2.draw_boxes(renderer);
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-		SDL_RenderDrawRect(renderer, &test);
+	//	draw_fighter_collision_boxes(renderer, fighter);
+	//	draw_fighter_collision_boxes(renderer, opponent);
 		SDL_RenderPresent(renderer);
 
 		int time = SDL_GetTicks() - ticks;

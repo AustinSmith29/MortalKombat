@@ -58,7 +58,7 @@ namespace bones
 		{
 			return nullptr;
 		}
-
+		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 160, 96, 128));
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		if (!texture)
 		{
