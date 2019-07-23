@@ -7,6 +7,8 @@
 #include <sstream>
 #include <algorithm> //std::reverse
 
+#define COLOR_KEY 160, 96, 128
+
 using namespace rapidxml;
 
 namespace bones
@@ -58,7 +60,7 @@ namespace bones
 		{
 			return nullptr;
 		}
-		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 160, 96, 128));
+		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, COLOR_KEY));
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		if (!texture)
 		{
