@@ -32,17 +32,18 @@ int main(int argc, char *argv[])
 	const int FPS = 60;
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	bones::GraphicsLoader graphics(renderer);
+	bones::Sprite stage = graphics.load_sprite("data/test_stage.bmp");
 
 	FighterAnimator cage_fighter = create_cage(graphics);
 	auto move_map = load_moves();
 	UserFighter fighter(cage_fighter, &handle_fightmove, move_map);
 	fighter.set_position_x(100);
-	fighter.set_position_y(350);
+	fighter.set_position_y(400);
 
 	AIFighter opponent(cage_fighter, EasyAI::logic);
 	opponent.flip_orientation();
 	opponent.set_position_x(300);
-	opponent.set_position_y(350);
+	opponent.set_position_y(400);
 
 	int njoysticks = SDL_NumJoysticks();
 	std::cout << njoysticks << " detected." << std::endl;
@@ -73,6 +74,7 @@ int main(int argc, char *argv[])
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
+		bones::draw_sprite(renderer, stage, 0, 0);
 		fighter.draw(renderer);
 		opponent.draw(renderer);
 	//	draw_fighter_collision_boxes(renderer, fighter);

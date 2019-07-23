@@ -19,7 +19,7 @@ private:
 	int frame_counter{ 0 };
 	const int GRAVITY{ 1 };
 	const int FRAME_DELAY{ 2 };
-	const int FLOOR_Y_POSITION{ 350 };
+	const int FLOOR_Y_POSITION{ 400 };
 	void decrease_y_velocity(Fighter& fighter);
 };
 #endif
