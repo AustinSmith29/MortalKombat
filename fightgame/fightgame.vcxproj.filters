@@ -99,6 +99,9 @@
     <ClCompile Include="dummy_ai.cpp">
       <Filter>Source Files\ai_state_machines</Filter>
     </ClCompile>
+    <ClCompile Include="stun_state.cpp">
+      <Filter>Source Files\fighter_states</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fighter.h">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="dummy_ai.h">
       <Filter>Header Files\ai_state_machines</Filter>
+    </ClInclude>
+    <ClInclude Include="stun_state.h">
+      <Filter>Header Files\fighter_states</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

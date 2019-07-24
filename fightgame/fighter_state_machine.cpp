@@ -11,6 +11,7 @@ FighterStateMachine::FighterStateMachine(Fighter& owner) : fighter(owner)
 	states[State::JUMP_RIGHT] = new JumpRightState();
 	states[State::JUMP_LEFT] = new JumpLeftState();
 	states[State::BLOCK] = new BlockState();
+	states[State::STUN] = new StunState();
 	current_state = states[State::IDLE];
 	prev_state = states[State::IDLE];
 }

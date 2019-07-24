@@ -78,16 +78,16 @@ static int get_largest_overlap_x(const SDL_Rect& a, const SDL_Rect& b);
 void handle_fighter_on_fighter_collision(Fighter& subject, Fighter& other)
 {
 	auto opponent_hitboxes = get_fighter_hitboxes(other);
+	auto opponent_dmgboxes = get_fighter_dmgboxes(other);
 	if (is_fighter_hitbox_collision_in(subject, opponent_hitboxes))
 	{
 		resolve_hitbox_hitbox_collision(subject, other);
 	}
-	/*
+
 	if (is_fighter_hitbox_collision_in(subject, opponent_dmgboxes))
 	{
-		subject.set_state(FighterStateMachine::State::BLOCK);
+		subject.set_state(FighterStateMachine::State::STUN);
 	}
-	*/
 }
 void resolve_hitbox_hitbox_collision(Fighter& subject, Fighter& other)
 {

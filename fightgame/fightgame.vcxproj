@@ -150,6 +150,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="move_left_state.cpp" />
     <ClCompile Include="move_right_state.cpp" />
+    <ClCompile Include="stun_state.cpp" />
     <ClCompile Include="user_fighter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +184,7 @@
     <ClInclude Include="keyboard_device.h" />
     <ClInclude Include="move_left_state.h" />
     <ClInclude Include="move_right_state.h" />
+    <ClInclude Include="stun_state.h" />
     <ClInclude Include="user_fighter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

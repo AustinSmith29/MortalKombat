@@ -11,5 +11,6 @@
 #include "jump_right_state.h"
 #include "jump_left_state.h"
 #include "block_state.h"
+#include "stun_state.h"
 
 #endif

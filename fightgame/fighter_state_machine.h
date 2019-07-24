@@ -19,6 +19,7 @@ public:
 		JUMP_RIGHT,
 		JUMP_LEFT,
 		BLOCK,
+		STUN,
 		TOTAL
 	};
 
