@@ -185,5 +185,8 @@
     <ClInclude Include="stun_state.h">
       <Filter>Header Files\fighter_states</Filter>
     </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

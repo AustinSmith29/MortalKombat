@@ -166,6 +166,7 @@
     <ClInclude Include="block_state.h" />
     <ClInclude Include="cage.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="constants.h" />
     <ClInclude Include="crouch_state.h" />
     <ClInclude Include="dummy_ai.h" />
     <ClInclude Include="easy_ai.h" />
