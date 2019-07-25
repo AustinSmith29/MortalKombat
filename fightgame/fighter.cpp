@@ -9,6 +9,7 @@ Fighter::Fighter(FighterAnimator& animator)
 	orientation = Orientation::RIGHT;
 	x_vel = y_vel = 0;
 	health = 100;
+	airborne = false;
 }
 
 Fighter::Fighter(const Fighter& other)
@@ -107,6 +108,16 @@ int Fighter::get_position_y()
 void Fighter::set_position_y(int val)
 {
 	y = val;
+}
+
+void Fighter::set_airborne(bool val)
+{
+	airborne = val;
+}
+
+bool Fighter::is_airborne()
+{
+	return airborne;
 }
 
 void Fighter::set_graphics(FighterGraphics graphics)

@@ -36,6 +36,9 @@ public:
 	int get_position_y();
 	void set_position_y(int val);
 
+	void set_airborne(bool val);
+	bool is_airborne();
+
 	void set_graphics(FighterGraphics graphics);
 	void flip_orientation();
 	void face(int x);
@@ -47,6 +50,7 @@ protected:
 	int x, y;
 	int x_vel, y_vel;
 	int health;
+	bool airborne;
 	FighterAnimator animator;
 	std::unique_ptr<FighterStateMachine> state_machine;
 	Orientation orientation;

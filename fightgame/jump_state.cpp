@@ -14,6 +14,7 @@ void JumpState::start_jump(Fighter& fighter)
 {
 	lock_input();
 	fighter.set_velocity_y(-10);
+	fighter.set_airborne(true);
 }
 
 void JumpState::tick(Fighter& fighter, FighterStateMachine &machine)
@@ -30,6 +31,7 @@ void JumpState::apply_gravity(Fighter& fighter, FighterStateMachine &machine)
 		fighter.set_velocity_y(0);
 		fighter.set_position_y(FLOOR_Y);
 		finish_jump(fighter, machine);
+		fighter.set_airborne(false);
 	}
 	frame_counter++;
 }

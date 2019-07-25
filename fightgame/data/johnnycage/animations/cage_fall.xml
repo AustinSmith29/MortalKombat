@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<animation spritesheet="C:/Users/Austin/Documents/dev/fight/fightgame/data/johnnycage/johnnycage_spritesheet.bmp">
+    <frame duration="5" h="119" w="50" x="587" y="1183">
+        <hitboxes/>
+        <damageboxes/>
+    </frame>
+    <frame duration="10" h="58" w="58" x="648" y="1244">
+        <hitboxes/>
+        <damageboxes/>
+    </frame>
+    <frame duration="10" h="73" w="49" x="717" y="1229">
+        <hitboxes/>
+        <damageboxes/>
+    </frame>
+    <frame duration="10" h="63" w="40" x="778" y="1239">
+        <hitboxes/>
+        <damageboxes/>
+    </frame>
+    <frame duration="10" h="63" w="72" x="829" y="1239">
+        <hitboxes/>
+        <damageboxes/>
+    </frame>
+    <frame duration="20" h="30" w="75" x="911" y="1272">
+        <hitboxes>
+            <hitbox h="21" w="70" x="5" y="1"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+</animation>
