@@ -3,6 +3,9 @@
 
 #include "fighter_animator.h"
 #include "fighter_state_machine.h"
+#include "projectile.h"
+
+#include <vector>
 #include <memory>
 
 class Fighter
@@ -43,6 +46,8 @@ public:
 	void flip_orientation();
 	void face(int x);
 
+	void add_projectile(Projectile& projectile);
+
 	void tick();
 	void draw(SDL_Renderer* renderer);
 
@@ -54,5 +59,6 @@ protected:
 	FighterAnimator animator;
 	std::unique_ptr<FighterStateMachine> state_machine;
 	Orientation orientation;
+	std::vector<Projectile> projectiles;
 };
 #endif

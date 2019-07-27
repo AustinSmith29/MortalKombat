@@ -155,6 +155,10 @@ void Fighter::face(int x)
 void Fighter::tick()
 {
 	state_machine->tick();
+	for (auto projectile : projectiles)
+	{
+		projectile.tick();
+	}
 }
 
 void Fighter::draw(SDL_Renderer* renderer)
@@ -164,4 +168,9 @@ void Fighter::draw(SDL_Renderer* renderer)
 	int draw_x = topleft_x();
 	int draw_y = topleft_y();
 	animator.play(renderer, draw_x, draw_y);
+
+	for (auto projectile : projectiles)
+	{
+		projectile.draw(renderer);
+	}
 }
