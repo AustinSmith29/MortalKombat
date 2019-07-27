@@ -152,12 +152,17 @@ void Fighter::face(int x)
 	}
 }
 
+void Fighter::add_projectile(Projectile* projectile)
+{
+	projectiles.push_back(projectile);
+}
+
 void Fighter::tick()
 {
 	state_machine->tick();
 	for (auto projectile : projectiles)
 	{
-		projectile.tick();
+		projectile->tick();
 	}
 }
 
@@ -171,6 +176,6 @@ void Fighter::draw(SDL_Renderer* renderer)
 
 	for (auto projectile : projectiles)
 	{
-		projectile.draw(renderer);
+		projectile->draw(renderer);
 	}
 }
