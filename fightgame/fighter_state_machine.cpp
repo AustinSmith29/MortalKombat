@@ -26,6 +26,8 @@ FighterStateMachine::~FighterStateMachine()
 
 void FighterStateMachine::change_to(State new_state, void *data)
 {
+	if (states[new_state] == current_state)
+		return;
 	current_state->exit(fighter, *this);
 	prev_state = current_state;
 	current_state = states[new_state];

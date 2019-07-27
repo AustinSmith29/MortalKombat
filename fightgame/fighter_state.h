@@ -18,6 +18,7 @@ public:
 		CROUCH,
 		JUMP
 	};
+	virtual ~FighterState() = default;
 	virtual void enter(Fighter &fighter, FighterStateMachine &machine, void* data) = 0;
 	virtual void tick(Fighter &fighter, FighterStateMachine &machine) = 0;
 	virtual void exit(Fighter &fighter, FighterStateMachine &machine) = 0;

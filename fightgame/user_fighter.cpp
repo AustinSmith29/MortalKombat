@@ -1,4 +1,5 @@
 #include "user_fighter.h"
+#include <iostream>
 
 UserFighter::UserFighter(FighterAnimator& animator, HandlerFunc handler, std::map<ActivationKey, FightMove> move_map)
 	: Fighter(animator), fightmove_handler(handler, move_map)
@@ -18,7 +19,7 @@ void UserFighter::handle_input_event(InputEvent& event, InputDevice& controller)
 	}
 	if (event.type == EventType::BUTTON_UP)
 	{
-		handle_button_release(event.button);
+		handle_button_release(event.button, controller);
 	}
 }
 
@@ -49,15 +50,43 @@ void UserFighter::handle_button_press(InputButton button, InputDevice& controlle
 	}
 	else if (button == InputButton::BUTTON_DOWN)
 	{
+		std::cout << "DOWN\n";
 		set_state(FighterStateMachine::State::CROUCH);
 	}
 	else if (button == InputButton::BUTTON_RIGHTSHOULDER)
 	{
-		set_state(FighterStateMachine::State::BLOCK);
+		bool is_crouch = false;
+		if (controller.is_button_down(InputButton::BUTTON_DOWN))
+		{
+			is_crouch = true;
+			set_state(FighterStateMachine::State::BLOCK, &is_crouch);
+		}
+		else
+		{
+			set_state(FighterStateMachine::State::BLOCK, &is_crouch);
+		}
 	}
 }
 
-void UserFighter::handle_button_release(InputButton button)
+void UserFighter::handle_button_release(InputButton button, InputDevice& controller)
 {
-	set_state(FighterStateMachine::State::IDLE);
+	if (button == InputButton::BUTTON_DOWN)
+	{
+		set_state(FighterStateMachine::State::IDLE);
+	}
+	if (button == InputButton::BUTTON_RIGHT || button == InputButton::BUTTON_LEFT)
+	{
+		set_state(FighterStateMachine::State::IDLE);
+	}
+	if (button == InputButton::BUTTON_RIGHTSHOULDER)
+	{
+		if (controller.is_button_down(InputButton::BUTTON_DOWN))
+		{
+			set_state(FighterStateMachine::State::CROUCH);
+		}
+		else
+		{
+			set_state(FighterStateMachine::State::IDLE);
+		}
+	}
 }

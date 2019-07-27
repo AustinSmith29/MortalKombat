@@ -20,6 +20,6 @@ private:
 	FightMoveInputHandler fightmove_handler;	
 
 	void handle_button_press(InputButton button, InputDevice& controller);
-	void handle_button_release(InputButton button);
+	void handle_button_release(InputButton button, InputDevice& controller);
 };
 #endif
