@@ -33,6 +33,7 @@ enum FighterGraphics
 	STUN_LOW,
 
 	JUMP_KICK,
+	FALL,
 
 	SPECIAL_0,
 	SPECIAL_1,

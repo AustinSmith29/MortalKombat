@@ -11,6 +11,7 @@ public:
 	void exit(Fighter& fighter, FighterStateMachine& machine) override;
 private:
 	bool fall{ false };
+	int next_state;
 };
 
 #endif

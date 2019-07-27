@@ -1,5 +1,4 @@
 #include "user_fighter.h"
-#include <iostream>
 
 UserFighter::UserFighter(FighterAnimator& animator, HandlerFunc handler, std::map<ActivationKey, FightMove> move_map)
 	: Fighter(animator), fightmove_handler(handler, move_map)
@@ -50,7 +49,6 @@ void UserFighter::handle_button_press(InputButton button, InputDevice& controlle
 	}
 	else if (button == InputButton::BUTTON_DOWN)
 	{
-		std::cout << "DOWN\n";
 		set_state(FighterStateMachine::State::CROUCH);
 	}
 	else if (button == InputButton::BUTTON_RIGHTSHOULDER)

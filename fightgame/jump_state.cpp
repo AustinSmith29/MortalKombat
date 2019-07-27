@@ -2,7 +2,6 @@
 #include "fighter.h"
 #include "fighter_state_machine.h"
 #include "constants.h"
-#include <iostream>
 
 void JumpState::enter(Fighter& fighter, FighterStateMachine &machine, void *data)
 {
@@ -16,7 +15,6 @@ void JumpState::start_jump(Fighter& fighter)
 	lock_input();
 	fighter.set_velocity_y(-10);
 	fighter.set_airborne(true);
-	std::cout << "Fighter Jump!\n";
 }
 
 void JumpState::tick(Fighter& fighter, FighterStateMachine &machine)
@@ -67,6 +65,5 @@ void JumpState::finish_jump(Fighter& fighter, FighterStateMachine &machine)
 {
 	fighter.get_animation()->restart();
 	unlock_input();
-	std::cout << "Finished jump!\n";
 	machine.change_to(FighterStateMachine::State::IDLE, nullptr);
 }

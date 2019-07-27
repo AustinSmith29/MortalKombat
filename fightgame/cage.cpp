@@ -26,6 +26,7 @@ std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader&
 	anim_sources[FighterGraphics::HIGH_KICK] = loader.load_animation(ANIMATIONS "cage_kick_high.xml");
 	anim_sources[FighterGraphics::STUN_HIGH] = loader.load_animation(ANIMATIONS "cage_stun_high.xml");
 	anim_sources[FighterGraphics::STUN_LOW] = loader.load_animation(ANIMATIONS "cage_stun_low.xml");
+	anim_sources[FighterGraphics::FALL] = loader.load_animation(ANIMATIONS "cage_fall.xml");
 
 	return anim_sources;
 }
