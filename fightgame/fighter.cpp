@@ -21,6 +21,7 @@ Fighter::Fighter(const Fighter& other)
 	y_vel = other.y_vel;
 	health = other.health;
 	orientation = other.orientation;
+	airborne = other.airborne;
 }
 
 //TODO: Can prob move these to FighterAnimator
