@@ -19,6 +19,7 @@ std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader&
 	anim_sources[FighterGraphics::JUMP_FORWARD] = jump_forward;
 	anim_sources[FighterGraphics::JUMP_BACKWARD] = jump_forward.reverse();
 	anim_sources[FighterGraphics::BLOCK] = loader.load_animation(ANIMATIONS "cage_block.xml");
+	anim_sources[FighterGraphics::CROUCH_BLOCK] = loader.load_animation(ANIMATIONS "cage_block_low.xml");
 	anim_sources[FighterGraphics::LOW_PUNCH] = loader.load_animation(ANIMATIONS "cage_punch_low_right.xml");
 	anim_sources[FighterGraphics::LOW_KICK] = loader.load_animation(ANIMATIONS "cage_kick_low.xml");
 	anim_sources[FighterGraphics::HIGH_PUNCH] = loader.load_animation(ANIMATIONS "cage_punch_high_right.xml");
