@@ -12,5 +12,6 @@ public:
 	void exit(Fighter& fighter, FighterStateMachine &machine) override;
 private:
 	FightMove move;
+	int next_state;
 };
 #endif

@@ -1,11 +1,8 @@
 #include "stun_state.h"
 #include "fighter.h"
 
-#include <iostream>
-
 void StunState::enter(Fighter& fighter, FighterStateMachine& machine, void* data)
 {
-	std::cout << "STUN STATE ENTER!\n";
 	lock_input();
 	if (fighter.is_airborne())
 	{
@@ -22,7 +19,6 @@ void StunState::enter(Fighter& fighter, FighterStateMachine& machine, void* data
 	{
 		fighter.set_graphics(FighterGraphics::STUN_LOW);
 		next_state = FighterStateMachine::State::CROUCH;
-		std::cout << "CROUCH HIT\n";
 	}
 	else
 	{
@@ -47,7 +43,6 @@ void StunState::tick(Fighter& fighter, FighterStateMachine& machine)
 
 void StunState::exit(Fighter& fighter, FighterStateMachine& machine)
 {
-	std::cout << "Exit STUN STATE\n";
 	fighter.set_velocity_x(0);
 	unlock_input();
 	fighter.get_animation()->restart();

@@ -6,6 +6,15 @@ void FightMoveState::enter(Fighter& fighter, FighterStateMachine &machine, void 
 	lock_input();
 	move = *static_cast<FightMove*>(data);
 	fighter.set_graphics(move.animation);
+	auto hook = machine.get_previous_state()->get_move_hook();
+	if (hook == FightMoveHook::CROUCH)
+	{
+		next_state = FighterStateMachine::State::CROUCH;
+	}
+	else
+	{
+		next_state = FighterStateMachine::State::IDLE;
+	}
 }
 
 void FightMoveState::tick(Fighter& fighter, FighterStateMachine &machine)
@@ -14,20 +23,11 @@ void FightMoveState::tick(Fighter& fighter, FighterStateMachine &machine)
 	if (fighter.get_animation()->is_complete())
 	{
 		unlock_input();
-		exit(fighter, machine);
+		machine.change_to((FighterStateMachine::State)next_state, nullptr);
 	}
 }
 
 void FightMoveState::exit(Fighter& fighter, FighterStateMachine &machine)
 {
 	fighter.get_animation()->restart();
-	auto hook = machine.get_previous_state()->get_move_hook();
-	if (hook == FightMoveHook::CROUCH)
-	{
-		fighter.set_graphics(FighterGraphics::CROUCH);
-	}
-	else
-	{
-		fighter.set_graphics(FighterGraphics::IDLE);
-	}
 }
