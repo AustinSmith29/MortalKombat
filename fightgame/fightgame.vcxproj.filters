@@ -25,6 +25,12 @@
     <Filter Include="Source Files\ai_state_machines">
       <UniqueIdentifier>{ac95df42-8ccd-4304-b73e-228b2133f707}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\projectiles">
+      <UniqueIdentifier>{fb3ce7b3-b985-4b2f-a2e8-eacf306716b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\projectiles">
+      <UniqueIdentifier>{ad3db0ed-5de8-4b0c-bd28-a82f505311a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -101,6 +107,12 @@
     </ClCompile>
     <ClCompile Include="stun_state.cpp">
       <Filter>Source Files\fighter_states</Filter>
+    </ClCompile>
+    <ClCompile Include="cage_projectile.cpp">
+      <Filter>Source Files\projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="projectile_factory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +198,15 @@
       <Filter>Header Files\fighter_states</Filter>
     </ClInclude>
     <ClInclude Include="constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cage_projectile.h">
+      <Filter>Header Files\projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="projectile_factory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

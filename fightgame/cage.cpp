@@ -1,8 +1,8 @@
 #include "cage.h"
 #include "fighter.h"
+#include "projectile_factory.h"
 
 #include <map>
-#include <iostream>
 
 #define ANIMATIONS "data/johnnycage/animations/"
 
@@ -27,6 +27,7 @@ std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader&
 	anim_sources[FighterGraphics::STUN_HIGH] = loader.load_animation(ANIMATIONS "cage_stun_high.xml");
 	anim_sources[FighterGraphics::STUN_LOW] = loader.load_animation(ANIMATIONS "cage_stun_low.xml");
 	anim_sources[FighterGraphics::FALL] = loader.load_animation(ANIMATIONS "cage_fall.xml");
+	anim_sources[FighterGraphics::SPECIAL_0] = loader.load_animation(ANIMATIONS "cage_fireball_throw.xml");
 
 	return anim_sources;
 }
@@ -42,10 +43,19 @@ std::map <FightMoveInputHandler::ActivationKey, FightMove> load_moves()
 	moves[FightMoveInputHandler::make_key(STAND, "B,")] = { FighterGraphics::LOW_KICK, 5 };
 	moves[FightMoveInputHandler::make_key(CROUCH, "X,")] = { FighterGraphics::LOW_PUNCH, 5 };
 	moves[FightMoveInputHandler::make_key(CROUCH, "A,")] = { FighterGraphics::LOW_KICK, 5 };
+	moves[FightMoveInputHandler::make_key(STAND, "D,F,A,")] = { FighterGraphics::SPECIAL_0 };
 	return moves;
 }
 
 void handle_fightmove(FightMove move, Fighter &fighter)
 {
+	if (move.animation == FighterGraphics::SPECIAL_0)
+	{
+		auto projectile = ProjectileFactory::create(fighter.get_position_x(),
+									fighter.get_position_y() - 50,
+									fighter.get_orientation(),
+									CAGE_PROJECTILE);
+		fighter.add_projectile(std::move(projectile));
+	}
 	fighter.set_state(FighterStateMachine::State::FIGHT_MOVE, &move);
 }

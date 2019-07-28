@@ -153,17 +153,18 @@ void Fighter::face(int x)
 	}
 }
 
-void Fighter::add_projectile(Projectile* projectile)
+void Fighter::add_projectile(std::unique_ptr<Projectile> projectile)
 {
-	projectiles.push_back(projectile);
+	projectiles.push_back(std::move(projectile));
 }
 
 void Fighter::tick()
 {
 	state_machine->tick();
-	for (auto projectile : projectiles)
+	for (auto& projectile : projectiles)
 	{
-		projectile->tick();
+		if (!projectile->is_dead())
+			projectile->tick();
 	}
 }
 
@@ -175,8 +176,9 @@ void Fighter::draw(SDL_Renderer* renderer)
 	int draw_y = topleft_y();
 	animator.play(renderer, draw_x, draw_y);
 
-	for (auto projectile : projectiles)
+	for (auto& projectile : projectiles)
 	{
-		projectile->draw(renderer);
+		if (!projectile->is_dead())
+			projectile->draw(renderer);
 	}
 }

@@ -9,6 +9,7 @@
 #include "dummy_ai.h"
 #include "keyboard_device.h"
 #include "gamepad_device.h"
+#include "projectile_factory.h"
 #include <iostream>
 
 FighterAnimator create_cage(bones::GraphicsLoader &loader)
@@ -40,10 +41,12 @@ int main(int argc, char *argv[])
 	fighter.set_position_x(100);
 	fighter.set_position_y(400);
 
-	AIFighter opponent(cage_fighter, EasyAI::logic);
+	AIFighter opponent(cage_fighter, DummyAI::logic);
 	opponent.flip_orientation();
 	opponent.set_position_x(300);
 	opponent.set_position_y(400);
+
+	ProjectileFactory::load(graphics);
 
 	int njoysticks = SDL_NumJoysticks();
 	std::cout << njoysticks << " detected." << std::endl;

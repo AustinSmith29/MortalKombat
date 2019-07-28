@@ -46,7 +46,7 @@ public:
 	void flip_orientation();
 	void face(int x);
 
-	void add_projectile(Projectile* projectile);
+	void add_projectile(std::unique_ptr<Projectile> projectile);
 
 	void tick();
 	void draw(SDL_Renderer* renderer);
@@ -59,6 +59,6 @@ protected:
 	FighterAnimator animator;
 	std::unique_ptr<FighterStateMachine> state_machine;
 	Orientation orientation;
-	std::vector<Projectile*> projectiles;
+	std::vector<std::unique_ptr<Projectile>> projectiles;
 };
 #endif
