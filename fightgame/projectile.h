@@ -12,6 +12,7 @@ public:
 	virtual ~Projectile() = default;
 
 	virtual Projectile* clone() = 0;
+	virtual void initialize(int x, int y, Orientation direction) = 0;
 	virtual void tick() = 0;
 	virtual void draw(SDL_Renderer* renderer) = 0;
 	virtual void do_impact(Fighter& other) {};

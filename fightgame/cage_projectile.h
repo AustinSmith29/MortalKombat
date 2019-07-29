@@ -8,9 +8,10 @@
 class CageProjectile : public Projectile
 {
 public:
-	CageProjectile(int x, int y, Orientation direction);
+	CageProjectile();
 
 	CageProjectile* clone() override;
+	void initialize(int x, int y, Orientation orientation) override;
 	void tick() override;
 	void draw(SDL_Renderer* renderer) override;
 	void do_impact(Fighter& other) override;

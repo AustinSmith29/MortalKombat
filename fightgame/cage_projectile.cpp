@@ -1,16 +1,20 @@
 #include "cage_projectile.h"
 #include "constants.h"
 
-CageProjectile::CageProjectile(int x, int y, Orientation orientation)
+CageProjectile::CageProjectile()
+{
+	damage = 10;
+}
+
+void CageProjectile::initialize(int x, int y, Orientation direction)
 {
 	this->x = x;
 	this->y = y;
-	direction = orientation;
-	damage = 10;
-	if (orientation == Orientation::LEFT) 
-		velocity_x = 8;
-	else
+	this->direction = direction;
+	if (direction == Orientation::LEFT) 
 		velocity_x = -8;
+	else
+		velocity_x = 8;
 	velocity_y = -4;
 	gravity_counter = 0;
 }
