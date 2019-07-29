@@ -1,9 +1,12 @@
 #include "cage_projectile.h"
 #include "constants.h"
+#include "fighter.h"
 
 CageProjectile::CageProjectile()
 {
 	damage = 10;
+	velocity_x = velocity_y = x = y = 0;
+	gravity_counter = 0;
 }
 
 void CageProjectile::initialize(int x, int y, Orientation direction)
@@ -55,10 +58,22 @@ void CageProjectile::draw(SDL_Renderer* renderer)
 void CageProjectile::do_impact(Fighter& other)
 {
 	kill();
+	other.set_state(FighterStateMachine::STUN);
 }
 
 void CageProjectile::load_graphics(bones::GraphicsLoader& loader)
 {
 	projectile_animation = loader.load_animation("data/johnnycage/animations/cage_projectile.xml");
 	die_animation = loader.load_animation("data/johnnycage/animations/cage_projectile_explode.xml");
+}
+
+std::vector<SDL_Rect> CageProjectile::get_dmgboxes()
+{
+	auto boxes = projectile_animation.get_current_frame().damageboxes;
+	for (auto& box : boxes)
+	{
+		box.x = x;
+		box.y = y;
+	}
+	return boxes;
 }

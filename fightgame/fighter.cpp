@@ -158,6 +158,11 @@ void Fighter::add_projectile(std::unique_ptr<Projectile> projectile)
 	projectiles.push_back(std::move(projectile));
 }
 
+std::vector<std::unique_ptr<Projectile>>* Fighter::get_projectiles()
+{
+	return &projectiles;
+}
+
 void Fighter::tick()
 {
 	state_machine->tick();

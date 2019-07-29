@@ -139,6 +139,16 @@ int get_largest_overlap_x(const SDL_Rect& a, const SDL_Rect& b)
 	}
 }
 
+void handle_fighter_on_projectile_collision(Fighter& fighter, Projectile& other)
+{
+	auto projectile_dmgbox = other.get_dmgboxes();
+	auto fighter_damagebox = get_fighter_hitboxes(fighter);
+	if (intersects(projectile_dmgbox, fighter_damagebox))
+	{
+		if (!other.is_dead())
+			other.do_impact(fighter);
+	}
+}
 
 void draw_fighter_collision_boxes(SDL_Renderer* renderer, Fighter& fighter)
 {

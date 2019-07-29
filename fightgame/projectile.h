@@ -2,6 +2,8 @@
 #define _PROJECTILE_H
 
 #include <SDL.h>
+#include <vector>
+
 #include "graphics.h"
 #include "fighter_state.h"
 
@@ -16,6 +18,7 @@ public:
 	virtual void tick() = 0;
 	virtual void draw(SDL_Renderer* renderer) = 0;
 	virtual void do_impact(Fighter& other) {};
+	virtual std::vector<SDL_Rect> get_dmgboxes() = 0;
 	virtual void load_graphics(bones::GraphicsLoader& loader) = 0;
 
 	void kill() {

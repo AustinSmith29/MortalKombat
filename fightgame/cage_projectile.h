@@ -16,6 +16,7 @@ public:
 	void draw(SDL_Renderer* renderer) override;
 	void do_impact(Fighter& other) override;
 	void load_graphics(bones::GraphicsLoader& loader) override;
+	std::vector<SDL_Rect> get_dmgboxes() override;
 private:
 	bones::Animation projectile_animation;
 	bones::Animation die_animation;

@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 	fighter.set_position_x(100);
 	fighter.set_position_y(400);
 
-	AIFighter opponent(cage_fighter, EasyAI::logic);
+	AIFighter opponent(cage_fighter, DummyAI::logic);
 	opponent.flip_orientation();
 	opponent.set_position_x(300);
 	opponent.set_position_y(400);
@@ -73,6 +73,11 @@ int main(int argc, char *argv[])
 		opponent.face(fighter.get_position_x());
 
 		handle_fighter_on_fighter_collision(fighter, opponent);
+		auto fighter_projectiles = fighter.get_projectiles();
+		for (auto& projectile : *fighter_projectiles)
+		{
+			handle_fighter_on_projectile_collision(opponent, *projectile);
+		}
 		handle_fighter_on_fighter_collision(opponent, fighter);
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);

@@ -47,6 +47,7 @@ public:
 	void face(int x);
 
 	void add_projectile(std::unique_ptr<Projectile> projectile);
+	std::vector<std::unique_ptr<Projectile>>* get_projectiles();
 
 	void tick();
 	void draw(SDL_Renderer* renderer);
