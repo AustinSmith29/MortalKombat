@@ -12,27 +12,21 @@ namespace EasyAI
 		int distance = ai.get_position_x() - other.get_position_x();
 		if (distance > 50)
 		{
-			double jump_chance = random();
-			if (jump_chance > .90)
-			{
-				ai.set_state(FighterStateMachine::JUMP_LEFT);
-			}
-			else
-			{
-				ai.set_state(FighterStateMachine::MOVE_LEFT);
-			}
+			std::vector<std::pair<int, FighterStateMachine::State>> random_map = {
+				{10, FighterStateMachine::State::JUMP_LEFT},
+				{90, FighterStateMachine::State::MOVE_LEFT}
+			};
+			auto state = nonuni_random_state_from<FighterStateMachine::State>(random_map);
+			ai.set_state(state);
 		}
 		else if (distance < -50)
 		{
-			double jump_chance = random();
-			if (jump_chance > .90)
-			{
-				ai.set_state(FighterStateMachine::JUMP_RIGHT);
-			}
-			else
-			{
-				ai.set_state(FighterStateMachine::MOVE_RIGHT);
-			}
+			std::vector<std::pair<int, FighterStateMachine::State>> random_map = {
+				{10, FighterStateMachine::State::JUMP_RIGHT},
+				{90, FighterStateMachine::State::MOVE_RIGHT}
+			};
+			auto state = nonuni_random_state_from<FighterStateMachine::State>(random_map);
+			ai.set_state(state);
 		}
 		else
 		{
@@ -49,25 +43,16 @@ namespace EasyAI
 					ai.set_state(FighterStateMachine::JUMP_LEFT);
 				}
 			}
-			else if (move_chance <= .25)
-			{
-				FightMove move = { FighterGraphics::LOW_PUNCH , 5 };
-				ai.set_state(FighterStateMachine::FIGHT_MOVE, &move);
-			}
-			else if (move_chance <= .50)
-			{
-				FightMove move = { FighterGraphics::HIGH_PUNCH, 5 };
-				ai.set_state(FighterStateMachine::FIGHT_MOVE, &move);
-			}
 			else if (move_chance <= .75)
 			{
-				FightMove move = { FighterGraphics::HIGH_KICK, 5 };
-				ai.set_state(FighterStateMachine::FIGHT_MOVE, &move);
-			}
-			else if (move_chance <= .85)
-			{
-				FightMove move = { FighterGraphics::LOW_KICK, 5 };
-				ai.set_state(FighterStateMachine::FIGHT_MOVE, &move);
+				std::vector<std::pair<int, FightMove>> random_map = {
+					{25, {FighterGraphics::LOW_PUNCH, 5}},
+					{25, {FighterGraphics::HIGH_PUNCH, 5}}, 
+					{25, {FighterGraphics::HIGH_KICK, 5}},
+					{25, {FighterGraphics::LOW_KICK, 5}},
+				};
+				auto move = nonuni_random_state_from<FightMove>(random_map);
+				ai.set_state(FighterStateMachine::State::FIGHT_MOVE, &move);
 			}
 			else
 			{
