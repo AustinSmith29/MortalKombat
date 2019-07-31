@@ -9,15 +9,17 @@
 
 double random();
 
-unsigned int distance(Fighter& a, Fighter& b);
-
 class Fighter;
+unsigned int x_distance(Fighter& a, Fighter& b);
+
 namespace Behavior
 {
+	using BehaviorFunc = std::function<void(Fighter&, Fighter&)>;
 	void jump_towards(Fighter& subject, Fighter& target);
 	void jump_away(Fighter& subject, Fighter& target);
 	void move_towards(Fighter& subject, Fighter& target);
 	void move_away(Fighter& subject, Fighter& target);
+	void idle(Fighter& subject, Fighter& target);
 };
 
 template <typename T, typename V>

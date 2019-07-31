@@ -13,14 +13,14 @@ double random()
 	return distribution(generator);
 }
 
-unsigned int distance(Fighter& a, Fighter& b)
+unsigned int x_distance(Fighter& a, Fighter& b)
 {
-	return abs(a.get_position_x() - b.get_position_y());
+	return abs(a.get_position_x() - b.get_position_x());
 }
 
 static bool on_left(Fighter& subject, Fighter& target)
 {
-	if (subject.get_position_x() - subject.get_position_y() < 0)
+	if (subject.get_position_x() - target.get_position_x() < 0)
 		return true;
 	return false;
 }
@@ -73,5 +73,10 @@ namespace Behavior
 		{
 			subject.set_state(FighterStateMachine::State::MOVE_RIGHT);
 		}
+	}
+
+	void idle(Fighter& subject, Fighter& target)
+	{
+		subject.set_state(FighterStateMachine::State::IDLE);
 	}
 }
