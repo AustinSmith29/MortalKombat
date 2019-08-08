@@ -6,16 +6,17 @@
 
 namespace EasyAI
 {
-	void select_fightmove(Fighter& a, Fighter& b)
+	void select_fightmove(AIFighter& a, Fighter& b)
 	{
 		std::vector<std::pair<int, FightMove>> random_map = {
-			{25, {FighterGraphics::LOW_PUNCH, 5}},
-			{25, {FighterGraphics::HIGH_PUNCH, 5}}, 
-			{25, {FighterGraphics::HIGH_KICK, 5}},
-			{25, {FighterGraphics::LOW_KICK, 5}},
+			{20, {FighterGraphics::LOW_PUNCH, 5}},
+			{20, {FighterGraphics::HIGH_PUNCH, 5}}, 
+			{20, {FighterGraphics::HIGH_KICK, 5}},
+			{20, {FighterGraphics::LOW_KICK, 5}},
+			{20, {FighterGraphics::SPECIAL_0, 5}},
 		};
 		auto move = nonuni_random_state_from<FightMove>(random_map);
-		a.set_state(FighterStateMachine::State::FIGHT_MOVE, &move);
+		a.do_move(move);
 	}
 	
 	void logic(AIFighter& ai, Fighter& other)

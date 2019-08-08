@@ -9,17 +9,18 @@
 
 double random();
 
+class AIFighter;
 class Fighter;
 unsigned int x_distance(Fighter& a, Fighter& b);
 
 namespace Behavior
 {
-	using BehaviorFunc = std::function<void(Fighter&, Fighter&)>;
-	void jump_towards(Fighter& subject, Fighter& target);
-	void jump_away(Fighter& subject, Fighter& target);
-	void move_towards(Fighter& subject, Fighter& target);
-	void move_away(Fighter& subject, Fighter& target);
-	void idle(Fighter& subject, Fighter& target);
+	using BehaviorFunc = std::function<void(AIFighter&, Fighter&)>;
+	void jump_towards(AIFighter& subject, Fighter& target);
+	void jump_away(AIFighter& subject, Fighter& target);
+	void move_towards(AIFighter& subject, Fighter& target);
+	void move_away(AIFighter& subject, Fighter& target);
+	void idle(AIFighter& subject, Fighter& target);
 };
 
 template <typename T, typename V>
@@ -36,7 +37,7 @@ T nonuni_random_state_from(std::vector<std::pair<int, T>> prob_map)
 	for (auto& item : prob_map) {
 		prob_total += item.first;
 		last_prob += item.first;
-		item.first += last_prob;
+		item.first = last_prob;
 	}
 	if (prob_total != 100)
 		throw std::logic_error("Probabilities must sum to 1.");

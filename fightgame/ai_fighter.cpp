@@ -11,8 +11,8 @@ static Uint32 timer_callback(Uint32 interval, void* param)
 	return 0;
 }
 
-AIFighter::AIFighter(FighterAnimator& animator, std::function<void(AIFighter& ai, Fighter& other)> logic)
-	: Fighter(animator), logic_func(logic)
+AIFighter::AIFighter(FighterAnimator& animator, std::function<void(AIFighter& ai, Fighter& other)> logic, HandlerFunc handler)
+	: Fighter(animator), logic_func(logic), fightmove_handler(handler)
 {
 }
 
@@ -25,4 +25,10 @@ void AIFighter::tick(Fighter &other)
 		SDL_AddTimer(200, timer_callback, &action_chosen);
 	}
 	Fighter::tick();
+}
+
+void AIFighter::do_move(FightMove& move)
+{
+	set_state(FighterStateMachine::State::FIGHT_MOVE, &move);
+	fightmove_handler(move, *this);
 }

@@ -1,5 +1,6 @@
 #include "ai_util.h"
 #include "fighter.h"
+#include "ai_fighter.h"
 
 #include <random>
 #include <algorithm>
@@ -27,7 +28,7 @@ static bool on_left(Fighter& subject, Fighter& target)
 
 namespace Behavior
 {
-	void jump_towards(Fighter& subject, Fighter& target)
+	void jump_towards(AIFighter& subject, Fighter& target)
 	{
 		if (on_left(subject, target))
 		{
@@ -39,7 +40,7 @@ namespace Behavior
 		}
 	}
 
-	void jump_away(Fighter& subject, Fighter& target)
+	void jump_away(AIFighter& subject, Fighter& target)
 	{
 		if (on_left(subject, target))
 		{
@@ -51,7 +52,7 @@ namespace Behavior
 		}
 	}
 
-	void move_towards(Fighter& subject, Fighter& target)
+	void move_towards(AIFighter& subject, Fighter& target)
 	{
 		if (on_left(subject, target))
 		{
@@ -63,7 +64,7 @@ namespace Behavior
 		}
 	}
 
-	void move_away(Fighter& subject, Fighter& target)
+	void move_away(AIFighter& subject, Fighter& target)
 	{
 		if (on_left(subject, target))
 		{
@@ -75,7 +76,7 @@ namespace Behavior
 		}
 	}
 
-	void idle(Fighter& subject, Fighter& target)
+	void idle(AIFighter& subject, Fighter& target)
 	{
 		subject.set_state(FighterStateMachine::State::IDLE);
 	}
