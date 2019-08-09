@@ -9,6 +9,10 @@
 static Uint32 projectile_callback(Uint32 interval, void* param)
 {
 	Fighter *fighter = static_cast<Fighter*>(param);
+	// if fighter has been hit before the projectile should launch... we
+	// don't want it to launch.
+	if (fighter->get_state()->get_state() != FighterStateMachine::State::FIGHT_MOVE) //ewww.. get_state()->get_state()
+		return 0;
 	auto projectile = ProjectileFactory::create(fighter->get_position_x(),
 								fighter->get_position_y() - 50,
 								fighter->get_orientation(),
