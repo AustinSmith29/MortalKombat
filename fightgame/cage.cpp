@@ -6,6 +6,17 @@
 
 #define ANIMATIONS "data/johnnycage/animations/"
 
+static Uint32 projectile_callback(Uint32 interval, void* param)
+{
+	Fighter *fighter = static_cast<Fighter*>(param);
+	auto projectile = ProjectileFactory::create(fighter->get_position_x(),
+								fighter->get_position_y() - 50,
+								fighter->get_orientation(),
+								CAGE_PROJECTILE);
+	fighter->add_projectile(std::move(projectile));
+	return 0;
+}
+
 std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader& loader)
 {
 	std::map <FighterGraphics, bones::Animation> anim_sources;
@@ -53,11 +64,7 @@ void handle_fightmove(FightMove move, Fighter &fighter)
 {
 	if (move.animation == FighterGraphics::SPECIAL_0)
 	{
-		auto projectile = ProjectileFactory::create(fighter.get_position_x(),
-									fighter.get_position_y() - 50,
-									fighter.get_orientation(),
-									CAGE_PROJECTILE);
-		fighter.add_projectile(std::move(projectile));
+		SDL_AddTimer(450, projectile_callback, &fighter);
 	}
 	fighter.set_state(FighterStateMachine::State::FIGHT_MOVE, &move);
 }

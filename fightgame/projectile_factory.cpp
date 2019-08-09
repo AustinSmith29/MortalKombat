@@ -1,3 +1,5 @@
+#include <SDL.h>
+
 #include "projectile_factory.h"
 #include "cage_projectile.h"
 
