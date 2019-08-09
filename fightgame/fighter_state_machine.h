@@ -33,6 +33,7 @@ public:
 	FighterState::FightMoveHook get_fightmove_hook();
 	bool is_input_locked();
 	FighterState* get_previous_state();
+	State get_state();
 	void tick();
 
 private:

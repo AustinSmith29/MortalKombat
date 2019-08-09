@@ -1,6 +1,8 @@
 #ifndef _AI_UTIL_H
 #define _AI_UTIL_H
 
+#include "fightmove.h"
+
 #include <stdexcept>
 #include <algorithm>
 #include <functional>
@@ -16,11 +18,29 @@ unsigned int x_distance(Fighter& a, Fighter& b);
 namespace Behavior
 {
 	using BehaviorFunc = std::function<void(AIFighter&, Fighter&)>;
+
+	class Behavior
+	{
+	public:
+		Behavior() = default;
+		~Behavior() = default;
+		Behavior(BehaviorFunc behavior);
+		Behavior(FightMove move);
+
+		void operator()(AIFighter&, Fighter&);
+
+	private:
+		BehaviorFunc func;
+		FightMove move;
+		enum DataType { FUNC, FIGHTMOVE } type;
+	};
+
 	void jump_towards(AIFighter& subject, Fighter& target);
 	void jump_away(AIFighter& subject, Fighter& target);
 	void move_towards(AIFighter& subject, Fighter& target);
 	void move_away(AIFighter& subject, Fighter& target);
 	void idle(AIFighter& subject, Fighter& target);
+	void block(AIFighter& subject, Fighter& target);
 };
 
 template <typename T, typename V>

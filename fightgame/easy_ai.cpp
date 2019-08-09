@@ -24,22 +24,30 @@ namespace EasyAI
 		auto distance = x_distance(ai, other);
 		if (distance > 50)
 		{
-			std::vector<std::pair<int, Behavior::BehaviorFunc>> random_map = {
-				{10, Behavior::jump_towards},
-				{90, Behavior::move_towards}
+			std::vector<std::pair<int, Behavior::Behavior>> random_map = {
+				{5, Behavior::Behavior(FightMove {FighterGraphics::SPECIAL_0, 5})},
+				{10, Behavior::Behavior(Behavior::jump_towards)},
+				{85, Behavior::Behavior(Behavior::move_towards)},
 			};
-			auto state = nonuni_random_state_from<Behavior::BehaviorFunc>(random_map);
+			auto state = nonuni_random_state_from<Behavior::Behavior>(random_map);
 			state(ai, other);
 		}
 		else
 		{
-			std::vector<std::pair<int, Behavior::BehaviorFunc>> random_map = {
-				{5, Behavior::jump_away},
-				{70, select_fightmove},
-				{25, Behavior::idle}
-			};
-			auto behavior = nonuni_random_state_from<Behavior::BehaviorFunc>(random_map);
-			behavior(ai, other);
+			if (other.get_state()->get_state() == FighterStateMachine::State::FIGHT_MOVE && random() <= .75)
+			{
+				ai.set_state(FighterStateMachine::State::BLOCK);
+			}
+			else
+			{
+				std::vector<std::pair<int, Behavior::BehaviorFunc>> random_map = {
+					{5, Behavior::jump_away},
+					{70, select_fightmove},
+					{25, Behavior::idle}
+				};
+				auto behavior = nonuni_random_state_from<Behavior::BehaviorFunc>(random_map);
+				behavior(ai, other);
+			}
 		}
 	}
 	

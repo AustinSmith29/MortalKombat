@@ -74,9 +74,14 @@ int main(int argc, char *argv[])
 
 		handle_fighter_on_fighter_collision(fighter, opponent);
 		auto fighter_projectiles = fighter.get_projectiles();
+		auto opponent_projectiles = opponent.get_projectiles();
 		for (auto& projectile : *fighter_projectiles)
 		{
 			handle_fighter_on_projectile_collision(opponent, *projectile);
+		}
+		for (auto& projectile : *opponent_projectiles)
+		{
+			handle_fighter_on_projectile_collision(fighter, *projectile);
 		}
 		handle_fighter_on_fighter_collision(opponent, fighter);
 

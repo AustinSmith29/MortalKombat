@@ -28,6 +28,31 @@ static bool on_left(Fighter& subject, Fighter& target)
 
 namespace Behavior
 {
+	Behavior::Behavior(BehaviorFunc func) 
+	{
+		type = DataType::FUNC;
+		this->func = func;
+	}
+
+	Behavior::Behavior(FightMove move)
+	{
+		type = DataType::FIGHTMOVE;
+		this->move = move;
+	}
+
+	void Behavior::operator()(AIFighter& a, Fighter& b)
+	{
+		switch (type)
+		{
+		case FUNC:
+			func(a, b);
+			break;
+		case FIGHTMOVE:
+			a.do_move(move);
+			break;
+		}
+	}
+
 	void jump_towards(AIFighter& subject, Fighter& target)
 	{
 		if (on_left(subject, target))
@@ -79,5 +104,10 @@ namespace Behavior
 	void idle(AIFighter& subject, Fighter& target)
 	{
 		subject.set_state(FighterStateMachine::State::IDLE);
+	}
+
+	void block(AIFighter& subject, Fighter& target)
+	{
+		subject.set_state(FighterStateMachine::State::BLOCK, false);
 	}
 }

@@ -49,6 +49,24 @@ FighterState* FighterStateMachine::get_previous_state()
 	return prev_state;
 }
 
+static int index(FighterState* p, std::array<FighterState*, FighterStateMachine::State::TOTAL> arry)
+{
+	int index = 0;
+	for (auto& item : arry)
+	{
+		if (item == p)
+			return index;
+		index++;
+	}
+	return -1;
+}
+
+FighterStateMachine::State FighterStateMachine::get_state()
+{
+	return static_cast<FighterStateMachine::State>(index(current_state, states));
+}
+
+
 void FighterStateMachine::tick()
 {
 	current_state->tick(fighter, *this);

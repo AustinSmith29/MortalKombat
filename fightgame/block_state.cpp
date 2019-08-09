@@ -3,7 +3,7 @@
 
 void BlockState::enter(Fighter& fighter, FighterStateMachine &machine, void* data)
 {
-	bool is_crouch = *static_cast<bool*>(data);
+	bool is_crouch = (!data) ? false : *static_cast<bool*>(data);
 	if (is_crouch)
 		fighter.set_graphics(FighterGraphics::CROUCH_BLOCK);
 	else
