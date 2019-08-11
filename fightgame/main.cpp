@@ -90,8 +90,8 @@ int main(int argc, char *argv[])
 		bones::draw_sprite(renderer, stage, 0, 0);
 		fighter.draw(renderer);
 		opponent.draw(renderer);
-		draw_fighter_collision_boxes(renderer, fighter);
-		draw_fighter_collision_boxes(renderer, opponent);
+		//draw_fighter_collision_boxes(renderer, fighter);
+		//draw_fighter_collision_boxes(renderer, opponent);
 		SDL_RenderPresent(renderer);
 
 		int time = SDL_GetTicks() - ticks;
