@@ -2,13 +2,13 @@
 
 namespace bones
 {
-	Animation::Animation(Sprite sheet, std::vector<Frame> frames)
+	Animation::Animation(const Sprite& sheet, const std::vector<Frame>& frames)
 	{
 		spritesheet = sheet;
 		this->frames = frames;
 	}
 
-	const Frame& Animation::get_current_frame()
+	const Frame& Animation::get_current_frame() const
 	{
 		return frames[current_frame];
 	}

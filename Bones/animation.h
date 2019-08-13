@@ -20,9 +20,9 @@ namespace bones
 	{
 	public:
 		Animation() = default;
-		Animation(Sprite sheet, std::vector<Frame> frames);
+		Animation(const Sprite& sheet, const std::vector<Frame>& frames);
 
-		const Frame &get_current_frame();
+		const Frame& get_current_frame() const;
 
 		void restart();
 		void step();
