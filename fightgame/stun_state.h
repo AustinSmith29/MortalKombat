@@ -1,14 +1,15 @@
 #ifndef _STUN_STATE_H
 #define _STUN_STATE_H
 
-#include "jump_state.h"
+#include "fighter_state.h"
 
-class StunState :  public JumpState
+class StunState :  public FighterState
 {
 public:
-	void enter(Fighter& fighter, FighterStateMachine& machine, void* data) override;
-	void tick(Fighter& fighter, FighterStateMachine& machine) override;
-	void exit(Fighter& fighter, FighterStateMachine& machine) override;
+	StunState(FighterStateMachine& machine);
+	void enter(void* data) override;
+	void tick() override;
+	void exit() override;
 private:
 	bool fall{ false };
 	int next_state;

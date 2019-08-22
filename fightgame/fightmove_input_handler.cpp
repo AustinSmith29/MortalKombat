@@ -51,7 +51,7 @@ add it to input buffer
 if input buffer contains move add it to the front of buffer
 return move at front of buffer
 */
-void FightMoveInputHandler::process_event(InputEvent &event, FighterState::FightMoveHook hook,
+void FightMoveInputHandler::process_event(InputEvent &event, FightMoveHook hook,
 										  Orientation direction, Fighter &fighter)
 {
 	auto input = get_input(event, direction);
@@ -80,7 +80,7 @@ void FightMoveInputHandler::flush()
 	input_buffer.clear();
 }
 
-FightMoveInputHandler::ActivationKey FightMoveInputHandler::make_key(FighterState::FightMoveHook hook, std::string input)
+FightMoveInputHandler::ActivationKey FightMoveInputHandler::make_key(FightMoveHook hook, std::string input)
 {
 	return std::make_pair(hook, input);
 }

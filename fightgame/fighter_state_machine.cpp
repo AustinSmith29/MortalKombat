@@ -2,16 +2,16 @@
 
 FighterStateMachine::FighterStateMachine(Fighter& owner) : fighter(owner)
 {
-	states[State::IDLE] = new IdleState();
-	states[State::CROUCH] = new CrouchState();
-	states[State::MOVE_RIGHT] = new MoveRightState();
-	states[State::MOVE_LEFT] = new MoveLeftState();
-	states[State::FIGHT_MOVE] = new FightMoveState();
-	states[State::JUMP] = new JumpState();
-	states[State::JUMP_RIGHT] = new JumpRightState();
-	states[State::JUMP_LEFT] = new JumpLeftState();
-	states[State::BLOCK] = new BlockState();
-	states[State::STUN] = new StunState();
+	states[State::IDLE] = new IdleState(*this);
+	states[State::CROUCH] = new CrouchState(*this);
+	states[State::MOVE_RIGHT] = new MoveRightState(*this);
+	states[State::MOVE_LEFT] = new MoveLeftState(*this);
+	states[State::FIGHT_MOVE] = new FightMoveState(*this);
+	states[State::JUMP] = new JumpState(*this);
+	states[State::JUMP_RIGHT] = new JumpRightState(*this);
+	states[State::JUMP_LEFT] = new JumpLeftState(*this);
+	states[State::BLOCK] = new BlockState(*this);
+	states[State::STUN] = new StunState(*this);
 	current_state = states[State::IDLE];
 	prev_state = states[State::IDLE];
 }
@@ -28,13 +28,13 @@ void FighterStateMachine::change_to(State new_state, void *data)
 {
 	if (states[new_state] == current_state)
 		return;
-	current_state->exit(fighter, *this);
+	current_state->exit();
 	prev_state = current_state;
 	current_state = states[new_state];
-	current_state->enter(fighter, *this, data);
+	current_state->enter(data);
 }
 
-FighterState::FightMoveHook FighterStateMachine::get_fightmove_hook()
+FightMoveHook FighterStateMachine::get_fightmove_hook()
 {
 	return current_state->get_move_hook();
 }
@@ -69,5 +69,5 @@ FighterStateMachine::State FighterStateMachine::get_state()
 
 void FighterStateMachine::tick()
 {
-	current_state->tick(fighter, *this);
+	current_state->tick();
 }

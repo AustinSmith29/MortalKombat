@@ -1,7 +1,14 @@
 #include "fightmove_state.h"
 #include "fighter.h"
 
-void FightMoveState::enter(Fighter& fighter, FighterStateMachine &machine, void *data)
+FightMoveState::FightMoveState(FighterStateMachine& machine)
+	: FighterState(machine, FightMoveHook::NONE)
+{
+	move = FightMove{};
+	next_state = -1;
+}
+
+void FightMoveState::enter(void *data)
 {
 	lock_input();
 	move = *static_cast<FightMove*>(data);
@@ -17,7 +24,7 @@ void FightMoveState::enter(Fighter& fighter, FighterStateMachine &machine, void 
 	}
 }
 
-void FightMoveState::tick(Fighter& fighter, FighterStateMachine &machine)
+void FightMoveState::tick()
 {
 	bones::Animation* animation = fighter.get_animation();
 	if (fighter.get_animation()->is_complete())
@@ -27,7 +34,7 @@ void FightMoveState::tick(Fighter& fighter, FighterStateMachine &machine)
 	}
 }
 
-void FightMoveState::exit(Fighter& fighter, FighterStateMachine &machine)
+void FightMoveState::exit()
 {
 	fighter.get_animation()->restart();
 }

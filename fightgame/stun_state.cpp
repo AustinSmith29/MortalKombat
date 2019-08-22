@@ -1,7 +1,12 @@
 #include "stun_state.h"
 #include "fighter.h"
 
-void StunState::enter(Fighter& fighter, FighterStateMachine& machine, void* data)
+StunState::StunState(FighterStateMachine& machine)
+	: FighterState(machine, FightMoveHook::NONE)
+{
+}
+
+void StunState::enter(void* data)
 {
 	lock_input();
 	if (fighter.is_airborne())
@@ -27,21 +32,15 @@ void StunState::enter(Fighter& fighter, FighterStateMachine& machine, void* data
 	}
 }
 
-void StunState::tick(Fighter& fighter, FighterStateMachine& machine)
+void StunState::tick()
 {
-	if (fall)
-	{
-		apply_gravity(fighter, machine);
-		fighter.set_position_x(fighter.get_position_x() + fighter.get_velocity_x());
-	}
-
-	if (fall && has_landed(fighter))
+	if (fall && !fighter.is_airborne())
 		machine.change_to((FighterStateMachine::State)next_state, nullptr);
-	else if (fighter.get_animation()->is_complete())
+	else if (!fall && fighter.get_animation()->is_complete())
 		machine.change_to((FighterStateMachine::State)next_state, nullptr);
 }
 
-void StunState::exit(Fighter& fighter, FighterStateMachine& machine)
+void StunState::exit()
 {
 	fighter.set_velocity_x(0);
 	unlock_input();

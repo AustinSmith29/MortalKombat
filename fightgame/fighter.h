@@ -28,6 +28,7 @@ public:
 
 	void move_left();
 	void move_right();
+	void jump();
 
 	int get_velocity_x();
 	void set_velocity_x(int val);
@@ -39,12 +40,10 @@ public:
 	int get_position_y();
 	void set_position_y(int val);
 
-	void set_airborne(bool val);
 	bool is_airborne();
 
 	void set_graphics(FighterGraphics graphics);
 	void flip_orientation();
-	void face(int x);
 
 	void add_projectile(std::unique_ptr<Projectile> projectile);
 	std::vector<std::unique_ptr<Projectile>>* get_projectiles();
@@ -61,5 +60,11 @@ protected:
 	std::unique_ptr<FighterStateMachine> state_machine;
 	Orientation orientation;
 	std::vector<std::unique_ptr<Projectile>> projectiles;
+
+private:
+	int gravity_counter{ 0 };
+	void apply_gravity();
 };
+
+void face(Fighter& fighter, int x);
 #endif

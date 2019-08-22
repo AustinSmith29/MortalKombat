@@ -6,8 +6,9 @@
 class IdleState : public FighterState
 {
 public:
-	void enter(Fighter &fighter, FighterStateMachine &machine, void *data) override;
-	void tick(Fighter &fighter, FighterStateMachine &machine) override;
-	void exit(Fighter &fighter, FighterStateMachine &machine) override;
+	IdleState(FighterStateMachine& machine);
+	void enter(void *data) override;
+	void tick() override;
+	void exit() override;
 };
 #endif

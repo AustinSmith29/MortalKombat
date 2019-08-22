@@ -1,7 +1,12 @@
 #include "move_right_state.h"
 #include "fighter.h"
 
-void MoveRightState::enter(Fighter& fighter, FighterStateMachine &machine, void *data)
+MoveRightState::MoveRightState(FighterStateMachine& machine)
+	: FighterState(machine, FightMoveHook::STAND)
+{
+}
+
+void MoveRightState::enter(void *data)
 {
 	if (fighter.get_orientation() == Orientation::RIGHT)
 	{
@@ -11,15 +16,15 @@ void MoveRightState::enter(Fighter& fighter, FighterStateMachine &machine, void 
 	{
 		fighter.set_graphics(FighterGraphics::WALK_BACKWARD);
 	}
+	fighter.set_velocity_x(1);
 }
 
-void MoveRightState::tick(Fighter& fighter, FighterStateMachine &machine)
+void MoveRightState::tick()
 {
-	fighter.move_right();
 	fighter.get_animation()->loop();
 }
 
-void MoveRightState::exit(Fighter &fighter, FighterStateMachine &machine)
+void MoveRightState::exit()
 {
-
+	fighter.set_velocity_x(0);
 }

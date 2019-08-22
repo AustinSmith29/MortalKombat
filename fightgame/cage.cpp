@@ -53,8 +53,8 @@ std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader&
 std::map <FightMoveInputHandler::ActivationKey, FightMove> load_moves()
 {
 	std::map <FightMoveInputHandler::ActivationKey, FightMove> moves;
-	const FighterState::FightMoveHook STAND = FighterState::FightMoveHook::STAND;
-	const FighterState::FightMoveHook CROUCH = FighterState::FightMoveHook::CROUCH;
+	const FightMoveHook STAND = FightMoveHook::STAND;
+	const FightMoveHook CROUCH = FightMoveHook::CROUCH;
 	moves[FightMoveInputHandler::make_key(STAND, "X,")] = { FighterGraphics::LOW_PUNCH, 5 };
 	moves[FightMoveInputHandler::make_key(STAND, "Y,")] = { FighterGraphics::HIGH_PUNCH, 5 };
 	moves[FightMoveInputHandler::make_key(STAND, "A,")] = { FighterGraphics::LOW_KICK, 5 };

@@ -1,4 +1,5 @@
 #include "fighter.h"
+#include "constants.h" 
 
 #include <iostream>
 
@@ -111,11 +112,6 @@ void Fighter::set_position_y(int val)
 	y = val;
 }
 
-void Fighter::set_airborne(bool val)
-{
-	airborne = val;
-}
-
 bool Fighter::is_airborne()
 {
 	return airborne;
@@ -139,19 +135,6 @@ void Fighter::flip_orientation()
 	animator.flip_orientation();
 }
 
-void Fighter::face(int x)
-{
-	int dx = get_position_x() - x;
-	Orientation orientation = get_orientation();
-	if (dx > 0 && orientation != Orientation::LEFT)
-	{
-		flip_orientation();
-	}
-	if (dx < 0 && orientation != Orientation::RIGHT)
-	{
-		flip_orientation();
-	}
-}
 
 void Fighter::add_projectile(std::unique_ptr<Projectile> projectile)
 {
@@ -165,6 +148,8 @@ std::vector<std::unique_ptr<Projectile>>* Fighter::get_projectiles()
 
 void Fighter::tick()
 {
+	apply_gravity();
+	x = get_position_x() + get_velocity_x();
 	state_machine->tick();
 	for (auto& projectile : projectiles)
 	{
@@ -185,5 +170,45 @@ void Fighter::draw(SDL_Renderer* renderer)
 	{
 		if (!projectile->is_dead())
 			projectile->draw(renderer);
+	}
+}
+
+void Fighter::jump()
+{
+	if (!airborne)
+	{
+		set_velocity_y(JUMP_FORCE);
+		airborne = true;
+	}
+}
+
+void Fighter::apply_gravity()
+{
+	if (gravity_counter > GRAVITY_FRAME_DELAY)
+	{
+		set_velocity_y(get_velocity_y() + GRAVITY);
+		gravity_counter = 0;
+	}
+	set_position_y(get_position_y() + get_velocity_y());
+	if (get_position_y() >= FLOOR_Y)
+	{
+		set_velocity_y(0);
+		set_position_y(FLOOR_Y);
+		airborne = false;
+	}
+	gravity_counter++;
+}
+
+void face(Fighter& fighter, int x)
+{
+	int dx = fighter.get_position_x() - x;
+	Orientation orientation = fighter.get_orientation();
+	if (dx > 0 && orientation != Orientation::LEFT)
+	{
+		fighter.flip_orientation();
+	}
+	if (dx < 0 && orientation != Orientation::RIGHT)
+	{
+		fighter.flip_orientation();
 	}
 }

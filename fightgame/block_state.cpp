@@ -1,7 +1,12 @@
 #include "block_state.h"
 #include "fighter.h"
 
-void BlockState::enter(Fighter& fighter, FighterStateMachine &machine, void* data)
+BlockState::BlockState(FighterStateMachine& machine) :
+	FighterState(machine, FightMoveHook::NONE)
+{
+}
+
+void BlockState::enter(void* data)
 {
 	bool is_crouch = (!data) ? false : *static_cast<bool*>(data);
 	if (is_crouch)
@@ -10,12 +15,12 @@ void BlockState::enter(Fighter& fighter, FighterStateMachine &machine, void* dat
 		fighter.set_graphics(FighterGraphics::BLOCK);
 }
 
-void BlockState::tick(Fighter& fighter, FighterStateMachine &machine)
+void BlockState::tick()
 {
 
 }
 
-void BlockState::exit(Fighter& fighter, FighterStateMachine &machine)
+void BlockState::exit()
 {
 	fighter.get_animation()->restart();
 }

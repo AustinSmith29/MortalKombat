@@ -1,29 +1,30 @@
 #include "jump_left_state.h"
 #include "fighter.h"
 
-void JumpLeftState::enter(Fighter& fighter, FighterStateMachine &machine, void *data)
+JumpLeftState::JumpLeftState(FighterStateMachine& machine)
+	: FighterState(machine, FightMoveHook::JUMP)
 {
-	fighter.set_graphics(FighterGraphics::JUMP_BACKWARD);
-	start_jump(fighter);
 }
 
-void JumpLeftState::tick(Fighter& fighter, FighterStateMachine &machine)
+void JumpLeftState::enter(void *data)
 {
-	apply_gravity(fighter, machine);
-	if (!has_landed(fighter))
+	fighter.set_graphics(FighterGraphics::JUMP_BACKWARD);
+	fighter.jump();
+	fighter.set_velocity_x(-2);
+	lock_input();
+}
+
+void JumpLeftState::tick()
+{
+	if (!fighter.is_airborne())
 	{
-		fighter.move_left();
+		machine.change_to(FighterStateMachine::State::IDLE, nullptr);
 	}
 }
 
-void JumpLeftState::exit(Fighter& fighter, FighterStateMachine &machine)
+void JumpLeftState::exit()
 {
-}
-
-void JumpLeftState::update_position(Fighter& fighter)
-{
-	int vel = fighter.get_velocity_y();
-	int old_pos = fighter.get_position_y();
-	fighter.set_position_y(old_pos + vel);
-	fighter.move_left();
+	fighter.set_velocity_x(0);
+	unlock_input();
+	fighter.get_animation()->restart();
 }

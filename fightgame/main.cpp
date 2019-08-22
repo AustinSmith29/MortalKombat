@@ -69,8 +69,8 @@ int main(int argc, char *argv[])
 		fighter.tick();
 		opponent.tick(fighter);
 
-		fighter.face(opponent.get_position_x());
-		opponent.face(fighter.get_position_x());
+		face(fighter, opponent.get_position_x());
+		face(opponent, fighter.get_position_x());
 
 		handle_fighter_on_fighter_collision(fighter, opponent);
 		auto fighter_projectiles = fighter.get_projectiles();

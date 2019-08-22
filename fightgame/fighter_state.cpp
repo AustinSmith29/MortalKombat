@@ -1,25 +1,27 @@
 #include "fighter_state.h"
+#include "fighter_state_machine.h"
 
-bool FighterState::is_input_locked()
+FighterState::FighterState(FighterStateMachine& machine, FightMoveHook hook)
+	: machine(machine), fighter(machine.fighter)
 {
-	return lock;
+	fightmove_hook = hook;
+}
+
+bool FighterState::is_input_locked() const
+{
+	return is_locked;
 }
 
 void FighterState::lock_input()
 {
-	lock = true;
+	is_locked = true;
 }
 void FighterState::unlock_input()
 {
-	lock = false;
+	is_locked = false;
 }
 
-FighterState::FightMoveHook FighterState::get_move_hook()
+FightMoveHook FighterState::get_move_hook() const
 {
-	return move_hook;
-}
-
-void FighterState::set_move_hook(FighterState::FightMoveHook hook)
-{
-	move_hook = hook;
+	return fightmove_hook;
 }

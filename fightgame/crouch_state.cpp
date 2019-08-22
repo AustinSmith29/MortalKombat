@@ -1,21 +1,21 @@
 #include "crouch_state.h"
 #include "fighter.h"
 
-CrouchState::CrouchState()
+CrouchState::CrouchState(FighterStateMachine& machine)
+	: FighterState(machine, FightMoveHook::CROUCH)
 {
-	set_move_hook(FighterState::FightMoveHook::CROUCH);
 }
 
-void CrouchState::enter(Fighter& fighter, FighterStateMachine &machine, void* data)
+void CrouchState::enter(void* data)
 {
 	fighter.set_graphics(FighterGraphics::CROUCH);
 }
 
-void CrouchState::tick(Fighter& fighter, FighterStateMachine &machine)
+void CrouchState::tick()
 {
 }
 
-void CrouchState::exit(Fighter &fighter, FighterStateMachine &machine)
+void CrouchState::exit()
 {
 	fighter.get_animation()->restart();
 }
