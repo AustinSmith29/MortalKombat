@@ -45,4 +45,5 @@ void StunState::exit()
 	fighter.set_velocity_x(0);
 	unlock_input();
 	fighter.get_animation()->restart();
+	fall = false;
 }
