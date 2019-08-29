@@ -1,18 +1,18 @@
 #include "fightmove_state.h"
 #include "fighter.h"
+#include "fightmove.h"
 
 FightMoveState::FightMoveState(FighterStateMachine& machine)
 	: FighterState(machine, FightMoveHook::NONE)
 {
-	move = FightMove{};
+	move = nullptr;
 	next_state = -1;
 }
 
 void FightMoveState::enter(void *data)
 {
 	lock_input();
-	move = *static_cast<FightMove*>(data);
-	fighter.set_graphics(move.animation);
+	move = static_cast<FightMove*>(data);
 	auto hook = machine.get_previous_state()->get_move_hook();
 	if (hook == FightMoveHook::CROUCH)
 	{
@@ -22,12 +22,12 @@ void FightMoveState::enter(void *data)
 	{
 		next_state = FighterStateMachine::State::IDLE;
 	}
+	move->enter(fighter);
 }
 
 void FightMoveState::tick()
 {
-	bones::Animation* animation = fighter.get_animation();
-	if (fighter.get_animation()->is_complete())
+	if (move->is_complete(fighter))
 	{
 		unlock_input();
 		machine.change_to((FighterStateMachine::State)next_state, nullptr);
@@ -37,4 +37,6 @@ void FightMoveState::tick()
 void FightMoveState::exit()
 {
 	fighter.get_animation()->restart();
+	move->exit(fighter);
+	move = nullptr;
 }

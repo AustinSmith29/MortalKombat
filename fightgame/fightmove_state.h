@@ -2,8 +2,8 @@
 #define _FIGHTMOVE_STATE_H
 
 #include "fighter_state.h"
-#include "fightmove.h"
 
+class FightMove;
 class FightMoveState : public FighterState
 {
 public:
@@ -12,7 +12,7 @@ public:
 	void tick() override;
 	void exit() override;
 private:
-	FightMove move;
 	int next_state;
+	FightMove* move;
 };
 #endif
