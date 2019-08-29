@@ -1,7 +1,7 @@
 #include "user_fighter.h"
 
-UserFighter::UserFighter(FighterAnimator& animator, HandlerFunc handler, std::map<ActivationKey, FightMove> move_map)
-	: Fighter(animator), fightmove_handler(handler, move_map)
+UserFighter::UserFighter(FighterAnimator& animator, std::map<ActivationKey, FightMove*> move_map)
+	: Fighter(animator), fightmove_handler(*this, move_map)
 {
 
 }
@@ -11,7 +11,7 @@ void UserFighter::handle_input_event(InputEvent& event, InputDevice& controller)
 	if (state_machine->is_input_locked())
 		return;
 	fightmove_handler.process_event(event, state_machine->get_fightmove_hook(), 
-		                            get_orientation(), *this);
+		                            get_orientation());
 	if (event.type == EventType::BUTTON_DOWN)
 	{
 		handle_button_press(event.button, controller);

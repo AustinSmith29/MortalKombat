@@ -15,13 +15,3 @@ bool BasicFightMove::is_complete(Fighter& fighter)
 {
 	return fighter.get_animation()->is_complete();
 }
-
-void BasicFightMove::exit(Fighter& fighter)
-{
-
-}
-
-void BasicFightMove::apply_effect(Fighter& target)
-{
-	// do nothing for right now
-}

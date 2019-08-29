@@ -7,10 +7,9 @@
 class UserFighter : public Fighter
 {
 public:
-	using HandlerFunc = FightMoveInputHandler::HandlerFunc;
 	using ActivationKey = FightMoveInputHandler::ActivationKey;
 
-	UserFighter(FighterAnimator &animator, HandlerFunc handler, std::map<ActivationKey, FightMove> move_map);
+	UserFighter(FighterAnimator &animator, std::map<ActivationKey, FightMove*> move_map);
 	UserFighter(const UserFighter& userfighter) = delete;
 	UserFighter& operator = (const UserFighter& userfighter) = delete;
 

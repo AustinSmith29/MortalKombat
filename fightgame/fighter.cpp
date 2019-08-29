@@ -199,6 +199,11 @@ void Fighter::apply_gravity()
 	gravity_counter++;
 }
 
+void Fighter::perform_fightmove(FightMove* move)
+{
+	set_state(FighterStateMachine::State::FIGHT_MOVE, &move);
+}
+
 void face(Fighter& fighter, int x)
 {
 	int dx = fighter.get_position_x() - x;

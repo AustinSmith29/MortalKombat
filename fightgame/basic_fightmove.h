@@ -11,8 +11,8 @@ public:
 
 	void enter(Fighter& fighter) override;
 	bool is_complete(Fighter& fighter) override;
-	void exit(Fighter& fighter) override;
-	void apply_effect(Fighter& target) override = {};
+	void exit(Fighter& fighter) override {};
+	void apply_effect(Fighter& target) override {};
 
 private:
 	int damage;

@@ -1,4 +1,5 @@
 #include "fightmove_input_handler.h"
+#include "user_fighter.h"
 
 #define FLUSH_TIME_MS 250
 
@@ -9,8 +10,8 @@ static Uint32 timer_callback(Uint32 interval, void* param)
 	return 0;
 }
 
-FightMoveInputHandler::FightMoveInputHandler(HandlerFunc func, std::map<ActivationKey, FightMove> move_map) :
-	handler(func), move_map(move_map), first_press(false)
+FightMoveInputHandler::FightMoveInputHandler(UserFighter& fighter, std::map<ActivationKey, FightMove*> move_map) :
+	fighter(fighter), move_map(move_map), first_press(false)
 {
 }
 
@@ -52,7 +53,7 @@ if input buffer contains move add it to the front of buffer
 return move at front of buffer
 */
 void FightMoveInputHandler::process_event(InputEvent &event, FightMoveHook hook,
-										  Orientation direction, Fighter &fighter)
+										  Orientation direction)
 {
 	auto input = get_input(event, direction);
 	if (input != "I")
@@ -70,7 +71,7 @@ void FightMoveInputHandler::process_event(InputEvent &event, FightMoveHook hook,
 	auto key = std::make_pair(hook, input_seq);
 	if (move_map.find(key) != move_map.end())
 	{
-		handler(move_map[key], fighter);
+		fighter.perform_fightmove(move_map[key]);
 	}
 }
 

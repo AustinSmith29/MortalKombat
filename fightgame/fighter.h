@@ -50,6 +50,7 @@ public:
 
 	void tick();
 	void draw(SDL_Renderer* renderer);
+	void perform_fightmove(FightMove* move);
 
 protected:
 	int x, y;
