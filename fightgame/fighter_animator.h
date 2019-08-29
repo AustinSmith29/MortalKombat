@@ -6,7 +6,7 @@
 #include <array>
 #include <map>
 
-enum FighterGraphics
+enum class FighterGraphics
 {
 	IDLE,
 	CROUCH,

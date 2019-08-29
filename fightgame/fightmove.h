@@ -1,11 +1,16 @@
 #ifndef _FIGHTMOVE_H
 #define _FIGHTMOVE_H
 
-#include "fighter_animator.h"
+#include "fighter.h"
 
-struct FightMove
+class Effect;
+class FightMove
 {
-	FighterGraphics animation;
-	int damage;
+public:
+	virtual ~FightMove() = default;
+	virtual void enter(Fighter& fighter) = 0;
+	virtual bool is_complete(Fighter& fighter) = 0;
+	virtual void exit(Fighter& fighter) = 0;
+	virtual void apply_effect(Fighter& target) = 0;
 };
 #endif
