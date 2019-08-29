@@ -3,20 +3,21 @@
 #include "ai_fighter.h"
 #include "fighter.h"
 #include "ai_util.h"
+#include "basic_fightmove.h"
 
 namespace EasyAI
 {
 	void select_fightmove(AIFighter& a, Fighter& b)
 	{
-		std::vector<std::pair<int, FightMove>> random_map = {
-			{20, {FighterGraphics::LOW_PUNCH, 5}},
-			{20, {FighterGraphics::HIGH_PUNCH, 5}}, 
-			{20, {FighterGraphics::HIGH_KICK, 5}},
-			{20, {FighterGraphics::LOW_KICK, 5}},
-			{20, {FighterGraphics::SPECIAL_0, 5}},
+		std::vector<std::pair<int, FightMove&>> random_map = {
+			{20, low_punch},
+			{20, high_punch}, 
+			{20, high_kick},
+			{20, low_kick},
+			{20, special_0},
 		};
-		auto move = nonuni_random_state_from<FightMove>(random_map);
-		a.do_move(move);
+		FightMove& move = nonuni_random_state_from<FightMove&>(random_map);
+		a.perform_fightmove(move);
 	}
 	
 	void logic(AIFighter& ai, Fighter& other)
@@ -25,7 +26,7 @@ namespace EasyAI
 		if (distance > 50)
 		{
 			std::vector<std::pair<int, Behavior::Behavior>> random_map = {
-				{5, Behavior::Behavior(FightMove {FighterGraphics::SPECIAL_0, 5})},
+				{5, Behavior::Behavior(&special_0)},
 				{10, Behavior::Behavior(Behavior::jump_towards)},
 				{85, Behavior::Behavior(Behavior::move_towards)},
 			};

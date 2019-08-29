@@ -71,7 +71,7 @@ void FightMoveInputHandler::process_event(InputEvent &event, FightMoveHook hook,
 	auto key = std::make_pair(hook, input_seq);
 	if (move_map.find(key) != move_map.end())
 	{
-		fighter.perform_fightmove(move_map[key]);
+		fighter.perform_fightmove(*move_map[key]);
 	}
 }
 

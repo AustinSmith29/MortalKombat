@@ -1,6 +1,6 @@
 #include "basic_fightmove.h"
 
-BasicFightMove(FighterGraphics animation, int damage)
+BasicFightMove::BasicFightMove(int animation, int damage)
 {
 	this->animation = animation;
 	this->damage = damage;
@@ -8,7 +8,7 @@ BasicFightMove(FighterGraphics animation, int damage)
 
 void BasicFightMove::enter(Fighter& fighter)
 {
-	fighter.set_graphics(this->animation);
+	fighter.set_graphics(static_cast<FighterGraphics>(this->animation));
 }
 
 bool BasicFightMove::is_complete(Fighter& fighter)
