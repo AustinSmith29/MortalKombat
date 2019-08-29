@@ -32,9 +32,10 @@ namespace Behavior
 	{
 		type = DataType::FUNC;
 		this->func = func;
+		this->move = nullptr;
 	}
 
-	Behavior::Behavior(FightMove move)
+	Behavior::Behavior(FightMove* move)
 	{
 		type = DataType::FIGHTMOVE;
 		this->move = move;
@@ -48,7 +49,7 @@ namespace Behavior
 			func(a, b);
 			break;
 		case FIGHTMOVE:
-			a.do_move(move);
+			a.perform_fightmove(*move);
 			break;
 		}
 	}

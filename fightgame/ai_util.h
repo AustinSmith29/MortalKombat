@@ -25,13 +25,13 @@ namespace Behavior
 		Behavior() = default;
 		~Behavior() = default;
 		Behavior(BehaviorFunc behavior);
-		Behavior(FightMove move);
+		Behavior(FightMove* move);
 
 		void operator()(AIFighter&, Fighter&);
 
 	private:
 		BehaviorFunc func;
-		FightMove move;
+		FightMove* move;
 		enum DataType { FUNC, FIGHTMOVE } type;
 	};
 

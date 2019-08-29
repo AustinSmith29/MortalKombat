@@ -10,17 +10,13 @@
 class AIFighter : public Fighter
 {
 public:
-	using HandlerFunc = std::function<void(FightMove,Fighter&)>;
-
-	AIFighter(FighterAnimator &animator, std::function<void(AIFighter& ai, Fighter& other)> logic, HandlerFunc handler); 
+	AIFighter(FighterAnimator &animator, std::function<void(AIFighter& ai, Fighter& other)> logic); 
 	AIFighter(const AIFighter& aifighter) = delete;
 	AIFighter& operator =(const AIFighter& aifighter) = delete;
 
 	void tick(Fighter &other);
-	void do_move(FightMove& move);
 private:
 	std::function<void(AIFighter& ai, Fighter& other)> logic_func;
-	HandlerFunc fightmove_handler;
 	bool action_chosen{ false };
 };
 #endif

@@ -37,11 +37,11 @@ int main(int argc, char *argv[])
 
 	FighterAnimator cage_fighter = create_cage(graphics);
 	auto move_map = load_moves();
-	UserFighter fighter(cage_fighter, &handle_fightmove, move_map);
+	UserFighter fighter(cage_fighter, move_map);
 	fighter.set_position_x(100);
 	fighter.set_position_y(400);
 
-	AIFighter opponent(cage_fighter, EasyAI::logic, &handle_fightmove);
+	AIFighter opponent(cage_fighter, EasyAI::logic);
 	opponent.flip_orientation();
 	opponent.set_position_x(300);
 	opponent.set_position_y(400);
