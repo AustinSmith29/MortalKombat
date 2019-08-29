@@ -1,25 +1,13 @@
 #include "cage.h"
 #include "fighter.h"
 #include "projectile_factory.h"
+#include "basic_fightmove.h"
+#include "projectile_fightmove.h"
+#include "uppercut_fightmove.h"
 
 #include <map>
 
 #define ANIMATIONS "data/johnnycage/animations/"
-
-static Uint32 projectile_callback(Uint32 interval, void* param)
-{
-	Fighter *fighter = static_cast<Fighter*>(param);
-	// if fighter has been hit before the projectile should launch... we
-	// don't want it to launch.
-	if (fighter->get_state()->get_state() != FighterStateMachine::State::FIGHT_MOVE) //ewww.. get_state()->get_state()
-		return 0;
-	auto projectile = ProjectileFactory::create(fighter->get_position_x(),
-								fighter->get_position_y() - 50,
-								fighter->get_orientation(),
-								CAGE_PROJECTILE);
-	fighter->add_projectile(std::move(projectile));
-	return 0;
-}
 
 std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader& loader)
 {
@@ -50,27 +38,18 @@ std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader&
 	return anim_sources;
 }
 
-std::map <FightMoveInputHandler::ActivationKey, FightMove> load_moves()
+std::map <FightMoveInputHandler::ActivationKey, FightMove*> load_moves()
 {
-	std::map <FightMoveInputHandler::ActivationKey, FightMove> moves;
+	std::map <FightMoveInputHandler::ActivationKey, FightMove*> moves;
 	const FightMoveHook STAND = FightMoveHook::STAND;
 	const FightMoveHook CROUCH = FightMoveHook::CROUCH;
-	moves[FightMoveInputHandler::make_key(STAND, "X,")] = { FighterGraphics::LOW_PUNCH, 5 };
-	moves[FightMoveInputHandler::make_key(STAND, "Y,")] = { FighterGraphics::HIGH_PUNCH, 5 };
-	moves[FightMoveInputHandler::make_key(STAND, "A,")] = { FighterGraphics::LOW_KICK, 5 };
-	moves[FightMoveInputHandler::make_key(STAND, "B,")] = { FighterGraphics::LOW_KICK, 5 };
-	moves[FightMoveInputHandler::make_key(CROUCH, "X,")] = { FighterGraphics::CROUCH_KICK_LOW, 5 };
-	moves[FightMoveInputHandler::make_key(CROUCH, "A,")] = { FighterGraphics::CROUCH_KICK_HIGH, 5 };
-	moves[FightMoveInputHandler::make_key(STAND, "D,F,A,")] = { FighterGraphics::SPECIAL_0, 5 };
-	moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = { FighterGraphics::UPPERCUT, 5 };
+	moves[FightMoveInputHandler::make_key(STAND, "X,")] = &low_punch;
+	moves[FightMoveInputHandler::make_key(STAND, "Y,")] = &high_punch;
+	moves[FightMoveInputHandler::make_key(STAND, "A,")] = &low_kick;
+	moves[FightMoveInputHandler::make_key(STAND, "B,")] = &high_kick;
+	moves[FightMoveInputHandler::make_key(CROUCH, "X,")] = &crouch_kick_low;
+	moves[FightMoveInputHandler::make_key(CROUCH, "A,")] = &crouch_kick_high;
+	moves[FightMoveInputHandler::make_key(STAND, "D,F,A,")] = &cage_projectile_fightmove;
+	moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = &uppercut;
 	return moves;
-}
-
-void handle_fightmove(FightMove move, Fighter &fighter)
-{
-	if (move.animation == FighterGraphics::SPECIAL_0)
-	{
-		SDL_AddTimer(450, projectile_callback, &fighter);
-	}
-	fighter.set_state(FighterStateMachine::State::FIGHT_MOVE, &move);
 }

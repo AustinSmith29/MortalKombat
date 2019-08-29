@@ -28,6 +28,5 @@ static BasicFightMove high_kick(FighterGraphics::HIGH_KICK, 5);
 static BasicFightMove crouch_kick_low(FighterGraphics::CROUCH_KICK_LOW, 5);
 static BasicFightMove crouch_kick_high(FighterGraphics::CROUCH_KICK_HIGH, 5);
 // THESE ARE NOT BASICFIGHTMOVES... JUST FOR TESTING
-static BasicFightMove special_0(FighterGraphics::SPECIAL_0, 5);
 static BasicFightMove special_1(FighterGraphics::SPECIAL_1, 5);
 #endif

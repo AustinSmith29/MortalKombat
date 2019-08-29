@@ -5,7 +5,6 @@
 #include "fightmove_input_handler.h"
 
 std::map <FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader& loader);
-std::map <FightMoveInputHandler::ActivationKey, FightMove> load_moves();
-void handle_fightmove(FightMove move, Fighter& fighter);
+std::map <FightMoveInputHandler::ActivationKey, FightMove*> load_moves();
 
 #endif

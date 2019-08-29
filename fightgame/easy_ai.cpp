@@ -4,6 +4,7 @@
 #include "fighter.h"
 #include "ai_util.h"
 #include "basic_fightmove.h"
+#include "projectile_fightmove.h"
 
 namespace EasyAI
 {
@@ -14,7 +15,7 @@ namespace EasyAI
 			{20, high_punch}, 
 			{20, high_kick},
 			{20, low_kick},
-			{20, special_0},
+			{20, cage_projectile_fightmove},
 		};
 		FightMove& move = nonuni_random_state_from<FightMove&>(random_map);
 		a.perform_fightmove(move);
@@ -26,7 +27,7 @@ namespace EasyAI
 		if (distance > 50)
 		{
 			std::vector<std::pair<int, Behavior::Behavior>> random_map = {
-				{5, Behavior::Behavior(&special_0)},
+				{5, Behavior::Behavior(&cage_projectile_fightmove)},
 				{10, Behavior::Behavior(Behavior::jump_towards)},
 				{85, Behavior::Behavior(Behavior::move_towards)},
 			};
