@@ -50,7 +50,8 @@ public:
 
 	void tick();
 	void draw(SDL_Renderer* renderer);
-	void perform_fightmove(FightMove* move);
+	FightMove& get_fightmove() const;
+	void perform_fightmove(FightMove& move);
 
 protected:
 	int x, y;
@@ -61,6 +62,7 @@ protected:
 	std::unique_ptr<FighterStateMachine> state_machine;
 	Orientation orientation;
 	std::vector<std::unique_ptr<Projectile>> projectiles;
+	FightMove* current_fightmove;
 
 private:
 	int gravity_counter{ 0 };

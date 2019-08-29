@@ -1,6 +1,7 @@
 #include "collision.h"
 #include "fighter.h"
 #include "animation.h"
+#include "fightmove.h"
 
 #include <cassert>
 #include <iostream>
@@ -86,6 +87,8 @@ void handle_fighter_on_fighter_collision(Fighter& subject, Fighter& other)
 
 	if (is_fighter_hitbox_collision_in(subject, opponent_dmgboxes))
 	{
+		FightMove& fightmove = other.get_fightmove();
+		fightmove.apply_effect(subject);
 		subject.set_state(FighterStateMachine::State::STUN);
 	}
 }

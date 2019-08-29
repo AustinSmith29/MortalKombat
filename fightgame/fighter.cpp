@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-Fighter::Fighter(FighterAnimator& animator) 
-	: state_machine(std::make_unique<FighterStateMachine>(*this)), animator(animator)
+Fighter::Fighter(FighterAnimator& animator)
+	: state_machine(std::make_unique<FighterStateMachine>(*this)), animator(animator), current_fightmove(nullptr)
 {
 	x = y = 0;
 	orientation = Orientation::RIGHT;
@@ -14,7 +14,7 @@ Fighter::Fighter(FighterAnimator& animator)
 }
 
 Fighter::Fighter(const Fighter& other)
-	: state_machine(std::make_unique<FighterStateMachine>(*this)), animator(other.animator)
+	: state_machine(std::make_unique<FighterStateMachine>(*this)), animator(other.animator), current_fightmove(nullptr)
 {
 	x = other.x;
 	y = other.y;
@@ -199,8 +199,14 @@ void Fighter::apply_gravity()
 	gravity_counter++;
 }
 
-void Fighter::perform_fightmove(FightMove* move)
+FightMove& Fighter::get_fightmove() const
 {
+	return *current_fightmove;
+}
+
+void Fighter::perform_fightmove(FightMove& move)
+{
+	current_fightmove = &move;
 	set_state(FighterStateMachine::State::FIGHT_MOVE, &move);
 }
 
