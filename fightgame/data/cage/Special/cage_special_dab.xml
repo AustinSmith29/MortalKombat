@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<animation spritesheet="C:/Users/xman0/Desktop/cage/cage_spritesheet.bmp">
+    <frame duration="10" h="116" w="35" x="691" y="1422">
+        <hitboxes/>
+        <damageboxes/>
+    </frame>
+</animation>

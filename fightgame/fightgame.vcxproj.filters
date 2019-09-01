@@ -114,6 +114,24 @@
     <ClCompile Include="projectile_factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="basic_fightmove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="projectile_fightmove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="uppercut_fightmove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="standard_effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common_fightmoves.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="uppercut_effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fighter.h">
@@ -207,6 +225,27 @@
       <Filter>Header Files\projectiles</Filter>
     </ClInclude>
     <ClInclude Include="projectile_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_fightmove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="projectile_fightmove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="uppercut_fightmove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="standard_effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common_fightmoves.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="uppercut_effect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

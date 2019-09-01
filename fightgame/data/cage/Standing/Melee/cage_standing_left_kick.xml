@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<animation spritesheet="C:/Users/xman0/Desktop/cage/cage_spritesheet.bmp">
+    <frame duration="3" h="102" w="34" x="268" y="613">
+        <hitboxes>
+            <hitbox h="-31" w="-16" x="29" y="104"/>
+            <hitbox h="-69" w="-14" x="23" y="71"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="4" h="92" w="36" x="312" y="623">
+        <hitboxes>
+            <hitbox h="-64" w="-10" x="28" y="92"/>
+            <hitbox h="-35" w="-15" x="17" y="35"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="5" h="88" w="52" x="359" y="627">
+        <hitboxes>
+            <hitbox h="-27" w="-27" x="29" y="39"/>
+            <hitbox h="-19" w="-12" x="14" y="19"/>
+            <hitbox h="-53" w="-9" x="32" y="87"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="10" h="86" w="71" x="421" y="629">
+        <hitboxes>
+            <hitbox h="-53" w="-9" x="32" y="87"/>
+            <hitbox h="-26" w="-29" x="31" y="37"/>
+            <hitbox h="-15" w="-10" x="11" y="15"/>
+        </hitboxes>
+        <damageboxes>
+            <damagebox h="13" w="31" x="44" y="17"/>
+        </damageboxes>
+    </frame>
+    <frame duration="6" h="88" w="52" x="359" y="627">
+        <hitboxes>
+            <hitbox h="-52" w="-11" x="32" y="88"/>
+            <hitbox h="-25" w="-31" x="32" y="35"/>
+            <hitbox h="-19" w="-12" x="13" y="16"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="5" h="92" w="36" x="312" y="623">
+        <hitboxes>
+            <hitbox h="-60" w="-15" x="31" y="90"/>
+            <hitbox h="-35" w="13" x="2" y="34"/>
+            <hitbox h="-19" w="-10" x="25" y="30"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="4" h="102" w="34" x="15" y="613">
+        <hitboxes>
+            <hitbox h="-60" w="-17" x="26" y="103"/>
+            <hitbox h="-43" w="14" x="7" y="43"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+</animation>

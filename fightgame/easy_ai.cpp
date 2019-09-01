@@ -3,7 +3,7 @@
 #include "ai_fighter.h"
 #include "fighter.h"
 #include "ai_util.h"
-#include "basic_fightmove.h"
+#include "common_fightmoves.h"
 #include "projectile_fightmove.h"
 
 namespace EasyAI

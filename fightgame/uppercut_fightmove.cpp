@@ -1,6 +1,13 @@
 #include "uppercut_fightmove.h"
 
-UppercutFightMove::UppercutFightMove(int damage)
+UppercutFightMove::UppercutFightMove() : effect(std::make_unique<UppercutEffect>())
+{
+	damage = 0;
+}
+
+UppercutFightMove::UppercutFightMove(int damage) : 
+	effect(std::make_unique<UppercutEffect>())
+
 {
 	this->damage = damage;
 }
@@ -17,5 +24,5 @@ bool UppercutFightMove::is_complete(Fighter& fighter)
 
 void UppercutFightMove::apply_effect(Fighter& target)
 {
-	target.jump();
+	target.set_state(FighterStateMachine::State::STUN, effect.get());
 }

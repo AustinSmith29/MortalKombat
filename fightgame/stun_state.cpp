@@ -1,49 +1,32 @@
 #include "stun_state.h"
 #include "fighter.h"
+#include "effect.h"
 
 StunState::StunState(FighterStateMachine& machine)
 	: FighterState(machine, FightMoveHook::NONE)
 {
+	effect = nullptr;
+	next_state = -1;
 }
 
 void StunState::enter(void* data)
 {
 	lock_input();
-	if (fighter.is_airborne())
-	{
-		fighter.set_graphics(FighterGraphics::FALL);
-		fall = true;
-		next_state = FighterStateMachine::State::IDLE;
-		// knock back fighter in direction of hit
-		if (fighter.get_orientation() == Orientation::RIGHT)
-			fighter.set_velocity_x(-2);
-		else
-			fighter.set_velocity_x(2);
-	}
-	else if (machine.get_previous_state()->get_move_hook() == FightMoveHook::CROUCH)
-	{
-		fighter.set_graphics(FighterGraphics::STUN_LOW);
-		next_state = FighterStateMachine::State::CROUCH;
-	}
-	else
-	{
-		fighter.set_graphics(FighterGraphics::STUN_HIGH);
-		next_state = FighterStateMachine::State::IDLE;
-	}
+	effect = static_cast<Effect*>(data);
+	effect->enter(fighter);
+	next_state = effect->get_next_state();
 }
 
 void StunState::tick()
 {
-	if (fall && !fighter.is_airborne())
-		machine.change_to((FighterStateMachine::State)next_state, nullptr);
-	else if (!fall && fighter.get_animation()->is_complete())
+	if (effect->is_complete(fighter))
 		machine.change_to((FighterStateMachine::State)next_state, nullptr);
 }
 
 void StunState::exit()
 {
-	fighter.set_velocity_x(0);
+	effect->exit(fighter);
+	effect = nullptr;
 	unlock_input();
 	fighter.get_animation()->restart();
-	fall = false;
 }

@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 	fighter.set_position_x(100);
 	fighter.set_position_y(400);
 
-	AIFighter opponent(cage_fighter, EasyAI::logic);
+	AIFighter opponent(cage_fighter, DummyAI::logic);
 	opponent.flip_orientation();
 	opponent.set_position_x(300);
 	opponent.set_position_y(400);

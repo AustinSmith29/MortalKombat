@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<animation spritesheet="C:/Users/xman0/Desktop/cage/cage_spritesheet.bmp">
+    <frame duration="6" h="102" w="45" x="539" y="382">
+        <hitboxes>
+            <hitbox h="102" w="-23" x="36" y="0"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="6" h="104" w="51" x="594" y="380">
+        <hitboxes>
+            <hitbox h="102" w="-23" x="36" y="0"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+    <frame duration="10" h="99" w="66" x="655" y="385">
+        <hitboxes>
+            <hitbox h="102" w="-23" x="36" y="0"/>
+        </hitboxes>
+        <damageboxes>
+            <damagebox h="-9" w="22" x="47" y="23"/>
+        </damageboxes>
+    </frame>
+    <frame duration="6" h="102" w="45" x="539" y="382">
+        <hitboxes>
+            <hitbox h="-41" w="-13" x="41" y="101"/>
+            <hitbox h="-24" w="13" x="0" y="102"/>
+            <hitbox h="-23" w="17" x="7" y="81"/>
+            <hitbox h="-40" w="19" x="15" y="59"/>
+            <hitbox h="-16" w="13" x="23" y="17"/>
+        </hitboxes>
+        <damageboxes/>
+    </frame>
+</animation>

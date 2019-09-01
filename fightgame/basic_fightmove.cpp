@@ -1,9 +1,11 @@
 #include "basic_fightmove.h"
+#include "effect.h"
 
-BasicFightMove::BasicFightMove(int animation, int damage)
+BasicFightMove::BasicFightMove(int animation, int damage, std::shared_ptr<Effect> effect)
 {
 	this->animation = animation;
 	this->damage = damage;
+	this->effect = effect;
 }
 
 void BasicFightMove::enter(Fighter& fighter)
@@ -14,4 +16,9 @@ void BasicFightMove::enter(Fighter& fighter)
 bool BasicFightMove::is_complete(Fighter& fighter)
 {
 	return fighter.get_animation()->is_complete();
+}
+
+void BasicFightMove::apply_effect(Fighter& target)
+{
+	target.set_state(FighterStateMachine::State::STUN, effect.get());
 }

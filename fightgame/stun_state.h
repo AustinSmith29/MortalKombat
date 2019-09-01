@@ -3,6 +3,7 @@
 
 #include "fighter_state.h"
 
+class Effect;
 class StunState :  public FighterState
 {
 public:
@@ -11,8 +12,8 @@ public:
 	void tick() override;
 	void exit() override;
 private:
-	bool fall{ false };
 	int next_state;
+	Effect* effect;
 };
 
 #endif

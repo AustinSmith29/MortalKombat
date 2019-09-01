@@ -1,9 +1,9 @@
 #include "cage.h"
 #include "fighter.h"
 #include "projectile_factory.h"
-#include "basic_fightmove.h"
+#include "fighter_animator.h"
+#include "common_fightmoves.h"
 #include "projectile_fightmove.h"
-#include "uppercut_fightmove.h"
 
 #include <map>
 
