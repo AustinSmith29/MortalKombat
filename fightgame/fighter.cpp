@@ -212,6 +212,8 @@ void Fighter::perform_fightmove(FightMove& move)
 
 void face(Fighter& fighter, int x)
 {
+	if (fighter.get_state()->is_input_locked())
+		return;
 	int dx = fighter.get_position_x() - x;
 	Orientation orientation = fighter.get_orientation();
 	if (dx > 0 && orientation != Orientation::LEFT)
