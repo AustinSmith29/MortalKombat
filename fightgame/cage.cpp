@@ -53,8 +53,8 @@ std::map <FightMoveInputHandler::ActivationKey, FightMove*> load_moves()
 	moves[FightMoveInputHandler::make_key(CROUCH, "X,")] = &crouch_kick_low;
 	moves[FightMoveInputHandler::make_key(CROUCH, "A,")] = &crouch_kick_high;
 	moves[FightMoveInputHandler::make_key(STAND, "D,F,A,")] = &cage_projectile_fightmove;
-	//moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = &uppercut;
-	moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = &throw_enemy;
+	moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = &uppercut;
+	moves[FightMoveInputHandler::make_key(STAND, "D,b,X,")] = &throw_enemy;
 	moves[FightMoveInputHandler::make_key(STAND, "F,D,F,")] = &throw_enemy;
 	return moves;
 }
