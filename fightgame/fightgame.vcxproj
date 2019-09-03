@@ -157,6 +157,8 @@
     <ClCompile Include="projectile_fightmove.cpp" />
     <ClCompile Include="standard_effect.cpp" />
     <ClCompile Include="stun_state.cpp" />
+    <ClCompile Include="thrown_effect.cpp" />
+    <ClCompile Include="throw_fightmove.cpp" />
     <ClCompile Include="uppercut_effect.cpp" />
     <ClCompile Include="uppercut_fightmove.cpp" />
     <ClCompile Include="user_fighter.cpp" />
@@ -202,6 +204,8 @@
     <ClInclude Include="projectile_fightmove.h" />
     <ClInclude Include="standard_effect.h" />
     <ClInclude Include="stun_state.h" />
+    <ClInclude Include="thrown_effect.h" />
+    <ClInclude Include="throw_fightmove.h" />
     <ClInclude Include="uppercut_effect.h" />
     <ClInclude Include="uppercut_fightmove.h" />
     <ClInclude Include="user_fighter.h" />

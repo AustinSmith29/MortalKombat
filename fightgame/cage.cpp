@@ -33,6 +33,9 @@ std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader&
 	anim_sources[FighterGraphics::CROUCH_KICK_HIGH] = loader.load_animation(ANIMATIONS "cage_kick_crouch_high.xml");
 	anim_sources[FighterGraphics::FALL] = loader.load_animation(ANIMATIONS "cage_fall.xml");
 	anim_sources[FighterGraphics::UPPERCUT] = loader.load_animation(ANIMATIONS "cage_uppercut.xml");
+	anim_sources[FighterGraphics::THROW_TRY] = loader.load_animation(ANIMATIONS "cage_throw_try.xml");
+	anim_sources[FighterGraphics::THROW_COMPLETE] = loader.load_animation(ANIMATIONS "cage_throw_complete.xml");
+	anim_sources[FighterGraphics::THROWN] = loader.load_animation(ANIMATIONS "cage_thrown.xml");
 	anim_sources[FighterGraphics::SPECIAL_0] = loader.load_animation(ANIMATIONS "cage_fireball_throw.xml");
 
 	return anim_sources;
@@ -50,6 +53,8 @@ std::map <FightMoveInputHandler::ActivationKey, FightMove*> load_moves()
 	moves[FightMoveInputHandler::make_key(CROUCH, "X,")] = &crouch_kick_low;
 	moves[FightMoveInputHandler::make_key(CROUCH, "A,")] = &crouch_kick_high;
 	moves[FightMoveInputHandler::make_key(STAND, "D,F,A,")] = &cage_projectile_fightmove;
-	moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = &uppercut;
+	//moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = &uppercut;
+	moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = &throw_enemy;
+	moves[FightMoveInputHandler::make_key(STAND, "F,D,F,")] = &throw_enemy;
 	return moves;
 }

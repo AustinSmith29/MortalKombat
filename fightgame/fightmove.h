@@ -3,7 +3,6 @@
 
 #include "fighter.h"
 
-class Effect;
 class FightMove
 {
 public:
