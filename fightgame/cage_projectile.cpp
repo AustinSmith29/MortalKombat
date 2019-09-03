@@ -1,6 +1,7 @@
 #include "cage_projectile.h"
 #include "constants.h"
 #include "fighter.h"
+#include "standard_effect.h"
 
 CageProjectile::CageProjectile()
 {
@@ -55,10 +56,11 @@ void CageProjectile::draw(SDL_Renderer* renderer)
 	}
 }
 
+static StandardEffect effect;
 void CageProjectile::do_impact(Fighter& other)
 {
 	kill();
-	other.set_state(FighterStateMachine::STUN);
+	other.set_state(FighterStateMachine::STUN, &effect);
 }
 
 void CageProjectile::load_graphics(bones::GraphicsLoader& loader)
