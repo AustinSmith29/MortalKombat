@@ -158,18 +158,18 @@ void Fighter::tick()
 	}
 }
 
-void Fighter::draw(SDL_Renderer* renderer)
+void Fighter::draw(SDL_Renderer* renderer, const SDL_Rect& camera)
 {
 	// "Anchor" of every frame is the bottom-middle.
 	// This fixes the animation jumping around on the screen. 
-	int draw_x = topleft_x();
-	int draw_y = topleft_y();
+	int draw_x = topleft_x() - camera.x;
+	int draw_y = topleft_y() - camera.y;
 	animator.play(renderer, draw_x, draw_y);
 
 	for (auto& projectile : projectiles)
 	{
 		if (!projectile->is_dead())
-			projectile->draw(renderer);
+			projectile->draw(renderer, camera);
 	}
 }
 

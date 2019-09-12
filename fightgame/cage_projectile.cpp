@@ -44,15 +44,17 @@ void CageProjectile::tick()
 		kill();
 }
 
-void CageProjectile::draw(SDL_Renderer* renderer)
+void CageProjectile::draw(SDL_Renderer* renderer, const SDL_Rect& camera)
 {
+	int draw_x = x - camera.x;
+	int draw_y = y - camera.y;
 	if (is_dead())
 	{
-		die_animation.play_animation(renderer, x, y);
+		die_animation.play_animation(renderer, draw_x, draw_y);
 	}
 	else
 	{
-		projectile_animation.play_animation(renderer, x, y);
+		projectile_animation.play_animation(renderer, draw_x, draw_y);
 	}
 }
 

@@ -16,7 +16,7 @@ public:
 	virtual Projectile* clone() = 0;
 	virtual void initialize(int x, int y, Orientation direction) = 0;
 	virtual void tick() = 0;
-	virtual void draw(SDL_Renderer* renderer) = 0;
+	virtual void draw(SDL_Renderer* renderer, const SDL_Rect& camera) = 0;
 	virtual void do_impact(Fighter& other) {};
 	virtual std::vector<SDL_Rect> get_dmgboxes() = 0;
 	virtual void load_graphics(bones::GraphicsLoader& loader) = 0;

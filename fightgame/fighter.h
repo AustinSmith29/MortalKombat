@@ -49,7 +49,7 @@ public:
 	std::vector<std::unique_ptr<Projectile>>* get_projectiles();
 
 	void tick();
-	void draw(SDL_Renderer* renderer);
+	void draw(SDL_Renderer* renderer, const SDL_Rect& camera);
 	FightMove& get_fightmove() const;
 	void perform_fightmove(FightMove& move);
 

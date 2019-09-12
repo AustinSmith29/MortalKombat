@@ -13,7 +13,7 @@ public:
 	CageProjectile* clone() override;
 	void initialize(int x, int y, Orientation orientation) override;
 	void tick() override;
-	void draw(SDL_Renderer* renderer) override;
+	void draw(SDL_Renderer* renderer, const SDL_Rect& camera) override;
 	void do_impact(Fighter& other) override;
 	void load_graphics(bones::GraphicsLoader& loader) override;
 	std::vector<SDL_Rect> get_dmgboxes() override;
