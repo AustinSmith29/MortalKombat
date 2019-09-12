@@ -149,7 +149,12 @@ std::vector<std::unique_ptr<Projectile>>* Fighter::get_projectiles()
 void Fighter::tick()
 {
 	apply_gravity();
-	x = get_position_x() + get_velocity_x();
+
+	x += x_vel;
+	if (x < 0)
+		x = 0;
+	if (x > MAP_WIDTH - 20)
+		x = MAP_WIDTH - 20;
 	state_machine->tick();
 	for (auto& projectile : projectiles)
 	{

@@ -1,6 +1,7 @@
 #include "SDL.h"
 #include "graphics.h"
 #include "cage.h"
+#include "constants.h"
 #include "user_fighter.h"
 #include "ai_fighter.h"
 #include "fighter_animator.h"
@@ -117,7 +118,7 @@ void focus_camera(SDL_Rect& camera, Fighter& a, Fighter& b)
 	const int CAMERA_PAD = 64;
 	int a_x = a.get_position_x();
 	int b_x = b.get_position_x();
-
+	int dx = a_x - b_x;
 
 	if (a_x + CAMERA_PAD > camera.x + camera.w ||
 		b_x + CAMERA_PAD > camera.x + camera.w)
@@ -130,6 +131,21 @@ void focus_camera(SDL_Rect& camera, Fighter& a, Fighter& b)
 	{
 		camera.x -= 2;
 	}
+	// don't let fighter move out of camera sight
+	if (dx > camera.w - CAMERA_PAD-20) 
+		a.set_position_x(camera.x + camera.w - 20);
+	if (-dx > camera.w - CAMERA_PAD - 20)
+		b.set_position_x(camera.x + camera.w - 20);
+
+	if (a.get_position_x() < camera.x + CAMERA_PAD)
+		a.set_position_x(camera.x + CAMERA_PAD);
+	if (b.get_position_x() < camera.x + CAMERA_PAD)
+		b.set_position_x(camera.x + CAMERA_PAD);
 
 	// TODO: ADD CAMERA LIMITS
+	if (camera.x < 0)
+		camera.x = 0;
+	if (camera.x + camera.w > MAP_WIDTH)
+		camera.x = MAP_WIDTH - camera.w;
+
 }
