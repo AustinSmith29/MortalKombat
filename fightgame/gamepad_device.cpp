@@ -17,13 +17,15 @@ static std::map<InputButton, SDL_GameControllerButton> translations = {
 	{InputButton::BUTTON_RIGHTSHOULDER, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER},
 };
 
-GamepadDevice::GamepadDevice(SDL_GameController* game_controller) : controller(game_controller)
+GamepadDevice::GamepadDevice(SDL_GameController* game_controller, int id) : controller(game_controller), id(id)
 {
 }
 
 InputEvent GamepadDevice::get_input(SDL_Event& event)
 {
 	InputEvent evnt = { EventType::NONE, InputButton::NONE };
+
+	if (event.cdevice.which != id) return evnt; // this event doesn't concern us
 
 	if (event.type == SDL_CONTROLLERBUTTONDOWN) evnt.type = EventType::BUTTON_DOWN;
 	if (event.type == SDL_CONTROLLERBUTTONUP) evnt.type = EventType::BUTTON_UP;
