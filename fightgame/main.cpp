@@ -12,6 +12,7 @@
 #include "gamepad_device.h"
 #include "projectile_factory.h"
 #include <iostream>
+#include <vector>
 
 FighterAnimator create_cage(bones::GraphicsLoader &loader)
 {
@@ -46,18 +47,42 @@ int main(int argc, char *argv[])
 	fighter.set_position_x(200);
 	fighter.set_position_y(400);
 
-	AIFighter opponent(cage_fighter, DummyAI::logic);
-	opponent.flip_orientation();
-	opponent.set_position_x(400);
-	opponent.set_position_y(400);
+	AIFighter ai_opponent(cage_fighter, DummyAI::logic);
+	UserFighter user_opponent(cage_fighter, move_map);
+	Fighter* opponent = nullptr;
 
 	ProjectileFactory::load(graphics);
 
-	int njoysticks = SDL_NumJoysticks();
-	std::cout << njoysticks << " detected." << std::endl;
-	InputDevice *input_device = new KeyboardDevice();
-	//SDL_GameController* controller = SDL_GameControllerOpen(0);
-	//InputDevice* input_device = new GamepadDevice(controller);
+	int nusers = SDL_NumJoysticks();
+	std::cout << nusers << " detected." << std::endl;
+	SDL_GameController* controller = nullptr; 
+	SDL_GameController* controller2 = nullptr;
+	InputDevice* input_device = nullptr;
+	InputDevice* input_device2 = nullptr;
+	if (nusers == 0)
+	{
+		input_device = new KeyboardDevice();
+		opponent = &ai_opponent;
+	}
+	else if (nusers == 1)
+	{
+		controller = SDL_GameControllerOpen(0);
+		input_device = new GamepadDevice(controller, 0);
+		opponent = &ai_opponent;
+	}
+	else
+	{
+		controller = SDL_GameControllerOpen(0);
+		input_device = new GamepadDevice(controller, 0);
+		controller2 = SDL_GameControllerOpen(1);
+		input_device2 = new GamepadDevice(controller2, 1);
+		opponent = &user_opponent;
+	}
+
+	opponent->flip_orientation();
+	opponent->set_position_x(400);
+	opponent->set_position_y(400);
+
 	SDL_Event event;
 	bool quit = false;
 	while (!quit)
@@ -69,33 +94,45 @@ int main(int argc, char *argv[])
 				quit = true;
 			auto input_event = input_device->get_input(event);
 			fighter.handle_input_event(input_event, *input_device);
+			if (nusers > 1)
+			{
+				auto input_event2 = input_device2->get_input(event);
+				user_opponent.handle_input_event(input_event2, *input_device2);
+			}
 		}
 
-		focus_camera(camera, fighter, opponent);
+		focus_camera(camera, fighter, *opponent);
 		fighter.tick();
-		opponent.tick(fighter);
+		if (nusers < 2)
+		{
+			ai_opponent.tick(fighter);
+		}
+		else
+		{
+			user_opponent.tick();
+		}
 
-		face(fighter, opponent.get_position_x());
-		face(opponent, fighter.get_position_x());
+		face(fighter, opponent->get_position_x());
+		face(*opponent, fighter.get_position_x());
 
-		handle_fighter_on_fighter_collision(fighter, opponent);
+		handle_fighter_on_fighter_collision(fighter, *opponent);
 		auto fighter_projectiles = fighter.get_projectiles();
-		auto opponent_projectiles = opponent.get_projectiles();
+		auto opponent_projectiles = opponent->get_projectiles();
 		for (auto& projectile : *fighter_projectiles)
 		{
-			handle_fighter_on_projectile_collision(opponent, *projectile);
+			handle_fighter_on_projectile_collision(*opponent, *projectile);
 		}
 		for (auto& projectile : *opponent_projectiles)
 		{
 			handle_fighter_on_projectile_collision(fighter, *projectile);
 		}
-		handle_fighter_on_fighter_collision(opponent, fighter);
+		handle_fighter_on_fighter_collision(*opponent, fighter);
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 		bones::draw_sprite(renderer, stage, -camera.x, -camera.y);
 		fighter.draw(renderer, camera);
-		opponent.draw(renderer, camera);
+		opponent->draw(renderer, camera);
 		//draw_fighter_collision_boxes(renderer, fighter);
 		//draw_fighter_collision_boxes(renderer, opponent);
 		SDL_RenderPresent(renderer);
@@ -107,6 +144,8 @@ int main(int argc, char *argv[])
 		}
 	}
 	delete input_device;
+	if (nusers > 1)
+		delete input_device2;
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
@@ -120,6 +159,7 @@ void focus_camera(SDL_Rect& camera, Fighter& a, Fighter& b)
 	int b_x = b.get_position_x();
 	int dx = a_x - b_x;
 
+	// Camera Scroll
 	if (a_x + CAMERA_PAD > camera.x + camera.w ||
 		b_x + CAMERA_PAD > camera.x + camera.w)
 	{
@@ -142,7 +182,7 @@ void focus_camera(SDL_Rect& camera, Fighter& a, Fighter& b)
 	if (b.get_position_x() < camera.x + CAMERA_PAD)
 		b.set_position_x(camera.x + CAMERA_PAD);
 
-	// TODO: ADD CAMERA LIMITS
+	// CAMERA LIMITS
 	if (camera.x < 0)
 		camera.x = 0;
 	if (camera.x + camera.w > MAP_WIDTH)
