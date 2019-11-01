@@ -1,6 +1,6 @@
 #include "user_fighter.h"
 
-UserFighter::UserFighter(FighterAnimator& animator, std::map<ActivationKey, FightMove*> move_map)
+UserFighter::UserFighter(FighterAnimator& animator, std::map<ActivationKey, std::string> move_map)
 	: Fighter(animator), fightmove_handler(*this, move_map)
 {
 

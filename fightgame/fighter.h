@@ -6,7 +6,9 @@
 #include "projectile.h"
 
 #include <vector>
+#include <map>
 #include <memory>
+#include <string>
 
 class Fighter
 {
@@ -51,7 +53,8 @@ public:
 	void tick();
 	void draw(SDL_Renderer* renderer, const SDL_Rect& camera);
 	FightMove& get_fightmove() const;
-	void perform_fightmove(FightMove& move);
+	void add_fightmove(const std::string& key, std::shared_ptr<FightMove> move);
+	void perform_fightmove(const std::string& move);
 
 protected:
 	int x, y;
@@ -63,10 +66,13 @@ protected:
 	Orientation orientation;
 	std::vector<std::unique_ptr<Projectile>> projectiles;
 	FightMove* current_fightmove;
+	std::map<std::string, std::shared_ptr<FightMove>> fightmoves;
 
 private:
 	int gravity_counter{ 0 };
 	void apply_gravity();
+	void init_common_fightmoves();
+	void perform_fightmove(FightMove& move);
 };
 
 void face(Fighter& fighter, int x);

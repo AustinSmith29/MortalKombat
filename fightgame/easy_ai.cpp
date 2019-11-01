@@ -10,14 +10,14 @@ namespace EasyAI
 {
 	void select_fightmove(AIFighter& a, Fighter& b)
 	{
-		std::vector<std::pair<int, FightMove&>> random_map = {
-			{20, low_punch},
-			{20, high_punch}, 
-			{20, high_kick},
-			{20, low_kick},
-			{20, cage_projectile_fightmove},
+		std::vector<std::pair<int, std::string>> random_map = {
+			{20, "low_punch"},
+			{20, "high_punch"}, 
+			{20, "high_kick"},
+			{20, "low_kick"},
+			{20, "cage_projectile_fightmove"},
 		};
-		FightMove& move = nonuni_random_state_from<FightMove&>(random_map);
+		auto move = nonuni_random_state_from<std::string>(random_map);
 		a.perform_fightmove(move);
 	}
 	
@@ -27,7 +27,7 @@ namespace EasyAI
 		if (distance > 50)
 		{
 			std::vector<std::pair<int, Behavior::Behavior>> random_map = {
-				{5, Behavior::Behavior(&cage_projectile_fightmove)},
+				{5, Behavior::Behavior("cage_projectile_fightmove")},
 				{10, Behavior::Behavior(Behavior::jump_towards)},
 				{85, Behavior::Behavior(Behavior::move_towards)},
 			};

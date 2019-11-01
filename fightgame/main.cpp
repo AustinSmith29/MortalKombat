@@ -1,4 +1,6 @@
 #include "SDL.h"
+#include "SDL_mixer.h"
+#include "audio.h"
 #include "graphics.h"
 #include "cage.h"
 #include "constants.h"
@@ -21,13 +23,26 @@ FighterAnimator create_cage(bones::GraphicsLoader &loader)
 	return cage_animator;
 }
 
+/*
+THE REASON SOUND WON'T WORK IS BECAUSE THE EFFECTS ARE STATICALLY CREATED BEFORE MIX_OPENAUDIO EXECUTES.
+WE HAVE TO CONTROL WHEN EFFECTS ARE CREATED.
+*/
+
 void focus_camera(SDL_Rect& camera, Fighter& a, Fighter& b);
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
 	SDL_Surface* screen = NULL;
 	SDL_Init(SDL_INIT_EVERYTHING);
+	if (Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3) != 0)
+	{
+		std::cout << "Could not initialize! " << Mix_GetError() << std::endl;
+	}
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_CHANNELS, 1024) != 0)
+	{
+		std::cout << "Could not open audio! " << Mix_GetError() << std::endl;
+	}
 	window = SDL_CreateWindow("Mortal Kombat II", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		640,
@@ -148,6 +163,8 @@ int main(int argc, char *argv[])
 		delete input_device2;
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	Mix_CloseAudio();
+	Mix_Quit();
 	SDL_Quit();
 	return 0;
 }

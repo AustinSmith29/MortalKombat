@@ -4,12 +4,14 @@
 #include "fighter.h"
 #include "fightmove_input_handler.h"
 
+#include <string>
+
 class UserFighter : public Fighter
 {
 public:
 	using ActivationKey = FightMoveInputHandler::ActivationKey;
 
-	UserFighter(FighterAnimator &animator, std::map<ActivationKey, FightMove*> move_map);
+	UserFighter(FighterAnimator &animator, std::map<ActivationKey, std::string> move_map);
 	UserFighter(const UserFighter& userfighter) = delete;
 	UserFighter& operator = (const UserFighter& userfighter) = delete;
 

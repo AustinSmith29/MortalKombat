@@ -10,7 +10,7 @@ static Uint32 timer_callback(Uint32 interval, void* param)
 	return 0;
 }
 
-FightMoveInputHandler::FightMoveInputHandler(UserFighter& fighter, std::map<ActivationKey, FightMove*> move_map) :
+FightMoveInputHandler::FightMoveInputHandler(UserFighter& fighter, std::map<ActivationKey, std::string> move_map) :
 	fighter(fighter), move_map(move_map), first_press(false)
 {
 }
@@ -71,7 +71,7 @@ void FightMoveInputHandler::process_event(InputEvent &event, FightMoveHook hook,
 	auto key = std::make_pair(hook, input_seq);
 	if (move_map.find(key) != move_map.end())
 	{
-		fighter.perform_fightmove(*move_map[key]);
+		fighter.perform_fightmove(move_map[key]);
 	}
 }
 

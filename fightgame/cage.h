@@ -4,7 +4,10 @@
 #include "fighter_animator.h"
 #include "fightmove_input_handler.h"
 
+#include <string>
+#include <map>
+
 std::map <FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader& loader);
-std::map <FightMoveInputHandler::ActivationKey, FightMove*> load_moves();
+std::map <FightMoveInputHandler::ActivationKey, std::string> load_moves();
 
 #endif

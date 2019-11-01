@@ -1,5 +1,10 @@
 #include "standard_effect.h"
 
+StandardEffect::StandardEffect() 
+{
+	soundeffect = new bones::AudioClip("data/sounds/hitsounds/mk2-00100.mp3");
+}
+
 void StandardEffect::enter(Fighter& fighter)
 {
 	if (fighter.is_airborne())
@@ -23,7 +28,7 @@ void StandardEffect::enter(Fighter& fighter)
 		fighter.set_graphics(FighterGraphics::STUN_HIGH);
 		next_state = FighterStateMachine::State::IDLE;
 	}
-
+	soundeffect->play();
 }
 
 bool StandardEffect::is_complete(Fighter& fighter)

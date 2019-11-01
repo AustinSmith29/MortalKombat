@@ -3,9 +3,9 @@
 #include "projectile_factory.h"
 #include "fighter_animator.h"
 #include "common_fightmoves.h"
+#include "standard_effect.h"
 #include "projectile_fightmove.h"
 
-#include <map>
 
 #define ANIMATIONS "data/johnnycage/animations/"
 
@@ -41,20 +41,19 @@ std::map<FighterGraphics, bones::Animation> load_graphics(bones::GraphicsLoader&
 	return anim_sources;
 }
 
-std::map <FightMoveInputHandler::ActivationKey, FightMove*> load_moves()
+std::map <FightMoveInputHandler::ActivationKey, std::string> load_moves()
 {
-	std::map <FightMoveInputHandler::ActivationKey, FightMove*> moves;
+	std::map <FightMoveInputHandler::ActivationKey, std::string> moves;
 	const FightMoveHook STAND = FightMoveHook::STAND;
 	const FightMoveHook CROUCH = FightMoveHook::CROUCH;
-	moves[FightMoveInputHandler::make_key(STAND, "X,")] = &low_punch;
-	moves[FightMoveInputHandler::make_key(STAND, "Y,")] = &high_punch;
-	moves[FightMoveInputHandler::make_key(STAND, "A,")] = &low_kick;
-	moves[FightMoveInputHandler::make_key(STAND, "B,")] = &high_kick;
-	moves[FightMoveInputHandler::make_key(CROUCH, "X,")] = &crouch_kick_low;
-	moves[FightMoveInputHandler::make_key(CROUCH, "A,")] = &crouch_kick_high;
-	moves[FightMoveInputHandler::make_key(STAND, "D,F,A,")] = &cage_projectile_fightmove;
-	moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = &uppercut;
-	moves[FightMoveInputHandler::make_key(STAND, "D,b,X,")] = &throw_enemy;
-	moves[FightMoveInputHandler::make_key(STAND, "F,D,F,")] = &throw_enemy;
+	moves[FightMoveInputHandler::make_key(STAND, "X,")] = "low_punch";
+	moves[FightMoveInputHandler::make_key(STAND, "Y,")] = "high_punch"; 
+	moves[FightMoveInputHandler::make_key(STAND, "A,")] = "low_kick";
+	moves[FightMoveInputHandler::make_key(STAND, "B,")] = "high_kick";
+	moves[FightMoveInputHandler::make_key(CROUCH, "X,")] = "crouch_kick_low";
+	moves[FightMoveInputHandler::make_key(CROUCH, "A,")] = "crouch_kick_high";
+	moves[FightMoveInputHandler::make_key(STAND, "D,F,A,")] = "cage_projectile_fightmove";
+	moves[FightMoveInputHandler::make_key(STAND, "D,Y,")] = "uppercut";
+	moves[FightMoveInputHandler::make_key(STAND, "D,b,X,")] = "throw";
 	return moves;
 }

@@ -35,7 +35,7 @@ namespace Behavior
 		this->move = nullptr;
 	}
 
-	Behavior::Behavior(FightMove* move)
+	Behavior::Behavior(std::string move)
 	{
 		type = DataType::FIGHTMOVE;
 		this->move = move;
@@ -49,7 +49,7 @@ namespace Behavior
 			func(a, b);
 			break;
 		case FIGHTMOVE:
-			a.perform_fightmove(*move);
+			a.perform_fightmove(move);
 			break;
 		}
 	}

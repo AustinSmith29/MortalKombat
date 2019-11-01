@@ -7,10 +7,10 @@
 
 namespace bones
 {
-	struct MixMusicDeleter {
-		void operator()(Mix_Music* music)
+	struct MixChunkDeleter {
+		void operator()(Mix_Chunk* sound)
 		{
-			Mix_FreeMusic(music);
+			Mix_FreeChunk(sound);
 		}
 	};
 	class AudioClip
@@ -22,7 +22,7 @@ namespace bones
 		void restart();
 		bool is_complete() const;
 	private:
-		std::unique_ptr<Mix_Music, MixMusicDeleter> sound;
+		std::unique_ptr<Mix_Chunk, MixChunkDeleter> sound;
 	};
 }
 #endif

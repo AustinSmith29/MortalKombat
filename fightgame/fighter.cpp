@@ -1,5 +1,6 @@
 #include "fighter.h"
 #include "constants.h" 
+#include "common_fightmoves.h"
 
 #include <iostream>
 
@@ -11,6 +12,7 @@ Fighter::Fighter(FighterAnimator& animator)
 	x_vel = y_vel = 0;
 	health = 100;
 	airborne = false;
+	init_common_fightmoves();
 }
 
 Fighter::Fighter(const Fighter& other)
@@ -23,6 +25,7 @@ Fighter::Fighter(const Fighter& other)
 	health = other.health;
 	orientation = other.orientation;
 	airborne = other.airborne;
+	init_common_fightmoves();
 }
 
 //TODO: Can prob move these to FighterAnimator
@@ -204,6 +207,11 @@ void Fighter::apply_gravity()
 	gravity_counter++;
 }
 
+void Fighter::add_fightmove(const std::string& key, std::shared_ptr<FightMove> move)
+{
+	fightmoves[key] = move;
+}
+
 FightMove& Fighter::get_fightmove() const
 {
 	return *current_fightmove;
@@ -213,6 +221,36 @@ void Fighter::perform_fightmove(FightMove& move)
 {
 	current_fightmove = &move;
 	set_state(FighterStateMachine::State::FIGHT_MOVE, &move);
+}
+
+void Fighter::perform_fightmove(const std::string& move)
+{
+	perform_fightmove(*fightmoves[move]);
+}
+
+	/*
+	BasicFightMove low_punch(FighterGraphics::LOW_PUNCH, 5, standard_effect);
+	BasicFightMove high_punch(FighterGraphics::HIGH_PUNCH, 5, standard_effect);
+	BasicFightMove low_kick(FighterGraphics::LOW_KICK, 5, standard_effect);
+	BasicFightMove high_kick(FighterGraphics::HIGH_KICK, 5, standard_effect);
+	BasicFightMove crouch_kick_low(FighterGraphics::CROUCH_KICK_LOW, 5, standard_effect);
+	BasicFightMove crouch_kick_high(FighterGraphics::CROUCH_KICK_HIGH, 5, standard_effect);
+	UppercutFightMove uppercut(5);
+	ThrowFightMove throw_enemy;
+// THESE ARE NOT BASICFIGHTMOVES... JUST FOR TESTING
+BasicFightMove special_1(FighterGraphics::SPECIAL_1, 5, standard_effect);
+*/
+void Fighter::init_common_fightmoves()
+{
+	auto standard_effect = std::make_shared<StandardEffect>();
+	auto uppercut_effect = std::make_shared<UppercutEffect>();
+	fightmoves["low_punch"] = std::make_shared<BasicFightMove>(FighterGraphics::LOW_PUNCH, 5, standard_effect);
+	fightmoves["high_punch"] = std::make_shared<BasicFightMove>(FighterGraphics::HIGH_PUNCH, 5, standard_effect);
+	fightmoves["low_kick"] = std::make_shared<BasicFightMove>(FighterGraphics::LOW_KICK, 5, standard_effect);
+	fightmoves["high_kick"] = std::make_shared<BasicFightMove>(FighterGraphics::HIGH_KICK, 5, standard_effect);
+	fightmoves["crouch_kick_low"] = std::make_shared<BasicFightMove>(FighterGraphics::CROUCH_KICK_LOW, 5, standard_effect);
+	fightmoves["crouch_kick_high"] = std::make_shared<BasicFightMove>(FighterGraphics::CROUCH_KICK_HIGH, 5, standard_effect);
+	fightmoves["uppercut"] = std::make_shared<BasicFightMove>(FighterGraphics::UPPERCUT, 5, uppercut_effect);
 }
 
 void face(Fighter& fighter, int x)

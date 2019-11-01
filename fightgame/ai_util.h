@@ -1,9 +1,8 @@
 #ifndef _AI_UTIL_H
 #define _AI_UTIL_H
 
-#include "fightmove.h"
-
 #include <stdexcept>
+#include <string>
 #include <algorithm>
 #include <functional>
 #include <utility>
@@ -25,13 +24,13 @@ namespace Behavior
 		Behavior() = default;
 		~Behavior() = default;
 		Behavior(BehaviorFunc behavior);
-		Behavior(FightMove* move);
+		Behavior(std::string move);
 
 		void operator()(AIFighter&, Fighter&);
 
 	private:
 		BehaviorFunc func;
-		FightMove* move;
+		std::string move;
 		enum DataType { FUNC, FIGHTMOVE } type;
 	};
 
