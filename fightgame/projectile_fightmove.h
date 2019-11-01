@@ -19,6 +19,4 @@ private:
 	int projectile_type;
 };
 
-static ProjectileFightMove cage_projectile_fightmove(FighterGraphics::SPECIAL_0, 0);
-
 #endif

@@ -251,6 +251,9 @@ void Fighter::init_common_fightmoves()
 	fightmoves["crouch_kick_low"] = std::make_shared<BasicFightMove>(FighterGraphics::CROUCH_KICK_LOW, 5, standard_effect);
 	fightmoves["crouch_kick_high"] = std::make_shared<BasicFightMove>(FighterGraphics::CROUCH_KICK_HIGH, 5, standard_effect);
 	fightmoves["uppercut"] = std::make_shared<BasicFightMove>(FighterGraphics::UPPERCUT, 5, uppercut_effect);
+	fightmoves["throw"] = std::make_shared<ThrowFightMove>();
+	// temporary hack for right now...
+	fightmoves["cage_projectile_fightmove"] = std::make_shared<ProjectileFightMove>(FighterGraphics::SPECIAL_0, CAGE_PROJECTILE);
 }
 
 void face(Fighter& fighter, int x)
