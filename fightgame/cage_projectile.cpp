@@ -3,7 +3,7 @@
 #include "fighter.h"
 #include "standard_effect.h"
 
-CageProjectile::CageProjectile()
+CageProjectile::CageProjectile() 
 {
 	damage = 10;
 	velocity_x = velocity_y = x = y = 0;
@@ -21,6 +21,7 @@ void CageProjectile::initialize(int x, int y, Orientation direction)
 		velocity_x = 8;
 	velocity_y = -4;
 	gravity_counter = 0;
+	sound->play();
 }
 
 CageProjectile* CageProjectile::clone()
@@ -58,17 +59,18 @@ void CageProjectile::draw(SDL_Renderer* renderer, const SDL_Rect& camera)
 	}
 }
 
-static StandardEffect effect;
 void CageProjectile::do_impact(Fighter& other)
 {
 	kill();
-	other.set_state(FighterStateMachine::STUN, &effect);
+	other.set_state(FighterStateMachine::STUN, effect.get());
 }
 
 void CageProjectile::load_graphics(bones::GraphicsLoader& loader)
 {
 	projectile_animation = loader.load_animation("data/johnnycage/animations/cage_projectile.xml");
 	die_animation = loader.load_animation("data/johnnycage/animations/cage_projectile_explode.xml");
+	sound = std::make_shared<bones::AudioClip>("data/sounds/specialfx/mk2-00318.mp3");
+	effect = std::make_shared<StandardEffect>();
 }
 
 std::vector<SDL_Rect> CageProjectile::get_dmgboxes()

@@ -1,5 +1,10 @@
 #include "thrown_effect.h"
 
+ThrownEffect::ThrownEffect() : hurtsound(new bones::AudioClip("data/sounds/male/mk2-00665.mp3"))
+{
+
+}
+
 void ThrownEffect::enter(Fighter& fighter)
 {
 	fighter.set_graphics(FighterGraphics::THROWN);
@@ -12,6 +17,7 @@ void ThrownEffect::enter(Fighter& fighter)
 	{
 		fighter.set_velocity_x(-3);
 	}
+	hurtsound->play();
 }
 
 bool ThrownEffect::is_complete(Fighter& fighter)

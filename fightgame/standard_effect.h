@@ -17,6 +17,7 @@ public:
 private:
 	FighterStateMachine::State next_state;
 	bool fall{ false };
-	bones::AudioClip* soundeffect;
+	std::unique_ptr<bones::AudioClip> hitsound;
+	std::unique_ptr<bones::AudioClip> hurtsound;
 };
 #endif

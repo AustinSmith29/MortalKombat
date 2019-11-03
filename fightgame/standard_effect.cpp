@@ -1,8 +1,8 @@
 #include "standard_effect.h"
 
-StandardEffect::StandardEffect() 
+StandardEffect::StandardEffect() : hitsound(new bones::AudioClip("data/sounds/hitsounds/mk2-00100.mp3")),
+hurtsound(new bones::AudioClip("data/sounds/male/mk2-00618.mp3"))
 {
-	soundeffect = new bones::AudioClip("data/sounds/hitsounds/mk2-00100.mp3");
 }
 
 void StandardEffect::enter(Fighter& fighter)
@@ -28,7 +28,8 @@ void StandardEffect::enter(Fighter& fighter)
 		fighter.set_graphics(FighterGraphics::STUN_HIGH);
 		next_state = FighterStateMachine::State::IDLE;
 	}
-	soundeffect->play();
+	hitsound->play();
+	hurtsound->play();
 }
 
 bool StandardEffect::is_complete(Fighter& fighter)

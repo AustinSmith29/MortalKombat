@@ -16,9 +16,9 @@ namespace bones
 		}
 	}
 
-	void AudioClip::play()
+	void AudioClip::play(int loops)
 	{
-		if (Mix_PlayChannel(-1, sound.get(), 0) == -1) {
+		if (Mix_PlayChannel(-1, sound.get(), loops) == -1) {
 			std::cout << "Can't play music! " << Mix_GetError() << std::endl;
 		}
 	}

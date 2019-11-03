@@ -18,7 +18,7 @@ namespace bones
 	public:
 		AudioClip(const std::string& filename);
 
-		void play();
+		void play(int loops=0);
 		void restart();
 		bool is_complete() const;
 	private:

@@ -32,7 +32,7 @@ namespace Behavior
 	{
 		type = DataType::FUNC;
 		this->func = func;
-		this->move = nullptr;
+		this->move = "";
 	}
 
 	Behavior::Behavior(std::string move)

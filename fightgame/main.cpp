@@ -100,6 +100,8 @@ int main(int argc, char* argv[])
 
 	SDL_Event event;
 	bool quit = false;
+	bones::AudioClip music("data/sounds/musiccues/mk2-oneguy.mp3");
+	music.play(-1);
 	while (!quit)
 	{
 		Uint32 ticks = SDL_GetTicks();
@@ -115,7 +117,6 @@ int main(int argc, char* argv[])
 				user_opponent.handle_input_event(input_event2, *input_device2);
 			}
 		}
-
 		focus_camera(camera, fighter, *opponent);
 		fighter.tick();
 		if (nusers < 2)

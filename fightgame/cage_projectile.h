@@ -1,9 +1,13 @@
 #ifndef _CAGE_PROJECTILE_H
 #define _CAGE_PROJECTILE_H
 
+#include "audio.h"
+#include "standard_effect.h"
 #include "projectile.h"
 #include "animation.h"
 #include "fighter_state.h"
+
+#include <memory>
 
 class CageProjectile : public Projectile
 {
@@ -20,6 +24,8 @@ public:
 private:
 	bones::Animation projectile_animation;
 	bones::Animation die_animation;
+	std::shared_ptr<bones::AudioClip> sound;
+	std::shared_ptr<StandardEffect> effect;
 	int velocity_x;
 	int velocity_y;
 	const int gravity_timer{ 4 };

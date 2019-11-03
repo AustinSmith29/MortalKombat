@@ -1,5 +1,10 @@
 #include "uppercut_effect.h"
 
+UppercutEffect::UppercutEffect() : hitsound(new bones::AudioClip("data/sounds/hitsounds/mk2-00100.mp3")),
+hurtsound(new bones::AudioClip("data/sounds/male/mk2-00633.mp3"))
+{
+}
+
 void UppercutEffect::enter(Fighter& fighter)
 {
 	fighter.jump();
@@ -12,6 +17,8 @@ void UppercutEffect::enter(Fighter& fighter)
 		fighter.set_velocity_x(2);
 	}
 	fighter.set_graphics(FighterGraphics::FALL);
+	hitsound->play();
+	hurtsound->play();
 }
 
 bool UppercutEffect::is_complete(Fighter& fighter)
