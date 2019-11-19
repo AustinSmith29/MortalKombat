@@ -145,6 +145,7 @@
     <ClCompile Include="fightmove_input_handler.cpp" />
     <ClCompile Include="fightmove_state.cpp" />
     <ClCompile Include="gamepad_device.cpp" />
+    <ClCompile Include="gamestate.cpp" />
     <ClCompile Include="idle_state.cpp" />
     <ClCompile Include="jump_left_state.cpp" />
     <ClCompile Include="jump_right_state.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="fightmove_input_handler.h" />
     <ClInclude Include="fightmove_state.h" />
     <ClInclude Include="gamepad_device.h" />
+    <ClInclude Include="gamestate.h" />
     <ClInclude Include="idle_state.h" />
     <ClInclude Include="input_device.h" />
     <ClInclude Include="jump_left_state.h" />
