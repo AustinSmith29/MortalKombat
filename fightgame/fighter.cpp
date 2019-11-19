@@ -120,6 +120,11 @@ bool Fighter::is_airborne()
 	return airborne;
 }
 
+int Fighter::get_health() const
+{
+	return health;
+}
+
 void Fighter::set_graphics(FighterGraphics graphics)
 {
 	animator.set_graphics(graphics);

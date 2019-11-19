@@ -73,11 +73,23 @@ void GameState::tick()
 		handle_fighter_on_projectile_collision(*fighter_a, *projectile);
 }
 
+void draw_health(int health, int x, int y, SDL_Renderer* renderer)
+{
+	SDL_Rect background = { x, y, 100, 16 };
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_RenderFillRect(renderer, &background);
+	SDL_Rect bar = { x, y, health, 16 };
+	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+	SDL_RenderFillRect(renderer, &bar);
+}
+
 void GameState::render(SDL_Renderer* renderer)
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
 	bones::draw_sprite(renderer, stage, -camera.x, -camera.y);
+	draw_health(fighter_a->get_health(), 20, 20, renderer);
+	draw_health(fighter_b->get_health(), 280, 20, renderer);
 	fighter_a->draw(renderer, camera);
 	fighter_b->draw(renderer, camera);
 }
