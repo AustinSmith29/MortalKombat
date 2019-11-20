@@ -125,6 +125,12 @@ int Fighter::get_health() const
 	return health;
 }
 
+void Fighter::set_health(int value)
+{
+	if (state_machine->get_state() != FighterStateMachine::STUN)
+		health = value;
+}
+
 void Fighter::set_graphics(FighterGraphics graphics)
 {
 	animator.set_graphics(graphics);
@@ -255,7 +261,7 @@ void Fighter::init_common_fightmoves()
 	fightmoves["high_kick"] = std::make_shared<BasicFightMove>(FighterGraphics::HIGH_KICK, 5, standard_effect);
 	fightmoves["crouch_kick_low"] = std::make_shared<BasicFightMove>(FighterGraphics::CROUCH_KICK_LOW, 5, standard_effect);
 	fightmoves["crouch_kick_high"] = std::make_shared<BasicFightMove>(FighterGraphics::CROUCH_KICK_HIGH, 5, standard_effect);
-	fightmoves["uppercut"] = std::make_shared<BasicFightMove>(FighterGraphics::UPPERCUT, 5, uppercut_effect);
+	fightmoves["uppercut"] = std::make_shared<BasicFightMove>(FighterGraphics::UPPERCUT, 15, uppercut_effect);
 	fightmoves["throw"] = std::make_shared<ThrowFightMove>();
 	// temporary hack for right now...
 	fightmoves["cage_projectile_fightmove"] = std::make_shared<ProjectileFightMove>(FighterGraphics::SPECIAL_0, CAGE_PROJECTILE);

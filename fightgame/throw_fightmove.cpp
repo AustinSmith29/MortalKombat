@@ -25,5 +25,6 @@ void ThrowFightMove::exit(Fighter& fighter)
 void ThrowFightMove::apply_effect(Fighter& target)
 {
 	this->fighter->set_graphics(FighterGraphics::THROW_COMPLETE);
+	target.set_health(target.get_health() - 5);
 	target.set_state(FighterStateMachine::State::STUN, effect.get());
 }

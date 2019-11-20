@@ -62,6 +62,7 @@ void CageProjectile::draw(SDL_Renderer* renderer, const SDL_Rect& camera)
 void CageProjectile::do_impact(Fighter& other)
 {
 	kill();
+	other.set_health(other.get_health() - damage);
 	other.set_state(FighterStateMachine::STUN, effect.get());
 }
 

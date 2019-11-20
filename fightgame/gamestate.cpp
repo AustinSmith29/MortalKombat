@@ -30,6 +30,8 @@ void GameState::init(int type_a, bool ai_a, int type_b, bool ai_b,
 	input_devices[0] = device1;
 	input_devices[1] = device2;
 
+	fighter_a->set_position_x(20);
+	fighter_a->set_position_y(400);
 	fighter_b->flip_orientation();
 	fighter_b->set_position_x(400);
 	fighter_b->set_position_y(400);

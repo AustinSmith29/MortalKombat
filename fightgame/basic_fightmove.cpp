@@ -20,5 +20,6 @@ bool BasicFightMove::is_complete(Fighter& fighter)
 
 void BasicFightMove::apply_effect(Fighter& target)
 {
+	target.set_health(target.get_health() - damage);
 	target.set_state(FighterStateMachine::State::STUN, effect.get());
 }

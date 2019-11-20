@@ -45,6 +45,7 @@ public:
 	bool is_airborne();
 
 	int get_health() const;
+	void set_health(int value);
 
 	void set_graphics(FighterGraphics graphics);
 	void flip_orientation();
