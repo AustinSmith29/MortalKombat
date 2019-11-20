@@ -5,6 +5,7 @@
 #include "input_device.h"
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include <memory>
 #include <array>
 
@@ -28,6 +29,9 @@ private:
 	SDL_Rect camera;
 	int time;
 	int round;
+	TTF_Font* font;
+	SDL_Texture* timer;
+	void draw_timer(SDL_Renderer* renderer);
 };
 
 #endif

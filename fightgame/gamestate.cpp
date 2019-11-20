@@ -6,6 +6,15 @@
 #include "constants.h"
 #include "projectile_factory.h" // Do we need this file/class?
 
+#include <string>
+
+static Uint32 timer_callback(Uint32 interval, void* param)
+{
+	int* time_left = static_cast<int*>(param);
+	(*time_left)--;
+	return interval;
+}
+
 void focus_camera(SDL_Rect& camera, Fighter& a, Fighter& b);
 std::unique_ptr<Fighter> create_ai_fighter(int type, bones::GraphicsLoader& loader);
 std::unique_ptr<Fighter> create_user_fighter(int type, bones::GraphicsLoader& loader);
@@ -25,6 +34,7 @@ void GameState::init(int type_a, bool ai_a, int type_b, bool ai_b,
 	fighter_b_ai = ai_b;
 
 	stage = loader.load_sprite("data/test_stage.bmp");
+	font = TTF_OpenFont("data/mk2.ttf", 32);
 
 	camera = SDL_Rect{ 100, 150, 400, 254 };
 	input_devices[0] = device1;
@@ -35,6 +45,8 @@ void GameState::init(int type_a, bool ai_a, int type_b, bool ai_b,
 	fighter_b->flip_orientation();
 	fighter_b->set_position_x(400);
 	fighter_b->set_position_y(400);
+	time = 90;
+	SDL_AddTimer(1000, timer_callback, &time);
 }
 
 void GameState::handle_input(SDL_Event& event)
@@ -85,6 +97,18 @@ void draw_health(int health, int x, int y, SDL_Renderer* renderer)
 	SDL_RenderFillRect(renderer, &bar);
 }
 
+void GameState::draw_timer(SDL_Renderer* renderer)
+{
+	SDL_Color text_color = { 255, 255, 255, 255 };
+	SDL_Rect dest_rect = { 180, 20, 32, 32 };
+	SDL_Surface* surface = TTF_RenderText_Solid(font, std::to_string(time).c_str(), text_color);
+	if (timer != nullptr)
+		SDL_DestroyTexture(timer);
+	timer = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_FreeSurface(surface);
+	SDL_RenderCopy(renderer, timer, nullptr, &dest_rect);
+}
+
 void GameState::render(SDL_Renderer* renderer)
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -92,6 +116,7 @@ void GameState::render(SDL_Renderer* renderer)
 	bones::draw_sprite(renderer, stage, -camera.x, -camera.y);
 	draw_health(fighter_a->get_health(), 20, 20, renderer);
 	draw_health(fighter_b->get_health(), 280, 20, renderer);
+	draw_timer(renderer);
 	fighter_a->draw(renderer, camera);
 	fighter_b->draw(renderer, camera);
 }

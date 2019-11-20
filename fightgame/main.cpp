@@ -1,5 +1,6 @@
 #include "SDL.h"
 #include "SDL_mixer.h"
+#include "SDL_ttf.h"
 #include "gamestate.h"
 #include "audio.h"
 #include "graphics.h"
@@ -19,6 +20,11 @@ int main(int argc, char* argv[])
 	if (Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3) != 0)
 	{
 		std::cout << "Could not initialize! " << Mix_GetError() << std::endl;
+	}
+	if (TTF_Init() == -1)
+	{
+		std::cout << "Could not initialize!" << TTF_GetError() << std::endl;
+		return 1;
 	}
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_CHANNELS, 1024) != 0)
 	{
@@ -89,6 +95,7 @@ int main(int argc, char* argv[])
 	SDL_DestroyWindow(window);
 	Mix_CloseAudio();
 	Mix_Quit();
+	TTF_Quit();
 	SDL_Quit();
 	return 0;
 }
