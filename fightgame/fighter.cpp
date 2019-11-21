@@ -129,6 +129,8 @@ void Fighter::set_health(int value)
 {
 	if (state_machine->get_state() != FighterStateMachine::STUN)
 		health = value;
+	if (health < 0)
+		health = 0;
 }
 
 void Fighter::set_graphics(FighterGraphics graphics)
