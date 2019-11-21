@@ -7,12 +7,26 @@
 #include "projectile_factory.h" // Do we need this file/class?
 
 #include <string>
+#include <iostream>
 
 static Uint32 timer_callback(Uint32 interval, void* param)
 {
 	int* time_left = static_cast<int*>(param);
 	(*time_left)--;
 	return interval;
+}
+
+static Uint32 round_end_callback(Uint32 interval, void* param)
+{
+	static_cast<GameState*>(param)->setup_round();
+	return 0;
+}
+
+static Uint32 round_start_callback(Uint32 interval, void* param)
+{
+	*static_cast<GameState::State*>(param) = GameState::State::FIGHT;
+	std::cout << "FIGHT!" << std::endl;
+	return 0;
 }
 
 void focus_camera(SDL_Rect& camera, Fighter& a, Fighter& b);
@@ -36,21 +50,35 @@ void GameState::init(int type_a, bool ai_a, int type_b, bool ai_b,
 	stage = loader.load_sprite("data/test_stage.bmp");
 	font = TTF_OpenFont("data/mk2.ttf", 32);
 
-	camera = SDL_Rect{ 100, 150, 400, 254 };
 	input_devices[0] = device1;
 	input_devices[1] = device2;
 
+	round = 1;
+	state = State::ROUND_START;
+	setup_round();
+	SDL_AddTimer(1000, timer_callback, &time);
+}
+
+void GameState::setup_round()
+{
+	std::cout << "ROUND " << round << std::endl;
+	state = State::ROUND_START;
+	camera = SDL_Rect{ 100, 150, 400, 254 };
 	fighter_a->set_position_x(20);
 	fighter_a->set_position_y(400);
 	fighter_b->flip_orientation();
 	fighter_b->set_position_x(400);
 	fighter_b->set_position_y(400);
+	fighter_a->set_health(100);
+	fighter_b->set_health(10);
 	time = 90;
-	SDL_AddTimer(1000, timer_callback, &time);
+	SDL_AddTimer(2000, round_start_callback, &state);
 }
 
 void GameState::handle_input(SDL_Event& event)
 {
+	if (state != State::FIGHT)
+		return;
 	if (!fighter_a_ai)
 	{
 		auto fighter_a_input = input_devices[0]->get_input(event);
@@ -85,6 +113,40 @@ void GameState::tick()
 		handle_fighter_on_projectile_collision(*fighter_b, *projectile);
 	for (auto& projectile : *fighter_b->get_projectiles())
 		handle_fighter_on_projectile_collision(*fighter_a, *projectile);
+
+	if (state != State::ROUND_END)
+	{
+		if (fighter_a->get_health() <= 0)
+		{
+			do_round_end(*fighter_b);
+		}
+		if (fighter_b->get_health() <= 0)
+		{
+			do_round_end(*fighter_a);
+		}
+
+		if (time <= 0)
+		{
+			if (fighter_a->get_health() >= fighter_b->get_health())
+			{
+				do_round_end(*fighter_a);
+			}
+			else
+			{
+				do_round_end(*fighter_b);
+			}
+		}
+	}
+}
+
+void GameState::do_round_end(Fighter& winner)
+{
+	// draw winner text
+	// increment win counter
+	state = State::ROUND_END;
+	round++;
+	std::cout << round << std::endl;
+	SDL_AddTimer(2000, round_end_callback, this);
 }
 
 void draw_health(int health, int x, int y, SDL_Renderer* renderer)
