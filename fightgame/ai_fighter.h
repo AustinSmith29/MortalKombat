@@ -14,7 +14,8 @@ public:
 	AIFighter(const AIFighter& aifighter) = delete;
 	AIFighter& operator =(const AIFighter& aifighter) = delete;
 
-	void tick(Fighter &other);
+	void tick();
+	void driver(Fighter& other);
 private:
 	std::function<void(AIFighter& ai, Fighter& other)> logic_func;
 	bool action_chosen{ false };

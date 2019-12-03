@@ -82,6 +82,9 @@ int main(int argc, char* argv[])
 		gamestate.render(renderer);
 		SDL_RenderPresent(renderer);
 
+		if (gamestate.is_complete())
+			break;
+
 		int time = SDL_GetTicks() - ticks;
 		if (time < (1000 / FPS))
 		{

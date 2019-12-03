@@ -3,6 +3,7 @@
 
 #include "graphics.h"
 #include "input_device.h"
+#include "audio.h"
 
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -13,7 +14,8 @@ class Fighter;
 class GameState
 {
 public:
-	enum State { ROUND_START, FIGHT, ROUND_END, PAUSE };
+	GameState();
+	enum State { ROUND_START, FIGHT_W_TEXT, FIGHT, ROUND_END, GAME_OVER_A, GAME_OVER_B, GAME_OVER, PAUSE };
 	void init(int fighter_a, bool ai_a, int fighter_b, bool ai_b,
 		bones::GraphicsLoader& loader,
 		InputDevice* device1,
@@ -22,6 +24,8 @@ public:
 	void tick();
 	void render(SDL_Renderer *renderer);
 	void setup_round();
+	bool is_complete();
+
 private:
 	std::unique_ptr<Fighter> fighter_a;
 	std::unique_ptr<Fighter> fighter_b;
@@ -31,12 +35,19 @@ private:
 	State state;
 	SDL_Rect camera;
 	int time;
-	int round;
+	int ticks = 0;
+	int round = 0;
+	int fighter_a_wins = 0;
+	int fighter_b_wins = 0;
 	TTF_Font* font;
 	SDL_Texture* timer;
 	SDL_Texture* round_text;
 	void draw_timer(SDL_Renderer* renderer);
-	void do_round_end(Fighter& winner);
+	void draw_round_text(SDL_Renderer* renderer);
+	void do_round_end(int winner);
+	bool complete = false;
+	bones::AudioClip round1, round2, round3, fight;
+	bool fightsound_played = false;
 };
 
 #endif

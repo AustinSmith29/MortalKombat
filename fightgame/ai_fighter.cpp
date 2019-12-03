@@ -16,7 +16,12 @@ AIFighter::AIFighter(FighterAnimator& animator, std::function<void(AIFighter& ai
 {
 }
 
-void AIFighter::tick(Fighter &other)
+void AIFighter::tick()
+{
+	Fighter::tick();
+}
+
+void AIFighter::driver(Fighter& other)
 {
 	if (!state_machine->is_input_locked() && !action_chosen)
 	{ 
@@ -24,5 +29,4 @@ void AIFighter::tick(Fighter &other)
 		action_chosen = true;
 		SDL_AddTimer(200, timer_callback, &action_chosen);
 	}
-	Fighter::tick();
 }
